@@ -35,6 +35,7 @@ public class SendAttachMail {
 	private Address[] to = null; // 收件人邮箱
 	private String subject = ""; // 邮件标题
 	private String content = ""; // 邮件内容
+	private String priority ="3"; // 邮件发送优先级 1：紧急 3：普通 5：缓慢
 	private Address[] copy_to = null;// 抄送邮件到
 	private Session mailSession = null;
 	private Transport transport = null;
@@ -64,6 +65,14 @@ public class SendAttachMail {
 		this.content = content;
 	}
 
+	public String getPriority(){
+		return priority;
+	}
+	
+	public void SetPriority(String priority) {
+		this.priority = priority;
+	}
+	
 	public ArrayList<String> getFilename() {
 		return filename;
 	}
@@ -216,7 +225,7 @@ public class SendAttachMail {
 			// 指定邮件发送日期
 			message.setSentDate(new Date());
 			// 指定邮件优先级 1：紧急 3：普通 5：缓慢
-			message.setHeader("X-Priority", "3");
+			message.setHeader("X-Priority",this.priority);
 			message.saveChanges();
 			// 判断附件是否为空
 			if (!filename.isEmpty()) {

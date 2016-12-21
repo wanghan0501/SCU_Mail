@@ -8,9 +8,11 @@ import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-// 树形节点的实现
+
 /**
  * 重新渲染树形节点
+ * @author caesar
+ * 
  */
 public class ClassNameTreeCellRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;
@@ -29,6 +31,9 @@ public class ClassNameTreeCellRenderer extends DefaultTreeCellRenderer {
 			this.setIcon(EditorUtils.createIcon("home.gif"));
 			this.setFont(bf);
 		} else if (value.toString().equals("新建邮件")) {
+			this.setIcon(EditorUtils.createIcon("newMail.gif"));
+			this.setFont(bif);
+		} else if (value.toString().equals("新建群邮件")) {
 			this.setIcon(EditorUtils.createIcon("newMail.gif"));
 			this.setFont(bif);
 		} else if (value.toString().equals("发件箱")) {

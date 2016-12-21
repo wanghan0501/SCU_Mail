@@ -13,6 +13,7 @@ import org.dom4j.io.XMLWriter;
 
 /**
  * 类说明：保存联系人为xml文件
+ * @author caesar
  */
 public class SaveLinkmans2XML {
 	private Document document = null;// xml文档对象

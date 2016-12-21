@@ -37,7 +37,7 @@ public class SystemBickerTray extends Thread {
 		nullimage = nullIcon.getImage();
 		iconImage = icon.getImage();
 		createPopupMenu();
-		trayIcon = new TrayIcon(icon.getImage(), "java邮件系统", popupMenu);
+		trayIcon = new TrayIcon(icon.getImage(), "SCU邮件客户端", popupMenu);
 		trayIcon.addMouseListener(new MouseAdapter() {// 系统托盘添加鼠标事件
 			public void mouseClicked(MouseEvent e) {
 				mouseAction(e);// 鼠标事件的处理

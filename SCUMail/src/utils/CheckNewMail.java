@@ -5,6 +5,7 @@ import utils.bickerTray.SystemBickerTray;
 
 /**
  * 类说明：检测新邮件类
+ * @author caesar
  */
 public class CheckNewMail extends Thread {
 	private static int MailCount = 0;// 新邮件总数计数器

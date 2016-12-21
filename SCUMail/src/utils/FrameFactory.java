@@ -1,9 +1,12 @@
 package utils;
 
+import frame.AboutUsFrame;
 import frame.AddLinkManFrame;
+import frame.HelpContentsFrame;
 import frame.ReceiveFrame;
 import frame.RecycleFrame;
 import frame.SendFrame;
+import frame.SendGroupMailFrame;
 import frame.SendedFrame;
 
 /**
@@ -46,8 +49,22 @@ public class FrameFactory {
 	}
 
 	// 联系人列表
-
 	public AddLinkManFrame getAddLinkManFrame() {
 		return new AddLinkManFrame();
+	}
+	
+	// 帮助文档对象
+	public HelpContentsFrame getHelpContentsFrame(){
+		return new HelpContentsFrame();
+	}
+	
+	// 关于我们对象
+	public AboutUsFrame getAboutUsFrame(){
+		return new AboutUsFrame();
+	}
+	
+	// 发送群邮件对象
+	public SendGroupMailFrame getSendGroupMailFrame(){
+		return new SendGroupMailFrame();
 	}
 }

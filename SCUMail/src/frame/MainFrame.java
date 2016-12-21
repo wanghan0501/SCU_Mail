@@ -49,9 +49,12 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 	private JLabel labelbackground;
 	private JScrollPane scrollPane;
 	private JMenuItem exitMI = null, newMailMI = null, sendedMI = null,
-			receiveMI = null, recycleMI = null, refreshMI = null;
+			receiveMI = null, recycleMI = null, refreshMI = null, groupMailMI = null,
+			helpMI = null,aboutMI = null;
 	private JButton addLinkmanButton = null;// 添加联系人按钮
+	private JMenu fileMenu = null;
 	private JMenu mailMenu = null;
+	private JMenu aboutMenu = null;
 	private ReadLinkmanXMl readLinkman = null;
 
 	// 初始化界面配置
@@ -65,7 +68,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 	}
 
 	public MainFrame() {
-		super("SCU邮件系统");
+		super("SCU邮件客户端");
 		MAINFRAME = this;
 		this.setIconImage(EditorUtils.createIcon("email.png").getImage());
 		desktopPane = new JDesktopPane();
@@ -73,25 +76,34 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
 
-		final JMenu fileMenu = new JMenu("文件(F)");
+		fileMenu = new JMenu("文件(F)");
 		mailMenu = new JMenu("邮件(M)");
+		aboutMenu = new JMenu("帮助(H)");
 		menuBar.add(fileMenu);
 		menuBar.add(mailMenu);
+		menuBar.add(aboutMenu);
 
 		exitMI = addMenuItem(fileMenu, "退出", "exit.gif");// 退出菜单项的初始化
 		newMailMI = addMenuItem(mailMenu, "新建邮件", "newMail.gif");// 新建邮件菜单项的初始化
+		
+		groupMailMI = addMenuItem(mailMenu,"新建群邮件",""); //发送群邮件菜单项初始化
+		
 		sendedMI = addMenuItem(mailMenu, "发件箱", "sended.png");// 已发送邮件菜单项的初始化
 		receiveMI = addMenuItem(mailMenu, "收件箱", "receive.png");// 收件箱邮件菜单项的初始化
-		recycleMI = addMenuItem(mailMenu, "已删除", "deleted.png");// 已删除邮件菜单项的初始化
+		recycleMI = addMenuItem(mailMenu, "回收站", "deleted.png");// 已删除邮件菜单项的初始化
 		refreshMI = addMenuItem(mailMenu, "刷新收件箱", "refresh.jpg");// 已删除邮件菜单项的初始化
-
+		helpMI = addMenuItem(aboutMenu,"帮助文档",""); //帮助文档菜单项初始化
+		aboutMI = addMenuItem(aboutMenu,"关于我们",""); // 关于我们菜单项的初始化		
+		
 		// 构建树形节点
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("SCU邮件系统");
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("SCU邮件客户端");
 		DefaultMutableTreeNode send = new DefaultMutableTreeNode("新建邮件");
+		DefaultMutableTreeNode sendGroup = new DefaultMutableTreeNode("新建群邮件");
 		DefaultMutableTreeNode addressee = new DefaultMutableTreeNode("收件箱");
 		DefaultMutableTreeNode AlreadySend = new DefaultMutableTreeNode("发件箱");
 		DefaultMutableTreeNode delete = new DefaultMutableTreeNode("回收站");
 		root.add(send);
+		root.add(sendGroup);
 		root.add(addressee);
 		root.add(AlreadySend);
 		root.add(delete);
@@ -187,6 +199,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 			addIFame(FrameFactory.getFrameFactory().getAddLinkManFrame());// 联系人列表
 		} else if (e.getSource() == newMailMI) {// 新建邮件
 			addIFame(FrameFactory.getFrameFactory().getSendFrame());// 发件夹
+		} else if (e.getSource() == groupMailMI) { // 新建群邮件
+			addIFame(FrameFactory.getFrameFactory().getSendGroupMailFrame()); //新建群邮件
 		} else if (e.getSource() == itemPopupOne || e.getSource() == refreshMI) {// 右键刷新收件列表
 			ReceiveMailTable.getMail2Table().startReceiveMail();// 右键刷新收件列表
 		} else if (e.getSource() == sendedMI) {// 已发送
@@ -195,6 +209,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 			addIFame(FrameFactory.getFrameFactory().getReceiveFrame());// 收邮件
 		} else if (e.getSource() == recycleMI) {// 已删除
 			addIFame(FrameFactory.getFrameFactory().getRecycleFrame());// 收邮件
+		} else if (e.getSource() == helpMI) { //帮助文档
+			addIFame(FrameFactory.getFrameFactory().getHelpContentsFrame()); // 帮助文档
+		} else if (e.getSource() == aboutMI) { //关于我们
+			addIFame (FrameFactory.getFrameFactory().getAboutUsFrame()); //关于我们
 		}
 
 	}
@@ -213,7 +231,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 			else if (selectedNode.toString().equals("新建邮件")) {
 				sendFrame = FrameFactory.getFrameFactory().getSendFrame();
 				addIFame(sendFrame);// 发件夹
-			} else if (selectedNode.toString().equals("收件箱")) {
+			} else if (selectedNode.toString().equals("新建群邮件")) {
+				addIFame(FrameFactory.getFrameFactory().getSendGroupMailFrame()); //新建群邮件
+			}
+			else if (selectedNode.toString().equals("收件箱")) {
 				addIFame(FrameFactory.getFrameFactory().getReceiveFrame());// 收件夹
 			} else if (selectedNode.toString().equals("发件箱")) {
 				addIFame(FrameFactory.getFrameFactory().getSendedFrame());// 已发送邮件
@@ -228,7 +249,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 		} else if (e.getButton() == MouseEvent.BUTTON3 && e.getSource() == tree) {// 收件箱右键刷新
 			if (selectedNode == null)
 				return;
-			else if ("收件夹".equals(selectedNode.toString())) {
+			else if ("收件箱".equals(selectedNode.toString())) {
 				JPopupMenu popup = new JPopupMenu();
 				itemPopupOne = new JMenuItem("刷新收件箱",
 						EditorUtils.createIcon("refresh.jpg"));

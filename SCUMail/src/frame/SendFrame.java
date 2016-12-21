@@ -139,8 +139,7 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		attachmentList = new JList(listmodel);
 		attachmentList.addMouseListener(this);// 为邮件列表添加鼠标事件
 		jsp.setViewportView(attachmentList);// 设置JScrollPanel的视图为JList
-		attachmentList
-				.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		attachmentList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		attachmentList.setVisibleRowCount(1);
 		attachmentList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		// 插入附件按钮
@@ -166,8 +165,7 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 
 		// 字体
 		final JLabel fontLabel = new JLabel("字体");
-		GraphicsEnvironment ge = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();// 获得本地 计算机上字体可用的名称
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();// 获得本地 计算机上字体可用的名称
 		String font[] = ge.getAvailableFontFamilyNames();
 		fontCB = new JComboBox(font);
 		fontCB.addActionListener(this);

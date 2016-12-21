@@ -12,6 +12,7 @@ import frame.SendFrame;
 
 /**
  * 类说明：已发送邮件表格模板
+ * @author caesar
  */
 public class SendedMailTable {// 采用单例模式保证表格的唯一
 	private static SendedMailTable sendedMail = new SendedMailTable();// 本类对象
