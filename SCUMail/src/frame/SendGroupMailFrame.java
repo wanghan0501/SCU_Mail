@@ -29,6 +29,7 @@ import utils.EditorUtils;
 import utils.SendedMailTable;
 import mailutil.SendAttachMail;
 import frame.JProgressBarFrame;
+
 /**
  * 发送群邮件界面
  * 
@@ -39,19 +40,17 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 	private JPanel upperPanel = null;
 	private JButton linkmanInfoButton = null;
 	private JTable table = null;
-	private JButton sendGroupButton= null;
+	private JButton sendGroupButton = null;
 	private JButton resetButton = null;
 	private JProgressBarFrame progressBar = null;
 	// 获得发件实例
 	private SendAttachMail groupMails = SendAttachMail.getSendMailInstantiate();
-	private int sendedEmailCount =0 ;
+	private int sendedEmailCount = 0;
 	private int totalEmailCount = 0;
-	
-	
+
 	// 储存联系人信息
 	Vector<Vector<String>> linkmanInfo = new Vector<Vector<String>>();
-	
-			
+
 	public SendGroupMailFrame() {
 		super("群邮件");
 		// 设置对话框图标
@@ -83,7 +82,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 		resetButton = new JButton("重置", EditorUtils.createIcon("reset.png"));
 		resetButton.addActionListener(this);
 		toolBar.add(resetButton, JPanel.LEFT_ALIGNMENT);
-		
+
 		// 滚动面板
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -106,19 +105,18 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 			if (!isEmpty())
 				sendGroupMail(linkmanInfo);
 			else
-				JOptionPane.showMessageDialog(SendGroupMailFrame.this, "通讯录为空，请载入"
-						+ "通讯录后再次尝试群发邮件！", "警告",
+				JOptionPane.showMessageDialog(SendGroupMailFrame.this, "通讯录为空，请载入" + "通讯录后再次尝试群发邮件！", "警告",
 						JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == resetButton) {
 			resetButtonEvent();
 		}
 	}
 
-	public boolean isEmpty(){
+	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return linkmanInfo.size()==0;
+		return linkmanInfo.size() == 0;
 	}
-	
+
 	public void resetButtonEvent() {
 		// TODO Auto-generated method stub
 		linkmanInfo.clear();
@@ -174,10 +172,10 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 			File file = chooser.getSelectedFile();
 			Icon icon = chooser.getIcon(file);
 			if (file.isFile()) {
-				System.out.println("文件:" + file.getAbsolutePath());
+				// System.out.println("文件:" + file.getAbsolutePath());
 				dispLinkmanInfo(file);
 			}
-			System.out.println(file.getName());
+			// System.out.println(file.getName());
 			// 发送群邮件
 			validate();
 			repaint();
@@ -200,13 +198,19 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 					linkman = new Vector<String>();
 					for (int k = 0; k < rs.getColumns(); ++k) {
 						Cell cell = rs.getCell(k, j);
-						linkman.add(cell.getContents());
+						if (cell.getContents() == "")
+							continue;
+						else
+							linkman.add(cell.getContents());
 					}
-					linkmanInfo.add(linkman);
-					// 数据模型更新
-					model.addRow(linkman);
-					// 表格更新
-					table.updateUI();
+					// 如果联系人信息正确
+					if (linkman.size() == 4) {
+						linkmanInfo.add(linkman);
+						// 数据模型更新
+						model.addRow(linkman);
+						// 表格更新
+						table.updateUI();
+					}
 				}
 			}
 			fis.close();
@@ -217,42 +221,27 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 
 	public void sendMail(final String toMan, final String subject, final ArrayList<String> list, final String text,
 			final String copy, final String sendMan) {
+
 		groupMails.setContent(text);// 设置邮件正文
 		groupMails.setFilename(list);// 设置邮件附件名称
 		groupMails.setFrom(sendMan);// 设置发件人
 		groupMails.setSubject(subject);// 设置邮件主题
 		groupMails.setTo(toMan);// 设置收件人
 		groupMails.setCopy_to(copy);// 设置抄送人
-
-		if (progressBar == null) {
-			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "发送群邮件",
-					"正在发送群邮件, 请稍后...");
-
-		}
-		progressBar.setVisible(true);
-		new Thread() {// 开启一个新的线程发送邮件
-			public void run() {
-				String message = "";
-				if ("".equals(message = groupMails.send())) {
-					SendedMailTable.getSendedMailTable().setValues(toMan,
-							subject, list, text, copy, sendMan);// 将邮件添加到已发送
-					//message = "邮件已发送成功！";
-				} else {
-					message = "<html><h4>邮件发送失败！ 失败原因：</h4></html>\n" + message;
-					JOptionPane.showMessageDialog(SendGroupMailFrame.this, message, "提示",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-				progressBar.dispose();
-			}
-		}.start();
-
-		if ((getSendedEmailCount() == getTotalEmailCount())
-				&& (getTotalEmailCount()!=0)) {
-			JOptionPane.showMessageDialog(SendGroupMailFrame.this, "群邮件发送已完成!", "提示",
+		if ((getSendedEmailCount()) == 0 && (getTotalEmailCount() != 0)) {
+			JOptionPane.showMessageDialog(SendGroupMailFrame.this, "群邮件正在发送中...请等待发送完成提示", "提示",
 					JOptionPane.INFORMATION_MESSAGE);
 		}
+		String message = "";
+		if ("".equals(message = groupMails.send())) {
+			SendedMailTable.getSendedMailTable().setValues(toMan, subject, list, text, copy, sendMan);// 将邮件添加到已发送
+			// message = "邮件已发送成功！";
+		} else {
+			message = "<html><h4>邮件发送失败！ 失败原因：</h4></html>\n" + message;
+			JOptionPane.showMessageDialog(SendGroupMailFrame.this, message, "提示", JOptionPane.INFORMATION_MESSAGE);
+		}
+
 	}
-	
 
 	public int getSendedEmailCount() {
 		return this.sendedEmailCount;
@@ -286,7 +275,6 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 				// 设置抄送人
 				groupMails.setCopy_to("");
 				// 发送邮件，其实应该用多线程改写，稍后再写
-				//System.out.println(toMan + subject + list.toString() + content + copy_to + sendMan);
 				sendMail(toMan, subject, list, content, copy_to, sendMan);// 发送邮件
 				// 成功发送邮件计数加1
 				sendedEmailCount++;
@@ -294,11 +282,12 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			JOptionPane.showMessageDialog(SendGroupMailFrame.this, "群邮件发送" + sendedEmailCount + "封已完成!", "提示",
+					JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("成功发送" + sendedEmailCount + "封");
 		}
 	}
 
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
