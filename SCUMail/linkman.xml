@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="gbk"?>
-<linkmans><!--我的联系人列表！--><linkman><name>javamail</name><nickname>java</nickname><emailadress>javamail2010@yeah.net</emailadress></linkman></linkmans>
+<linkmans><!--我的联系人列表！ -->
+	<linkman>
+		<name>javamail</name>
+		<nickname>java</nickname>
+		<emailadress>javamail2010@yeah.net</emailadress>
+	</linkman>
+</linkmans>

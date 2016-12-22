@@ -379,8 +379,8 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		sendMail.setCopy_to(copy);// 设置抄送人
 
 		if (progressBar == null) {
-			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "发送邮件",
-					"正在发送邮件，请稍后...");
+			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "发送群邮件",
+					"群邮件正在发送中，请稍后...");
 		}
 		progressBar.setVisible(true);
 		new Thread() {// 开启一个新的线程发送邮件

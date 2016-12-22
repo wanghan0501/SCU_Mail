@@ -86,14 +86,14 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 		exitMI = addMenuItem(fileMenu, "退出", "exit.gif");// 退出菜单项的初始化
 		newMailMI = addMenuItem(mailMenu, "新建邮件", "newMail.gif");// 新建邮件菜单项的初始化
 		
-		groupMailMI = addMenuItem(mailMenu,"新建群邮件",""); //发送群邮件菜单项初始化
+		groupMailMI = addMenuItem(mailMenu,"新建群邮件","newGroup.jpg"); //发送群邮件菜单项初始化
 		
 		sendedMI = addMenuItem(mailMenu, "发件箱", "sended.png");// 已发送邮件菜单项的初始化
 		receiveMI = addMenuItem(mailMenu, "收件箱", "receive.png");// 收件箱邮件菜单项的初始化
 		recycleMI = addMenuItem(mailMenu, "回收站", "deleted.png");// 已删除邮件菜单项的初始化
 		refreshMI = addMenuItem(mailMenu, "刷新收件箱", "refresh.jpg");// 已删除邮件菜单项的初始化
-		helpMI = addMenuItem(aboutMenu,"帮助文档",""); //帮助文档菜单项初始化
-		aboutMI = addMenuItem(aboutMenu,"关于我们",""); // 关于我们菜单项的初始化		
+		helpMI = addMenuItem(aboutMenu,"帮助文档","help.png"); //帮助文档菜单项初始化
+		aboutMI = addMenuItem(aboutMenu,"关于我们","aboutUs.png"); // 关于我们菜单项的初始化		
 		
 		// 构建树形节点
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("SCU邮件客户端");
@@ -147,7 +147,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 				// 设置窗体背景图
 				labelbackground.setText("<html><img width=" + size.width
 						+ " height=" + size.height + " src='"
-						+ this.getClass().getResource("/main.gif")
+						+ this.getClass().getResource("/main.jpg")
 						+ "'></html>");
 			}
 		});

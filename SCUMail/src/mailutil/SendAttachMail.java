@@ -58,7 +58,7 @@ public class SendAttachMail {
 	public void setContent(String content) {
 		try {
 			// 解决内容的中文问题
-			content = new String(content.getBytes("ISO8859-1"), "gbk");
+			content = new String(content.getBytes("gbk"), "gbk");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

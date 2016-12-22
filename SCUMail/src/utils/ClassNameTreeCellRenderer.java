@@ -34,7 +34,7 @@ public class ClassNameTreeCellRenderer extends DefaultTreeCellRenderer {
 			this.setIcon(EditorUtils.createIcon("newMail.gif"));
 			this.setFont(bif);
 		} else if (value.toString().equals("新建群邮件")) {
-			this.setIcon(EditorUtils.createIcon("newMail.gif"));
+			this.setIcon(EditorUtils.createIcon("newGroup.jpg"));
 			this.setFont(bif);
 		} else if (value.toString().equals("发件箱")) {
 			this.setIcon(EditorUtils.createIcon("sended.png"));
