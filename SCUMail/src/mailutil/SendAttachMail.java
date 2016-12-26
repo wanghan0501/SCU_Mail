@@ -43,7 +43,7 @@ public class SendAttachMail {
 	private static SendAttachMail sendMail = new SendAttachMail();
 
 	// 无参数构造方法
-	private SendAttachMail() {
+	protected SendAttachMail() {
 	}
 
 	// 返回本类对象的实例

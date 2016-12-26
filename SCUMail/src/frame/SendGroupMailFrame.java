@@ -7,8 +7,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -27,7 +33,9 @@ import jxl.Sheet;
 import jxl.Workbook;
 import utils.EditorUtils;
 import utils.SendedMailTable;
+import utils.CreateLoggerFile;
 import mailutil.SendAttachMail;
+import mailutil.SendGroupAttachMail;
 import frame.JProgressBarFrame;
 
 /**
@@ -44,12 +52,22 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 	private JButton resetButton = null;
 	private JProgressBarFrame progressBar = null;
 	// 获得发件实例
-	private SendAttachMail groupMails = SendAttachMail.getSendMailInstantiate();
+	private SendAttachMail mail = SendAttachMail.getSendMailInstantiate();
 	private int sendedEmailCount = 0;
 	private int totalEmailCount = 0;
+	private String selectDirPath = "";
+	// 线程池
+	private ExecutorService exec = Executors.newCachedThreadPool();
+	// 群发时候最多只有10个线程
+	private final Semaphore sendSemaphore = new Semaphore(10);
+	// Log并发队列
+	private ConcurrentLinkedQueue<String> successQueue = new ConcurrentLinkedQueue<String>();
+	private ConcurrentLinkedQueue<String> faileQueue = new ConcurrentLinkedQueue<String>();
 
 	// 储存联系人信息
 	Vector<Vector<String>> linkmanInfo = new Vector<Vector<String>>();
+	// 储存是否有附件
+	ArrayList<Boolean> hasAttachment = new ArrayList<Boolean>();
 
 	public SendGroupMailFrame() {
 		super("群邮件");
@@ -90,7 +108,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 		table = new JTable();
 		table.setFillsViewportHeight(true);
 		table.setEnabled(false);
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "姓名", "联系地址", "邮件主题", "邮件正文" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "姓名", "联系地址", "邮件主题", "邮件正文", "附件" }));
 		table.setRowHeight(25);
 		scrollPane.setViewportView(table);
 	}
@@ -120,7 +138,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 	public void resetButtonEvent() {
 		// TODO Auto-generated method stub
 		linkmanInfo.clear();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "姓名", "联系地址", "邮件主题", "邮件正文" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "姓名", "联系地址", "邮件主题", "邮件正文", "附件" }));
 	}
 
 	public void openLinkmanInfoEvent() {
@@ -128,7 +146,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 		JFileChooser chooser = new JFileChooser(new File("."));
 		chooser.setOpaque(false);
 		// 只搜索文件
-		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
 		chooser.setAcceptAllFileFilterUsed(false);
 
@@ -137,7 +155,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 
 			@Override
 			public boolean accept(File f) {
-				if (f.getName().endsWith(".xls"))
+				if (f.getName().endsWith(".xls") || f.isDirectory())
 					// TODO Auto-generated method stub
 					return true;
 				return false;
@@ -170,6 +188,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 
 		if (chooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {// 如果选择确定键
 			File file = chooser.getSelectedFile();
+			selectDirPath = file.getParent();
 			Icon icon = chooser.getIcon(file);
 			if (file.isFile()) {
 				// System.out.println("文件:" + file.getAbsolutePath());
@@ -204,7 +223,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 							linkman.add(cell.getContents());
 					}
 					// 如果联系人信息正确
-					if (linkman.size() == 4) {
+					if (linkman.size() == 5 || linkman.size() == 4) {
 						linkmanInfo.add(linkman);
 						// 数据模型更新
 						model.addRow(linkman);
@@ -217,30 +236,6 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void sendMail(final String toMan, final String subject, final ArrayList<String> list, final String text,
-			final String copy, final String sendMan) {
-
-		groupMails.setContent(text);// 设置邮件正文
-		groupMails.setFilename(list);// 设置邮件附件名称
-		groupMails.setFrom(sendMan);// 设置发件人
-		groupMails.setSubject(subject);// 设置邮件主题
-		groupMails.setTo(toMan);// 设置收件人
-		groupMails.setCopy_to(copy);// 设置抄送人
-		if ((getSendedEmailCount()) == 0 && (getTotalEmailCount() != 0)) {
-			JOptionPane.showMessageDialog(SendGroupMailFrame.this, "群邮件正在发送中...请等待发送完成提示", "提示",
-					JOptionPane.INFORMATION_MESSAGE);
-		}
-		String message = "";
-		if ("".equals(message = groupMails.send())) {
-			SendedMailTable.getSendedMailTable().setValues(toMan, subject, list, text, copy, sendMan);// 将邮件添加到已发送
-			// message = "邮件已发送成功！";
-		} else {
-			message = "<html><h4>邮件发送失败！ 失败原因：</h4></html>\n" + message;
-			JOptionPane.showMessageDialog(SendGroupMailFrame.this, message, "提示", JOptionPane.INFORMATION_MESSAGE);
-		}
-
 	}
 
 	public int getSendedEmailCount() {
@@ -261,10 +256,16 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 		ArrayList<String> list = new ArrayList<String>(); // 附件列表
 		String content = ""; // 邮件正文内容
 		String copy_to = ""; // 抄送人
-		String sendMan = groupMails.getUser(); // 发件人
-
+		String sendMan = mail.getUser(); // 发件人
+		File file = new File(selectDirPath);
+		File[] files = file.listFiles();
+		File successLogger = new File(selectDirPath + "/successLog.txt");
+		File failelogger = new File(selectDirPath + "/faileLog.txt");
+		FileOutputStream successOut = null;
+		FileOutputStream faileOut = null;
 		try {
-			// System.out.println(linkmanInfo.toString());
+			successOut = new FileOutputStream(successLogger);
+			faileOut = new FileOutputStream(failelogger);
 			for (int i = 0; i < linkmanInfo.size(); i++) {
 				// 设置邮件主题
 				subject = linkmanInfo.get(i).get(2);
@@ -273,19 +274,70 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 				// 设置邮件内容
 				content = linkmanInfo.get(i).get(3);
 				// 设置抄送人
-				groupMails.setCopy_to("");
-				// 发送邮件，其实应该用多线程改写，稍后再写
-				sendMail(toMan, subject, list, content, copy_to, sendMan);// 发送邮件
+				copy_to = "";
+				// 设置附件
+				try {
+					String[] temp = linkmanInfo.get(i).get(4).trim().split(";");
+					for (int tempIndex = 0; tempIndex < temp.length; tempIndex++) {
+						for (int fileIndex = 0; fileIndex < files.length; fileIndex++) {
+							if (files[fileIndex].getName().equals(temp[tempIndex])) {
+								list.add(files[fileIndex].getPath().replaceAll("\\\\", "/"));
+							}
+						}
+					}
+				} catch (Exception e) {
+					list.clear();
+				}
+				// 发送邮件
+				sendMail(toMan, subject, list, content, copy_to, sendMan);
+				list.clear();
 				// 成功发送邮件计数加1
 				sendedEmailCount++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JOptionPane.showMessageDialog(SendGroupMailFrame.this, "群邮件发送" + sendedEmailCount + "封已完成!", "提示",
-					JOptionPane.INFORMATION_MESSAGE);
-			System.out.println("成功发送" + sendedEmailCount + "封");
+			new Thread(new CreateLoggerFile(successOut, successQueue)).start();
+			new Thread(new CreateLoggerFile(faileOut, faileQueue)).start();
 		}
+	}
+
+	public void sendMail(final String toMan, final String subject, final ArrayList<String> list, final String text,
+			final String copy, final String sendMan) {
+		// 群邮件对象
+		final SendGroupAttachMail groupMails = new SendGroupAttachMail(mail.getSMTPHost(), mail.getUser(),
+				mail.getPassword(), toMan, subject, text, copy, list);
+		if (progressBar == null) {
+			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "发送群邮件", "群邮件正在发送中，请稍后...");
+		}
+		progressBar.setVisible(true);
+		Runnable run = new Runnable() {// 开启一个新的线程发送邮件,线程最大数目10，超过最大数目后就等待
+			public void run() {
+				try {
+					// 获得锁许可
+					sendSemaphore.acquire();
+					String message = "";
+					if ("".equals(message = groupMails.send())) {
+						SendedMailTable.getSendedMailTable().setValues(toMan, subject, list, text, copy, sendMan);// 将邮件添加到已发送
+						message = "邮件已发送成功！";
+						successQueue.add(new Date()+" 向"+toMan +"发送邮件成功!\n");
+					} else {
+						message = "邮件发送失败！ 失败原因：\n" + message;
+						faileQueue.add(new Date() + " 向" + toMan + message+"\n");
+						JOptionPane.showMessageDialog(SendGroupMailFrame.this, message, "提示",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					progressBar.dispose();
+					// 访问完后，释放锁
+					sendSemaphore.release();
+					// System.out.println("-----------------"+sendSemaphore.availablePermits());
+				} catch (InterruptedException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+			}
+		};
+		exec.execute(run);
 	}
 
 	@Override
