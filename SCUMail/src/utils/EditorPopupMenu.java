@@ -25,19 +25,19 @@ import javax.swing.undo.UndoManager;
  */
 public class EditorPopupMenu {
 
-	/** Ìí¼Ó¼ôÇĞÕìÌıÆ÷ */
+	/** æ·»åŠ å‰ªåˆ‡ä¾¦å¬å™¨ */
 	private Action cutAction = new DefaultEditorKit.CutAction();
-	/** Ìí¼Ó¸´ÖÆÕìÌıÆ÷ */
+	/** æ·»åŠ å¤åˆ¶ä¾¦å¬å™¨ */
 	private Action copyAction = new DefaultEditorKit.CopyAction();
-	/** Ìí¼ÓÕ³ÌùÕìÌıÆ÷ */
+	/** æ·»åŠ ç²˜è´´ä¾¦å¬å™¨ */
 	private Action pasteAction = new DefaultEditorKit.PasteAction();
-	/** Ìí¼Ó³·Ïû¹ÜÀíÆ÷ */
+	/** æ·»åŠ æ’¤æ¶ˆç®¡ç†å™¨ */
 	protected UndoManager undoMenager = new UndoManager();
-	/** Ìí¼Ó³·ÏûÕìÌıÆ÷ */
+	/** æ·»åŠ æ’¤æ¶ˆä¾¦å¬å™¨ */
 	private UndoAction undoAction = new UndoAction();
-	/** Ìí¼Ó»Ö¸´ÕìÌıÆ÷ */
+	/** æ·»åŠ æ¢å¤ä¾¦å¬å™¨ */
 	private RedoAction redoAction = new RedoAction();
-	/** ÕìÌıÔÚµ±Ç°ÎÄµµÉÏµÄ±à¼­Æ÷ */
+	/** ä¾¦å¬åœ¨å½“å‰æ–‡æ¡£ä¸Šçš„ç¼–è¾‘å™¨ */
 	protected UndoableEditListener undoHandler = new UndoHandler();
 	private JPopupMenu popup = null;
 	private JMenuItem copy = null;
@@ -51,28 +51,28 @@ public class EditorPopupMenu {
 		textPane.getDocument().addUndoableEditListener(undoHandler);
 		popup = new JPopupMenu();
 		copy = new JMenuItem(copyAction);
-		copy.setText("¸´ÖÆ");
+		copy.setText("å¤åˆ¶");
 		copy.setIcon(EditorUtils.createIcon("copy.png"));
 		paste = new JMenuItem(pasteAction);
-		paste.setText("Õ³Ìù");
+		paste.setText("ç²˜è´´");
 		paste.setIcon(EditorUtils.createIcon("paste.png"));
 		cut = new JMenuItem(cutAction);
-		cut.setText("¼ôÇĞ");
+		cut.setText("å‰ªåˆ‡");
 		cut.setIcon(EditorUtils.createIcon("cut.png"));
 		undo = new JMenuItem(undoAction);
-		undo.setText("³·Ïú");
+		undo.setText("æ’¤é”€");
 		undo.setIcon(EditorUtils.createIcon("undo.png"));
 		redo = new JMenuItem(redoAction);
-		redo.setText("ÖØ×ö");
+		redo.setText("é‡åš");
 		redo.setIcon(EditorUtils.createIcon("redo.png"));
 		insertIcon = new JMenuItem();
-		insertIcon.setText("²åÈëÍ¼Æ¬");
+		insertIcon.setText("æ’å…¥å›¾ç‰‡");
 		insertIcon.setIcon(EditorUtils.createIcon("image.png"));
-		insertIcon.addActionListener(new ActionListener() {// ²åÈëÍ¼Æ¬ÊÂ¼ş
+		insertIcon.addActionListener(new ActionListener() {// æ’å…¥å›¾ç‰‡äº‹ä»¶
 					public void actionPerformed(ActionEvent arg0) {
-						File f = new File(".");// µÃµ½µ±Ç°Ä¿Â¼
-						JFileChooser chooser = new JFileChooser(f);// ¹¹ÔìÒ»¸öµ±Ç°Â·¾¶µÄÎÄ¼şÑ¡ÔñÆ÷
-						if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {// Èç¹ûÑ¡ÔñÈ·¶¨¼ü
+						File f = new File(".");// å¾—åˆ°å½“å‰ç›®å½•
+						JFileChooser chooser = new JFileChooser(f);// æ„é€ ä¸€ä¸ªå½“å‰è·¯å¾„çš„æ–‡ä»¶é€‰æ‹©å™¨
+						if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {// å¦‚æœé€‰æ‹©ç¡®å®šé”®
 							File file = chooser.getSelectedFile();
 							textPane.insertIcon(EditorUtils.createIcon(file
 									.getAbsolutePath()));
@@ -82,19 +82,19 @@ public class EditorPopupMenu {
 		popup.add(copy);
 		popup.add(paste);
 		popup.add(cut);
-		popup.addSeparator();// ²åÈë·Ö¸ô·û
+		popup.addSeparator();// æ’å…¥åˆ†éš”ç¬¦
 		popup.add(undo);
 		popup.add(redo);
-		popup.addSeparator();// ²åÈë·Ö¸ô·û
+		popup.addSeparator();// æ’å…¥åˆ†éš”ç¬¦
 		popup.add(insertIcon);
 	}
 
-	// ±à¼­ÇøÊó±êÓÒ¼üµÄÏìÓ¦
+	// ç¼–è¾‘åŒºé¼ æ ‡å³é”®çš„å“åº”
 	public void rightMouseButton(MouseEvent e) {
-		popup.show(e.getComponent(), e.getX(), e.getY());// ÏÔÊ¾µ¯³ö²Ëµ¥
+		popup.show(e.getComponent(), e.getX(), e.getY());// æ˜¾ç¤ºå¼¹å‡ºèœå•
 	}
 
-	// ³·Ïú
+	// æ’¤é”€
 	class UndoAction extends AbstractAction {
 		public UndoAction() {
 			super("Undo");
@@ -118,12 +118,12 @@ public class EditorPopupMenu {
 				putValue(Action.NAME, undoMenager.getUndoPresentationName());
 			} else {
 				setEnabled(false);
-				putValue(Action.NAME, "³·Ïú");
+				putValue(Action.NAME, "æ’¤é”€");
 			}
 		}
 	}
 
-	// ÖØ×ö
+	// é‡åš
 	class RedoAction extends AbstractAction {
 
 		public RedoAction() {
@@ -148,7 +148,7 @@ public class EditorPopupMenu {
 				putValue(Action.NAME, undoMenager.getRedoPresentationName());
 			} else {
 				setEnabled(false);
-				putValue(Action.NAME, "ÖØ×ö");
+				putValue(Action.NAME, "é‡åš");
 			}
 		}
 	}

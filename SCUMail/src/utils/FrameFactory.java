@@ -10,7 +10,7 @@ import frame.SendGroupMailFrame;
 import frame.SendedFrame;
 
 /**
- * ²úÉúÖ÷½çÃæÉÏµÄ¸÷ÖÖÀà
+ * äº§ç”Ÿä¸»ç•Œé¢ä¸Šçš„å„ç§ç±»
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -25,45 +25,45 @@ public class FrameFactory {
 		return factory;
 	}
 
-	// ÊÕ¼şÏä¶ÔÏó
+	// æ”¶ä»¶ç®±å¯¹è±¡
 
 	public ReceiveFrame getReceiveFrame() {
 		return new ReceiveFrame();
 	}
 
-	// ÒÑ·¢ËÍÓÊ¼ş¶ÔÏó
+	// å·²å‘é€é‚®ä»¶å¯¹è±¡
 
 	public SendedFrame getSendedFrame() {
 		return new SendedFrame();
 	}
 
-	// ·¢ËÍÓÊ¼ş¶ÔÏó
+	// å‘é€é‚®ä»¶å¯¹è±¡
 
 	public SendFrame getSendFrame() {
 		return new SendFrame();
 	}
 
-	// »ØÊÕÕ¾¶ÔÏó
+	// å›æ”¶ç«™å¯¹è±¡
 	public RecycleFrame getRecycleFrame() {
 		return new RecycleFrame();
 	}
 
-	// ÁªÏµÈËÁĞ±í
+	// è”ç³»äººåˆ—è¡¨
 	public AddLinkManFrame getAddLinkManFrame() {
 		return new AddLinkManFrame();
 	}
 	
-	// °ïÖúÎÄµµ¶ÔÏó
+	// å¸®åŠ©æ–‡æ¡£å¯¹è±¡
 	public HelpContentsFrame getHelpContentsFrame(){
 		return new HelpContentsFrame();
 	}
 	
-	// ¹ØÓÚÎÒÃÇ¶ÔÏó
+	// å…³äºæˆ‘ä»¬å¯¹è±¡
 	public AboutUsFrame getAboutUsFrame(){
 		return new AboutUsFrame();
 	}
 	
-	// ·¢ËÍÈºÓÊ¼ş¶ÔÏó
+	// å‘é€ç¾¤é‚®ä»¶å¯¹è±¡
 	public SendGroupMailFrame getSendGroupMailFrame(){
 		return new SendGroupMailFrame();
 	}

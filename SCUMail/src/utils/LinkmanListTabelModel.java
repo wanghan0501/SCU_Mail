@@ -5,7 +5,7 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * ÁªÏµÈËÁĞ±í±í¸ñÄ£ĞÍ
+ * è”ç³»äººåˆ—è¡¨è¡¨æ ¼æ¨¡å‹
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -13,32 +13,32 @@ import javax.swing.table.AbstractTableModel;
  */
 public class LinkmanListTabelModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final String[] COLUMNS = new String[] { "Ãû³Æ", "êÇ³Æ", "µç×ÓÓÊÏäµØÖ·" };
+	private final String[] COLUMNS = new String[] { "åç§°", "æ˜µç§°", "ç”µå­é‚®ç®±åœ°å€" };
 	private static Vector<Vector<String>> v = new Vector<Vector<String>>();
 
 	public LinkmanListTabelModel() {
 	}
 
 	@Override
-	public int getColumnCount() {// µÃµ½×ÜĞĞÊı
+	public int getColumnCount() {// å¾—åˆ°æ€»è¡Œæ•°
 		return COLUMNS.length;
 	}
 
 	@Override
-	public int getRowCount() {// µÃµ½ÁĞÊı
+	public int getRowCount() {// å¾—åˆ°åˆ—æ•°
 		return v.size();
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {// µÃµ½Ä³ĞĞÁĞµÄÖµ
+	public Object getValueAt(int rowIndex, int columnIndex) {// å¾—åˆ°æŸè¡Œåˆ—çš„å€¼
 		return ((Vector<String>) (v.get(rowIndex))).get(columnIndex);
 	}
 
-	public String getColumnName(int column) {// µÃµ½ĞĞÃû
+	public String getColumnName(int column) {// å¾—åˆ°è¡Œå
 		return COLUMNS[column];
 	}
 
-	// µÃµ½Vector<Vector<String>> ¶ÔÏó
+	// å¾—åˆ°Vector<Vector<String>> å¯¹è±¡
 	public static Vector<Vector<String>> getVector() {
 		return v;
 	}

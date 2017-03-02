@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import utils.EditorUtils;
 
 /**
- * °ïÖúĞÅÏ¢½çÃæ
+ * å¸®åŠ©ä¿¡æ¯ç•Œé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
@@ -23,11 +23,11 @@ ActionListener{
 	private JLabel background;
 
 	public HelpContentsFrame(){
-		super("°ïÖúÎÄµµ");
-		//ÉèÖÃ¶Ô»°¿òÍ¼±ê
+		super("å¸®åŠ©æ–‡æ¡£");
+		//è®¾ç½®å¯¹è¯æ¡†å›¾æ ‡
 		this.setFrameIcon(EditorUtils.createIcon("help.png"));
 		this.setClosable(true);
-		this.setMaximizable(true);// ´°¿Ú×î´ó»¯ÉèÖÃ
+		this.setMaximizable(true);// çª—å£æœ€å¤§åŒ–è®¾ç½®
 		this.setIconifiable(true);
 		this.setBounds(10, 10, 640, 600);
 		this.getContentPane().setLayout(new BorderLayout());

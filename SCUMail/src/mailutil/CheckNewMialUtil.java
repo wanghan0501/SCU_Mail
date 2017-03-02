@@ -10,9 +10,9 @@ import javax.mail.Store;
 import utils.CheckNewMail;
 
 public class CheckNewMialUtil {
-	private String POP3Host = ""; // POP3·şÎñÆ÷
-	private String user = ""; // µÇÂ¼POP3·şÎñÆ÷µÄÕÊºÅ
-	private String password = ""; // µÇÂ¼POP3·şÎñÆ÷µÄÃÜÂë
+	private String POP3Host = ""; // POP3æœåŠ¡å™¨
+	private String user = ""; // ç™»å½•POP3æœåŠ¡å™¨çš„å¸å·
+	private String password = ""; // ç™»å½•POP3æœåŠ¡å™¨çš„å¯†ç 
 
 	private Session session = null;
 	private Folder folder = null;
@@ -25,18 +25,18 @@ public class CheckNewMialUtil {
 		password = getMail.getPassword();
 	}
 
-	// Á¬½ÓÓÊ¼ş·şÎñÆ÷
+	// è¿æ¥é‚®ä»¶æœåŠ¡å™¨
 	public void connect() {
-		// ´´½¨Ò»¸öÊÚÈ¨ÑéÖ¤¶ÔÏó
+		// åˆ›å»ºä¸€ä¸ªæˆæƒéªŒè¯å¯¹è±¡
 		SmtpPop3Auth auth = new SmtpPop3Auth();
 		auth.setAccount(user, password);
 
-		// È¡µÃÒ»¸öSession¶ÔÏó
+		// å–å¾—ä¸€ä¸ªSessionå¯¹è±¡
 		Properties prop = new Properties();
 		prop.put("mail.pop3.host", POP3Host);
 		session = Session.getDefaultInstance(prop, auth);
 
-		// È¡µÃÒ»¸öStore¶ÔÏó
+		// å–å¾—ä¸€ä¸ªStoreå¯¹è±¡
 		try {
 			store = session.getStore("pop3");
 			store.connect(POP3Host, user, password);
@@ -46,17 +46,17 @@ public class CheckNewMialUtil {
 
 	}
 
-	// ¹Ø±ÕÁ¬½Ó
+	// å…³é—­è¿æ¥
 	public void closeConnect() {
 		try {
 			if (folder != null)
-				folder.close(true);// ¹Ø±ÕÁ¬½ÓÊ±ÊÇ·ñÉ¾³ıÓÊ¼ş£¬trueÉ¾³ıÓÊ¼ş
+				folder.close(true);// å…³é—­è¿æ¥æ—¶æ˜¯å¦åˆ é™¤é‚®ä»¶ï¼Œtrueåˆ é™¤é‚®ä»¶
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (store != null)
-					store.close();// ¹Ø±ÕÊÕ¼şÏäÁ¬½Ó
+					store.close();// å…³é—­æ”¶ä»¶ç®±è¿æ¥
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
@@ -65,7 +65,7 @@ public class CheckNewMialUtil {
 
 	public static boolean isCheck = true;
 
-	// ¼ì²âĞÂÓÊ¼ş
+	// æ£€æµ‹æ–°é‚®ä»¶
 	public int checkNewMail() {
 		int count = 0;
 		connect();

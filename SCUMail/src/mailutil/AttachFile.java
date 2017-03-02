@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * ¸½¼şµÄ²Ù×÷Àà
+ * é™„ä»¶çš„æ“ä½œç±»
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -19,35 +19,35 @@ public class AttachFile {
 	public AttachFile() {
 	}
 
-	// ÓÊ¼ş¸½¼şÏÂÔØÂ·¾¶µÄÑ¡Ôñ
+	// é‚®ä»¶é™„ä»¶ä¸‹è½½è·¯å¾„çš„é€‰æ‹©
 	public void choicePath(final String filename, final InputStream in) {
-		File f = new File(".");// µÃµ½µ±Ç°user¹¤×÷Ä¿Â¼
-		JFileChooser chooser = new JFileChooser(f);// ¹¹ÔìÒ»¸öµ±Ç°Â·¾¶µÄÎÄ¼şÑ¡ÔñÆ÷
+		File f = new File(".");// å¾—åˆ°å½“å‰userå·¥ä½œç›®å½•
+		JFileChooser chooser = new JFileChooser(f);// æ„é€ ä¸€ä¸ªå½“å‰è·¯å¾„çš„æ–‡ä»¶é€‰æ‹©å™¨
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {// Èç¹ûÑ¡ÔñÈ·¶¨¼ü
-			final File f1 = chooser.getSelectedFile();// µÃµ½Ñ¡ÔñµÄÎÄ¼ş
-			new Thread() {// ¿ªÆôĞÂÏß³ÌÏÂÔØ¸½¼ş
+		if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {// å¦‚æœé€‰æ‹©ç¡®å®šé”®
+			final File f1 = chooser.getSelectedFile();// å¾—åˆ°é€‰æ‹©çš„æ–‡ä»¶
+			new Thread() {// å¼€å¯æ–°çº¿ç¨‹ä¸‹è½½é™„ä»¶
 				public void run() {
-					downloadFile(f1.getPath() + "/" + filename, in);// ÏÂÔØ¸½¼ş
+					downloadFile(f1.getPath() + "/" + filename, in);// ä¸‹è½½é™„ä»¶
 				}
 			}.start();
 		}
 	}
 
-	// ÓÊ¼ş¸½¼şÏÂÔØÈ·¶¨
+	// é‚®ä»¶é™„ä»¶ä¸‹è½½ç¡®å®š
 	public boolean isDownload(String filename) {
 		boolean download = false;
-		int n = JOptionPane.showConfirmDialog(null, "¸ÃÓÊ¼ş¾ßÓĞ¸½¼ş  \"" + filename
-				+ "\" ÊÇ·ñÏÂÔØ£¿", "Ñ¯ÎÊ", JOptionPane.YES_NO_OPTION);
+		int n = JOptionPane.showConfirmDialog(null, "è¯¥é‚®ä»¶å…·æœ‰é™„ä»¶  \"" + filename
+				+ "\" æ˜¯å¦ä¸‹è½½ï¼Ÿ", "è¯¢é—®", JOptionPane.YES_NO_OPTION);
 		if (n == 0)
 			download = true;
 		return download;
 	}
 
-	// ÓÊ¼ş¸½¼şµÄÏÂÔØ
+	// é‚®ä»¶é™„ä»¶çš„ä¸‹è½½
 	public void downloadFile(String filename, InputStream in) {// filename
-																// ÎÄ¼şÃû£¬in ÊäÈëÁ÷
-		FileOutputStream out = null;// Êä³öÁ÷¶ÔÏó
+																// æ–‡ä»¶åï¼Œin è¾“å…¥æµ
+		FileOutputStream out = null;// è¾“å‡ºæµå¯¹è±¡
 		try {
 			out = new FileOutputStream(new File(filename));
 			byte[] content = new byte[1024];
@@ -55,21 +55,21 @@ public class AttachFile {
 			while ((read = in.read(content)) != -1) {
 				out.write(content);
 			}
-			JOptionPane.showMessageDialog(null, "¸½¼ş   \"" + filename
-					+ "\"ÏÂÔØ³É¹¦£¡", "ÌáÊ¾", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "é™„ä»¶   \"" + filename
+					+ "\"ä¸‹è½½æˆåŠŸï¼", "æç¤º", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
-			System.out.println("GetMailÀàÖĞdownloadFile·½·¨  ÏÂÔØÎÄ¼ş´íÎó£¡");
+			System.out.println("GetMailç±»ä¸­downloadFileæ–¹æ³•  ä¸‹è½½æ–‡ä»¶é”™è¯¯ï¼");
 			e.printStackTrace();
 		} finally {
 			try {
 				if (out != null)
-					out.close();// ¹Ø±ÕÊä³öÁ÷
+					out.close();// å…³é—­è¾“å‡ºæµ
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
 				try {
 					if (in != null)
-						in.close();// ¹Ø±ÕÊäÈëÁ÷
+						in.close();// å…³é—­è¾“å…¥æµ
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

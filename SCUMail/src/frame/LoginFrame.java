@@ -20,28 +20,28 @@ import utils.EditorUtils;
 import action.LoginAction;
 
 /**
- * µÇÂ¼Ò³Ãæ
+ * ç™»å½•é¡µé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
-	private JComboBox pop3CB;// ÊÕÓÊ¼ş·şÎñÆ÷ÏÂÀ­ÁĞ±í
-	private JComboBox smtpCB;// ·¢ÓÊ¼ş·şÎñÆ÷ÏÂÀ­ÁĞ±í
+	private JComboBox pop3CB;// æ”¶é‚®ä»¶æœåŠ¡å™¨ä¸‹æ‹‰åˆ—è¡¨
+	private JComboBox smtpCB;// å‘é‚®ä»¶æœåŠ¡å™¨ä¸‹æ‹‰åˆ—è¡¨
 	private JTextField nameTF;
 	private JPasswordField passwordTF;
 	private JButton loginButton = null, resetButton = null;
 	private String username = null, password = null, popHost = null,
-			smtpHost = null;// SMTP·şÎñÆ÷
-	private JProgressBarFrame progressBar = null;// ½ø¶ÈÌõÊµÀı
+			smtpHost = null;// SMTPæœåŠ¡å™¨
+	private JProgressBarFrame progressBar = null;// è¿›åº¦æ¡å®ä¾‹
 
 	public LoginFrame() {
 		super();
 		this.setIconImage(EditorUtils.createIcon("email.png").getImage());
 		getContentPane().setLayout(null);
 		jFrameValidate();
-		setTitle("µÇÂ¼ÓÊÏä");
+		setTitle("ç™»å½•é‚®ç®±");
 		JLabel backgroundLabel = new JLabel();
 		backgroundLabel.setBounds(0, 0, 768, 540);
 		backgroundLabel.setText("<html><img width=776 height=574 src='"
@@ -49,26 +49,26 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		backgroundLabel.setLayout(null);
 
 		final JLabel smtpLable = new JLabel();
-		//smtpLable.setText("SMTP ·şÎñÆ÷£º");
+		//smtpLable.setText("SMTP æœåŠ¡å™¨ï¼š");
 		smtpLable.setBounds(230, 203, 100, 18);
 		backgroundLabel.add(smtpLable);
 
 		final JLabel pop3Label = new JLabel();
-		//pop3Label.setText("POP3 ·şÎñÆ÷£º");
+		//pop3Label.setText("POP3 æœåŠ¡å™¨ï¼š");
 		pop3Label.setBounds(230, 233, 100, 18);
 		backgroundLabel.add(pop3Label);
 
 		final JLabel nameLabel = new JLabel();
-		//nameLabel.setText("ÓÊÏäÃû³Æ£º");
+		//nameLabel.setText("é‚®ç®±åç§°ï¼š");
 		nameLabel.setBounds(230, 263, 100, 18);
 		backgroundLabel.add(nameLabel);
 
 		final JLabel passwordLable = new JLabel();
-		//passwordLable.setText("ÃÜÂë£º");
+		//passwordLable.setText("å¯†ç ï¼š");
 		passwordLable.setBounds(230, 293, 100, 18);
 		backgroundLabel.add(passwordLable);
 
-		// ·¢¼şÏä·şÎñÆ÷µØÖ·ÁĞ±í
+		// å‘ä»¶ç®±æœåŠ¡å™¨åœ°å€åˆ—è¡¨
 		String[] smtpAdd = { "smtp.163.com", "smtp.126.com","smtp.sina.com"};
 		smtpCB = new JComboBox(smtpAdd);
 		smtpCB.setSelectedIndex(0);
@@ -78,7 +78,7 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		//smtpCB.setBounds(370, 203, 150, 22);
 		backgroundLabel.add(smtpCB);
 
-		// ÊÕ¼şÏä·şÎñÆ÷µØÖ·ÁĞ±í
+		// æ”¶ä»¶ç®±æœåŠ¡å™¨åœ°å€åˆ—è¡¨
 		String[] pop3Add = { "pop.163.com", "pop.126.com", "pop.sina.com"};
 		pop3CB = new JComboBox(pop3Add);
 		pop3CB.setSelectedIndex(0);
@@ -99,11 +99,11 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		backgroundLabel.add(passwordTF);
 
 		loginButton = new JButton();
-		//loginButton = new JButton("µÇÂ¼");
+		//loginButton = new JButton("ç™»å½•");
 		loginButton.setBorder(null);
 		loginButton.setContentAreaFilled(false);
 		resetButton = new JButton();
-		//resetButton = new JButton("ÖØÖÃ");
+		//resetButton = new JButton("é‡ç½®");
 		resetButton.setBorder(null);
 		resetButton.setContentAreaFilled(false);
 		backgroundLabel.add(loginButton);
@@ -116,12 +116,12 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		resetButton.addActionListener(this);
 		getContentPane().add(backgroundLabel);
 
-		progressBar = new JProgressBarFrame(this, "µÇÂ¼", "µÇÂ¼ÖĞ...");
-		reset();// Ä¬ÈÏ³õÊ¼Öµ
+		progressBar = new JProgressBarFrame(this, "ç™»å½•", "ç™»å½•ä¸­...");
+		reset();// é»˜è®¤åˆå§‹å€¼
 	}
 
 	public void jFrameValidate() {
-		Toolkit tk = getToolkit();// »ñµÃÆÁÄ»µÄ¿íºÍ¸ß
+		Toolkit tk = getToolkit();// è·å¾—å±å¹•çš„å®½å’Œé«˜
 		Dimension dim = tk.getScreenSize();
 		this.setResizable(false);
 		this.setBounds(dim.width / 2 - 380, dim.height / 2 - 270, 776, 574);
@@ -129,23 +129,23 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	// µÇÂ¼ ºÍÖØÖÃÊÂ¼şµÄ´¦Àí
+	// ç™»å½• å’Œé‡ç½®äº‹ä»¶çš„å¤„ç†
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == loginButton) {// µÇÂ¼
-			progressBar.setVisible(true);// ÉèÖÃ½ø¶ÈÌõ¿É¼û
+		if (e.getSource() == loginButton) {// ç™»å½•
+			progressBar.setVisible(true);// è®¾ç½®è¿›åº¦æ¡å¯è§
 			new Thread() {
 				public void run() {
-					getValues();// µÃµ½½çÃæÖĞµÄËùÓĞÏîµÄÖµ
-					checkUser();// µÇÂ¼ÑéÖ¤
+					getValues();// å¾—åˆ°ç•Œé¢ä¸­çš„æ‰€æœ‰é¡¹çš„å€¼
+					checkUser();// ç™»å½•éªŒè¯
 				}
 			}.start();
-		} else if (e.getSource() == resetButton) {// ÖØÖÃ
-			reset();// ÖØĞÂÉèÖÃ¸÷ÏîµÄÖµ
+		} else if (e.getSource() == resetButton) {// é‡ç½®
+			reset();// é‡æ–°è®¾ç½®å„é¡¹çš„å€¼
 		}
 	}
 
-	// µÃµ½½çÃæÖĞµÄËùÓĞÏîµÄÖµ
+	// å¾—åˆ°ç•Œé¢ä¸­çš„æ‰€æœ‰é¡¹çš„å€¼
 	@SuppressWarnings("deprecation")
 	private void getValues() {
 		smtpHost = (String) smtpCB.getSelectedItem();
@@ -154,7 +154,7 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		password = passwordTF.getText().trim();
 	}
 
-	// ÖØĞÂÉèÖÃ¸÷ÏîµÄÖµ
+	// é‡æ–°è®¾ç½®å„é¡¹çš„å€¼
 	private void reset() {
 		smtpCB.setSelectedIndex(2);
 		pop3CB.setSelectedIndex(2);
@@ -162,24 +162,24 @@ public class LoginFrame extends JFrame implements ActionListener, ItemListener {
 		passwordTF.setText("123456789");
 	}
 
-	// µÇÂ¼ÑéÖ¤
+	// ç™»å½•éªŒè¯
 	private void checkUser() {
 		LoginAction login = new LoginAction(smtpHost, popHost, username,
 				password);
-		if (login.isLogin()) {// µÇÂ¼³É¹¦
+		if (login.isLogin()) {// ç™»å½•æˆåŠŸ
 			progressBar.dispose();
-			new CheckNewMail().start();// ¿ªÊ¼¼ì²âĞÂÓÊ¼ş
-			this.dispose();// ÊÍ·Å±¾´°¿Ú×ÊÔ´
+			new CheckNewMail().start();// å¼€å§‹æ£€æµ‹æ–°é‚®ä»¶
+			this.dispose();// é‡Šæ”¾æœ¬çª—å£èµ„æº
 			new MainFrame().setVisible(true);
-		} else {// µÇÂ¼Ê§°Ü
+		} else {// ç™»å½•å¤±è´¥
 			progressBar.setVisible(false);
 			JOptionPane.showMessageDialog(this, "<html><h4>"
-					+ "µÇÂ¼Ê§°Ü!Çë¼ì²éÖ÷»ú¡¢ÓÃ»§Ãû¡¢ÃÜÂëÊÇ·ñÕıÈ·£¡" + "<html><h4>", "¾¯¸æ",
+					+ "ç™»å½•å¤±è´¥!è¯·æ£€æŸ¥ä¸»æœºã€ç”¨æˆ·åã€å¯†ç æ˜¯å¦æ­£ç¡®ï¼" + "<html><h4>", "è­¦å‘Š",
 					JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
-	// ÏÂÀ­ÁĞ±í¸Ä±äÊ±µÄÊÂ¼ş´¦Àí
+	// ä¸‹æ‹‰åˆ—è¡¨æ”¹å˜æ—¶çš„äº‹ä»¶å¤„ç†
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getSource() == smtpCB) {
 			if (e.getStateChange() == ItemEvent.SELECTED

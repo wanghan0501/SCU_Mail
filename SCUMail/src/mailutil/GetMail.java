@@ -25,28 +25,28 @@ import javax.mail.internet.ContentType;
 import javax.mail.internet.MimeUtility;
 
 /**
- * ÀûÓÃPOP3½ÓÊÕÓÊ¼ş
+ * åˆ©ç”¨POP3æ¥æ”¶é‚®ä»¶
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class GetMail {
 
-	private String POP3Host = ""; // POP3·şÎñÆ÷
-	private String user = ""; // µÇÂ¼POP3·şÎñÆ÷µÄÕÊºÅ
-	private String password = ""; // µÇÂ¼POP3·şÎñÆ÷µÄÃÜÂë
+	private String POP3Host = ""; // POP3æœåŠ¡å™¨
+	private String user = ""; // ç™»å½•POP3æœåŠ¡å™¨çš„å¸å·
+	private String password = ""; // ç™»å½•POP3æœåŠ¡å™¨çš„å¯†ç 
 
 	private Session session = null;
 	private Folder folder = null;
 	private Store store = null;
-	private Message[] msg = null;// ÓÊ¼şĞÅÏ¢
+	private Message[] msg = null;// é‚®ä»¶ä¿¡æ¯
 	private static final GetMail getMail = new GetMail();
 	private AttachFile attachFile = new AttachFile();
 
-	// ÎŞ²ÎÊıµÄ¹¹Ôìº¯Êı
+	// æ— å‚æ•°çš„æ„é€ å‡½æ•°
 	private GetMail() {
 	}
 
-	// ·µ»ØGetMailµÄ¶ÔÏó
+	// è¿”å›GetMailçš„å¯¹è±¡
 	public static GetMail getMailInstantiate() {
 		return getMail;
 	}
@@ -75,69 +75,69 @@ public class GetMail {
 		this.user = user;
 	}
 
-	// Á¬½ÓÓÊ¼ş·şÎñÆ÷
+	// è¿æ¥é‚®ä»¶æœåŠ¡å™¨
 	public void connect() throws Exception {
-		// ´´½¨Ò»¸öÊÚÈ¨ÑéÖ¤¶ÔÏó
+		// åˆ›å»ºä¸€ä¸ªæˆæƒéªŒè¯å¯¹è±¡
 		SmtpPop3Auth auth = new SmtpPop3Auth();
 		auth.setAccount(user, password);
 
-		// È¡µÃÒ»¸öSession¶ÔÏó
+		// å–å¾—ä¸€ä¸ªSessionå¯¹è±¡
 		Properties prop = new Properties();
 		prop.put("mail.pop3.host", POP3Host);
 		session = Session.getDefaultInstance(prop, auth);
 		//session.setDebug(true);
-		// È¡µÃÒ»¸öStore¶ÔÏó
+		// å–å¾—ä¸€ä¸ªStoreå¯¹è±¡
 		store = session.getStore("pop3");
 		store.connect(POP3Host, user, password);
 	}
 
-	// ¹Ø±ÕÁ¬½Ó
+	// å…³é—­è¿æ¥
 	public void closeConnect() {
 		try {
 			if (folder != null)
-				folder.close(true);// ¹Ø±ÕÁ¬½ÓÊ±ÊÇ·ñÉ¾³ıÓÊ¼ş£¬trueÉ¾³ıÓÊ¼ş
+				folder.close(true);// å…³é—­è¿æ¥æ—¶æ˜¯å¦åˆ é™¤é‚®ä»¶ï¼Œtrueåˆ é™¤é‚®ä»¶
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (store != null)
-					store.close();// ¹Ø±ÕÊÕ¼şÏäÁ¬½Ó
+					store.close();// å…³é—­æ”¶ä»¶ç®±è¿æ¥
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	// »ñµÃËùÓĞÓÊ¼şµÄÁĞ±í
+	// è·å¾—æ‰€æœ‰é‚®ä»¶çš„åˆ—è¡¨
 	public Message[] getAllMail() throws Exception {
-		// ½¨Á¢POP3Á¬½Ó
-		connect();// Á¬½ÓÓÊ¼ş·şÎñÆ÷
+		// å»ºç«‹POP3è¿æ¥
+		connect();// è¿æ¥é‚®ä»¶æœåŠ¡å™¨
 
-		// È¡µÃÒ»¸öFolder¶ÔÏó
+		// å–å¾—ä¸€ä¸ªFolderå¯¹è±¡
 		folder = store.getDefaultFolder().getFolder("INBOX");
 		folder.open(Folder.READ_ONLY);
-		// È¡µÃËùÓĞµÄMessage¶ÔÏó
+		// å–å¾—æ‰€æœ‰çš„Messageå¯¹è±¡
 		msg = folder.getMessages();
 		FetchProfile profile = new FetchProfile();
 		profile.add(FetchProfile.Item.ENVELOPE);
 		folder.fetch(msg, profile);
-		closeConnect();// ¹Ø±ÕÁ¬½ÓÓÊ¼ş·şÎñÆ÷
+		closeConnect();// å…³é—­è¿æ¥é‚®ä»¶æœåŠ¡å™¨
 		return msg;
 	}
 
-	// È¡µÃÓÊ¼şÁĞ±íµÄĞÅÏ¢
+	// å–å¾—é‚®ä»¶åˆ—è¡¨çš„ä¿¡æ¯
 	public List getMailInfo(Message[] msg) throws Exception {
 		List result = new ArrayList();
 		Map map = null;
 		Multipart mp = null;
 		BodyPart part = null;
 		String disp = null;
-		SimpleDateFormat fmt = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ hh:mm:ss");
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyå¹´MMæœˆddæ—¥ hh:mm:ss");
 		Enumeration enumMail = null;
-		// È¡³öÃ¿¸öÓÊ¼şµÄĞÅÏ¢
+		// å–å‡ºæ¯ä¸ªé‚®ä»¶çš„ä¿¡æ¯
 		for (int i = 0; i < msg.length; i++) {
 			map = new HashMap();
-			// ¶ÁÈ¡ÓÊ¼şID
+			// è¯»å–é‚®ä»¶ID
 			enumMail = msg[i].getAllHeaders();
 			Header h = null;
 			while (enumMail.hasMoreElements()) {
@@ -147,29 +147,29 @@ public class GetMail {
 					map.put("ID", h.getValue());
 				}
 			}
-			// ¶ÁÈ¡ÓÊ¼ş±êÌâ
+			// è¯»å–é‚®ä»¶æ ‡é¢˜
 			map.put("subject", msg[i].getSubject());
-			// ¶ÁÈ¡·¢¼şÈË
+			// è¯»å–å‘ä»¶äºº
 			map.put("sender",
 					MimeUtility.decodeText(msg[i].getFrom()[0].toString()));
-			// ¶ÁÈ¡ÓÊ¼ş·¢ËÍÈÕÆÚ
+			// è¯»å–é‚®ä»¶å‘é€æ—¥æœŸ
 			map.put("senddate", fmt.format(msg[i].getSentDate()));
-			// ¶ÁÈ¡ÓÊ¼ş´óĞ¡
+			// è¯»å–é‚®ä»¶å¤§å°
 			map.put("size", new Integer(msg[i].getSize()));
 			map.put("hasAttach", "&nbsp;");
-			// ÅĞ¶ÏÊÇ·ñÓĞ¸½¼ş
+			// åˆ¤æ–­æ˜¯å¦æœ‰é™„ä»¶
 			if (msg[i].isMimeType("multipart/*")) {
 				mp = (Multipart) msg[i].getContent();
-				// ±éÀúÃ¿¸öMiltipart¶ÔÏó
+				// éå†æ¯ä¸ªMiltipartå¯¹è±¡
 				for (int j = 0; j < mp.getCount(); j++) {
 					part = mp.getBodyPart(j);
 					disp = part.getDisposition();
-					// Èç¹ûÓĞ¸½¼ş
+					// å¦‚æœæœ‰é™„ä»¶
 					if (disp != null
 							&& (disp.equals(Part.ATTACHMENT) || disp
 									.equals(Part.INLINE))) {
-						// ÉèÖÃÓĞ¸½¼şµÄÌØÕ÷Öµ
-						map.put("hasAttach", "¡î");
+						// è®¾ç½®æœ‰é™„ä»¶çš„ç‰¹å¾å€¼
+						map.put("hasAttach", "â˜†");
 					}
 				}
 			}
@@ -178,16 +178,16 @@ public class GetMail {
 		return result;
 	}
 
-	// ²éÕÒÖ¸¶¨ÓÊ¼ş
+	// æŸ¥æ‰¾æŒ‡å®šé‚®ä»¶
 	public Message findMail(Message[] msg, String id) throws Exception {
 		Enumeration enumMail = null;
 		Header h = null;
 		for (int i = 0; i < msg.length; i++) {
 			enumMail = msg[i].getAllHeaders();
-			// ²éÕÒÓÊ¼şÍ·ÖĞµÄMessage-IDÏî
+			// æŸ¥æ‰¾é‚®ä»¶å¤´ä¸­çš„Message-IDé¡¹
 			while (enumMail.hasMoreElements()) {
 				h = (Header) enumMail.nextElement();
-				// ¸ù¾İ´«ÈëµÄmessage-idÀ´²éÕÒÄ¿±êÓÊ¼ş
+				// æ ¹æ®ä¼ å…¥çš„message-idæ¥æŸ¥æ‰¾ç›®æ ‡é‚®ä»¶
 				boolean messageId = (h.getName().equals("Message-ID"))
 						|| (h.getName().equals("Message-Id"));
 				if (messageId && (h.getValue().equals(id))) {
@@ -198,22 +198,22 @@ public class GetMail {
 		return null;
 	}
 
-	// É¾³ıÓÊ¼ş
+	// åˆ é™¤é‚®ä»¶
 	public boolean deleteMail(String[] id) {
 		boolean isDelete = false;
 		try {
-			connect();// Á¬½ÓÓÊ¼ş·şÎñÆ÷
-			// È¡µÃÒ»¸öFolder¶ÔÏó
+			connect();// è¿æ¥é‚®ä»¶æœåŠ¡å™¨
+			// å–å¾—ä¸€ä¸ªFolderå¯¹è±¡
 			folder = store.getDefaultFolder().getFolder("INBOX");
 			folder.open(Folder.READ_WRITE);
 			Message[] deletemsg = folder.getMessages();
 			Message mes = null;
 			for (int i = 0; i < id.length; i++) {
-				mes = findMail(deletemsg, id[i]);// ²éÕÒÖ¸¶¨ÓÊ¼ş
-				mes.setFlag(Flags.Flag.DELETED, true);// °ÑÓÊ¼ş±ê¼ÇÎªÉ¾³ı
+				mes = findMail(deletemsg, id[i]);// æŸ¥æ‰¾æŒ‡å®šé‚®ä»¶
+				mes.setFlag(Flags.Flag.DELETED, true);// æŠŠé‚®ä»¶æ ‡è®°ä¸ºåˆ é™¤
 			}
-			closeConnect();// ¹Ø±ÕÓÊ¼ş·şÎñÆ÷µÄÁ¬½Ó²¢É¾³ıÓÊ¼ş
-			CheckNewMialUtil.isCheck = true;// ÉèÖÃĞÂÓÊ¼ş±ê¼Ç
+			closeConnect();// å…³é—­é‚®ä»¶æœåŠ¡å™¨çš„è¿æ¥å¹¶åˆ é™¤é‚®ä»¶
+			CheckNewMialUtil.isCheck = true;// è®¾ç½®æ–°é‚®ä»¶æ ‡è®°
 			isDelete = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -221,18 +221,18 @@ public class GetMail {
 		return isDelete;
 	}
 
-	// ¶ÁÈ¡ÓÊ¼şÄÚÈİ
+	// è¯»å–é‚®ä»¶å†…å®¹
 	public Map readMail(String id) throws Exception {
 		Map map = new HashMap();
-		// ÕÒµ½Ä¿±êÓÊ¼ş
+		// æ‰¾åˆ°ç›®æ ‡é‚®ä»¶
 		Message readmsg = findMail(msg, id);
-		// ¶ÁÈ¡ÓÊ¼ş±êÌâ
+		// è¯»å–é‚®ä»¶æ ‡é¢˜
 		map.put("subject", readmsg.getSubject());
-		// ¶ÁÈ¡·¢¼şÈË
+		// è¯»å–å‘ä»¶äºº
 		map.put("sender",
 				MimeUtility.decodeText(readmsg.getFrom()[0].toString()));
 		map.put("attach", "");
-		// È¡µÃÓÊ¼şÄÚÈİ
+		// å–å¾—é‚®ä»¶å†…å®¹
 		if (readmsg.isMimeType("text/*")) {
 			map.put("content", readmsg.getContent().toString());
 		} else {
@@ -240,24 +240,24 @@ public class GetMail {
 			BodyPart part = null;
 			String disp = null;
 			StringBuffer result = new StringBuffer();
-			// ±éÀúÃ¿¸öMiltipart¶ÔÏó
+			// éå†æ¯ä¸ªMiltipartå¯¹è±¡
 			for (int j = 0; j < mp.getCount(); j++) {
 				part = mp.getBodyPart(j);
 				disp = part.getDisposition();
-				// Èç¹ûÓĞ¸½¼ş
+				// å¦‚æœæœ‰é™„ä»¶
 				if (disp != null
 						&& (disp.equals(Part.ATTACHMENT) || disp
 								.equals(Part.INLINE))) {
-					// È¡µÃ¸½¼şÎÄ¼şÃû
+					// å–å¾—é™„ä»¶æ–‡ä»¶å
 					String filename = MimeUtility
-							.decodeText(part.getFileName());// ½â¾öÖĞÎÄ¸½¼şÃûµÄÎÊÌâ
+							.decodeText(part.getFileName());// è§£å†³ä¸­æ–‡é™„ä»¶åçš„é—®é¢˜
 					map.put("attach", filename);
-					// ÏÂÔØ¸½¼ş
-					InputStream in = part.getInputStream();// ¸½¼şÊäÈëÁ÷
+					// ä¸‹è½½é™„ä»¶
+					InputStream in = part.getInputStream();// é™„ä»¶è¾“å…¥æµ
 					if (attachFile.isDownload(filename))
-						attachFile.choicePath(filename, in);// // ÏÂÔØ¸½¼ş
+						attachFile.choicePath(filename, in);// // ä¸‹è½½é™„ä»¶
 				} else {
-					// ÏÔÊ¾¸´ÔÓÓÊ¼şÕıÎÄÄÚÈİ
+					// æ˜¾ç¤ºå¤æ‚é‚®ä»¶æ­£æ–‡å†…å®¹
 					result.append(getPart(part, j, 1));
 				}
 			}
@@ -266,9 +266,9 @@ public class GetMail {
 		return map;
 	}
 
-	// x²ÎÊıÀ´È·¶¨ÊÇÒÔhtml 1 ¸ñÊ½ÏÔÊ¾»¹ÊÇÒÔplain 2
-	// µ÷ÓÃÊ±getPart£¨part£¬i£¬1£©;
-	// ÏÔÊ¾¸´ÔÓÓÊ¼şµÄÕıÎÄÄÚÈİ
+	// xå‚æ•°æ¥ç¡®å®šæ˜¯ä»¥html 1 æ ¼å¼æ˜¾ç¤ºè¿˜æ˜¯ä»¥plain 2
+	// è°ƒç”¨æ—¶getPartï¼ˆpartï¼Œiï¼Œ1ï¼‰;
+	// æ˜¾ç¤ºå¤æ‚é‚®ä»¶çš„æ­£æ–‡å†…å®¹
 	public String getPart(Part part, int partNum, int x) throws
 
 	MessagingException, IOException {
@@ -278,7 +278,7 @@ public class GetMail {
 		String s5 = "";
 		String sct = part.getContentType();
 		if (sct == null) {
-			s = "part ÎŞĞ§";
+			s = "part æ— æ•ˆ";
 			return s;
 		}
 		ContentType ct = new ContentType(sct);
@@ -302,10 +302,10 @@ public class GetMail {
 				else if (mp.getBodyPart(i).isMimeType("text/html"))
 					s6 = getPart(mp.getBodyPart(i), i, 1);
 			}
-			if (x == 1) {// html¸ñÊ½µÄ×Ö·û´®
+			if (x == 1) {// htmlæ ¼å¼çš„å­—ç¬¦ä¸²
 				s5 = s6;
 			}
-			if (x == 2) {// paintÀàĞÍµÄ×Ö·û´®
+			if (x == 2) {// paintç±»å‹çš„å­—ç¬¦ä¸²
 				s5 = s7;
 			}
 			return s5;

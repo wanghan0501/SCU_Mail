@@ -6,19 +6,19 @@ import utils.EditorUtils;
 import utils.SendedMailTable;
 
 /**
- * ÒÑ·¢ËÍÓÊ¼ş½çÃæ
+ * å·²å‘é€é‚®ä»¶ç•Œé¢
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class SendedFrame extends BaseReceiceFrame {
-	private SendedMailTable sendedMail = null;// ÒÑ·¢ËÍÓÊ¼şÁĞ±í¶ÔÏó
+	private SendedMailTable sendedMail = null;// å·²å‘é€é‚®ä»¶åˆ—è¡¨å¯¹è±¡
 
 	public SendedFrame() {
-		super("·¢¼şÏä");
+		super("å‘ä»¶ç®±");
 		this.setFrameIcon(EditorUtils.createIcon("sended.png"));
-		this.setPopupOne("É¾³ıÓÊ¼ş", "delete.png");
-		this.setPopupTwo("ÖØĞÂ·¢ËÍ", "send.png");
+		this.setPopupOne("åˆ é™¤é‚®ä»¶", "delete.png");
+		this.setPopupTwo("é‡æ–°å‘é€", "send.png");
 		sendedMail = SendedMailTable.getSendedMailTable();
 		tableModel = sendedMail.getMailTableModel();
 		sendedMail.setSendedMailTable(table);
@@ -26,27 +26,27 @@ public class SendedFrame extends BaseReceiceFrame {
 		mailContent.setText("");
 	}
 
-	public void doubleClick(int selectRom) {// Ë«»÷ÊÂ¼şµÄ´¦Àí
-		mailContent.setText(sendedMail.readMail(selectRom));// ¶ÁÈ¡ÒÑ·¢ËÍµÄÓÊ¼şÄÚÈİ
+	public void doubleClick(int selectRom) {// åŒå‡»äº‹ä»¶çš„å¤„ç†
+		mailContent.setText(sendedMail.readMail(selectRom));// è¯»å–å·²å‘é€çš„é‚®ä»¶å†…å®¹
 	}
 
 	public void delete(int[] selectRoms, int mailState) {
-		for (int i = 0; i < selectRoms.length// Ñ­»·É¾³ıÃ¿ĞĞ
-				&& selectRoms[i] < tableModel.getRowCount(); i++) {// ²¢ÅĞ¶ÏÃ¿ĞĞµÄÓĞĞ§ĞÔ
-			sendedMail.deleteMail(selectRoms[i]);// É¾³ıÓÊ¼şÁĞ±í±í¸ñÖĞµÄÓÊ¼ş
-			for (int j = i + 1; j < selectRoms.length; j++) {// ĞŞ¸ÄÑ¡ÖĞÓÊ¼şÒÔºóµÄÃ¿·âÓÊ¼şµÄĞĞºÅ
+		for (int i = 0; i < selectRoms.length// å¾ªç¯åˆ é™¤æ¯è¡Œ
+				&& selectRoms[i] < tableModel.getRowCount(); i++) {// å¹¶åˆ¤æ–­æ¯è¡Œçš„æœ‰æ•ˆæ€§
+			sendedMail.deleteMail(selectRoms[i]);// åˆ é™¤é‚®ä»¶åˆ—è¡¨è¡¨æ ¼ä¸­çš„é‚®ä»¶
+			for (int j = i + 1; j < selectRoms.length; j++) {// ä¿®æ”¹é€‰ä¸­é‚®ä»¶ä»¥åçš„æ¯å°é‚®ä»¶çš„è¡Œå·
 				selectRoms[j]--;
 			}
 		}
 	}
 
-	/* ÓÒ¼üµÚ¶ş¸öÑ¡Ïî±»Ñ¡ÖĞ */
+	/* å³é”®ç¬¬äºŒä¸ªé€‰é¡¹è¢«é€‰ä¸­ */
 	@Override
 	public void popupTwoisSelected(int[] selectRoms, List list) {
-		for (int i = 0; i < selectRoms.length// Ñ­»·É¾³ıÃ¿ĞĞ
-				&& selectRoms[i] < tableModel.getRowCount(); i++) {// ²¢ÅĞ¶ÏÃ¿ĞĞµÄÓĞĞ§ĞÔ
-			sendedMail.resend(selectRoms[i]);// ÖØĞÂ·¢ËÍÓÊ¼ş
-			for (int j = i + 1; j < selectRoms.length; j++) {// ĞŞ¸ÄÑ¡ÖĞÓÊ¼şÒÔºóµÄÃ¿·âÓÊ¼şµÄĞĞºÅ
+		for (int i = 0; i < selectRoms.length// å¾ªç¯åˆ é™¤æ¯è¡Œ
+				&& selectRoms[i] < tableModel.getRowCount(); i++) {// å¹¶åˆ¤æ–­æ¯è¡Œçš„æœ‰æ•ˆæ€§
+			sendedMail.resend(selectRoms[i]);// é‡æ–°å‘é€é‚®ä»¶
+			for (int j = i + 1; j < selectRoms.length; j++) {// ä¿®æ”¹é€‰ä¸­é‚®ä»¶ä»¥åçš„æ¯å°é‚®ä»¶çš„è¡Œå·
 				selectRoms[j]--;
 			}
 		}

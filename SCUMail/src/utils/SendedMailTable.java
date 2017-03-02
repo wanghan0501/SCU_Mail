@@ -11,96 +11,96 @@ import javax.swing.JTable;
 import frame.SendFrame;
 
 /**
- * ÀàËµÃ÷£ºÒÑ·¢ËÍÓÊ¼ş±í¸ñÄ£°å
+ * ç±»è¯´æ˜ï¼šå·²å‘é€é‚®ä»¶è¡¨æ ¼æ¨¡æ¿
  * @author caesar
  */
-public class SendedMailTable {// ²ÉÓÃµ¥ÀıÄ£Ê½±£Ö¤±í¸ñµÄÎ¨Ò»
-	private static SendedMailTable sendedMail = new SendedMailTable();// ±¾Àà¶ÔÏó
-	private JTable sendedMailTable = null;// ÒÑ·¢ËÍÓÊ¼ş±í¸ñ
+public class SendedMailTable {// é‡‡ç”¨å•ä¾‹æ¨¡å¼ä¿è¯è¡¨æ ¼çš„å”¯ä¸€
+	private static SendedMailTable sendedMail = new SendedMailTable();// æœ¬ç±»å¯¹è±¡
+	private JTable sendedMailTable = null;// å·²å‘é€é‚®ä»¶è¡¨æ ¼
 	private MailTableModel tableModel = null;
-	private Vector<Vector<String>> sendedMailVector = null;// ÒÑ·¢ËÍÓÊ¼şÁĞ±íÄ£ĞÍ
-	private Vector<Vector<Object>> resendMailVector = new Vector<Vector<Object>>();// ÖØĞÂ·¢ËÍ
-	private LinkedList<String> sendedMailMessageList = new LinkedList<String>();// ÒÑ·¢ËÍÓÊ¼şÄÚÈİÁĞ±í
+	private Vector<Vector<String>> sendedMailVector = null;// å·²å‘é€é‚®ä»¶åˆ—è¡¨æ¨¡å‹
+	private Vector<Vector<Object>> resendMailVector = new Vector<Vector<Object>>();// é‡æ–°å‘é€
+	private LinkedList<String> sendedMailMessageList = new LinkedList<String>();// å·²å‘é€é‚®ä»¶å†…å®¹åˆ—è¡¨
 
 	private SendedMailTable() {
 	}
 
-	// µÃµ½±¾Àà¶ÔÏó
+	// å¾—åˆ°æœ¬ç±»å¯¹è±¡
 	public static SendedMailTable getSendedMailTable() {
 		return sendedMail;
 	}
 
-	// ÉèÖÃ±í¸ñÄ£ĞÍ
+	// è®¾ç½®è¡¨æ ¼æ¨¡å‹
 	public MailTableModel getMailTableModel() {
 		if (tableModel == null) {
 			tableModel = new MailTableModel();
-			tableModel.setColumens(new String[] { "ÊÕ¼şÈË", "Ö÷Ìâ", "·¢ËÍÊ±¼ä", "¸½¼ş" });
+			tableModel.setColumens(new String[] { "æ”¶ä»¶äºº", "ä¸»é¢˜", "å‘é€æ—¶é—´", "é™„ä»¶" });
 			sendedMailVector = tableModel.getVector();
 		}
 		return tableModel;
 	}
 
-	// ÉèÖÃ±í¸ñ¶ÔÏó
+	// è®¾ç½®è¡¨æ ¼å¯¹è±¡
 	public void setSendedMailTable(JTable table) {
 		sendedMailTable = table;
 		sendedMailTable.updateUI();
 	}
 
-	// Ìí¼ÓÓÊ¼şµ½ÒÑ·¢ËÍÁĞ±íÖĞ
+	// æ·»åŠ é‚®ä»¶åˆ°å·²å‘é€åˆ—è¡¨ä¸­
 	public void addSendedMail(Vector<String> vector, String mailMessage) {
-		sendedMailVector.add(vector);// ½«ÒªÉ¾³ıµÄÓÊ¼şÌí¼Óµ½»ØÊÕÕ¾ÁĞ±íÖĞ
+		sendedMailVector.add(vector);// å°†è¦åˆ é™¤çš„é‚®ä»¶æ·»åŠ åˆ°å›æ”¶ç«™åˆ—è¡¨ä¸­
 		sendedMailMessageList.add(mailMessage);
 		if (sendedMailTable != null)
 			sendedMailTable.updateUI();
 	}
 
-	// É¾³ıÒÑ·¢ËÍÁĞ±íÖĞµÄÓÊ¼ş
-	public void deleteMail(int id) {// id Ñ¡ÔñµÄĞĞºÅ
-		sendedMailVector.removeElementAt(id);// É¾³ı±í¸ñÖĞÑ¡ÖĞÓÊ¼ş¶ÔÓ¦µÄĞĞ
-		resendMailVector.removeElementAt(id);// É¾³ıÖØĞÂ·¢ËÍÁĞ±íÖĞµÄÓÊ¼şĞÅÏ¢
+	// åˆ é™¤å·²å‘é€åˆ—è¡¨ä¸­çš„é‚®ä»¶
+	public void deleteMail(int id) {// id é€‰æ‹©çš„è¡Œå·
+		sendedMailVector.removeElementAt(id);// åˆ é™¤è¡¨æ ¼ä¸­é€‰ä¸­é‚®ä»¶å¯¹åº”çš„è¡Œ
+		resendMailVector.removeElementAt(id);// åˆ é™¤é‡æ–°å‘é€åˆ—è¡¨ä¸­çš„é‚®ä»¶ä¿¡æ¯
 		sendedMailMessageList.remove(id);
 		if (sendedMailTable != null)
-			sendedMailTable.updateUI();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
+			sendedMailTable.updateUI();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
 	}
 
-	// ¶ÁÈ¡ÒÑÉ¾³ıÓÊ¼şµÄÄÚÈİ
+	// è¯»å–å·²åˆ é™¤é‚®ä»¶çš„å†…å®¹
 	public String readMail(int id) {
 		return sendedMailMessageList.get(id);
 	}
 
-	// ÉèÖÃÒÑ·¢ËÍÓÊ¼şµÄ¸÷¸öÊôĞÔ
-	public void setValues(String toMan, // ÊÕ¼şÈË
-			String subject, // ÒÑ·¢ËÍÓÊ¼şµÄÖ÷Ìâ
-			ArrayList<String> list,// ÓÊ¼şÊÇ·ñÓĞ¸½¼ş
-			String text,// ÒÑ·¢ËÍÓÊ¼şµÄÕıÎÄ
-			String copyto,// ³­ËÍµ½
-			String sendMan) {// ·¢ËÍÈË
-		getMailTableModel();// ³õÊ¼»¯ÒÑ·¢ËÍÓÊ¼şÁĞ±íÄ£ĞÍ
-		resendMail(toMan, subject, list, text, copyto, sendMan);// ½«ÒÑ·¢ËÍÓÊ¼şÌí¼Óµ½ÖØĞÂ·¢ËÍÁĞ±íÖĞ
+	// è®¾ç½®å·²å‘é€é‚®ä»¶çš„å„ä¸ªå±æ€§
+	public void setValues(String toMan, // æ”¶ä»¶äºº
+			String subject, // å·²å‘é€é‚®ä»¶çš„ä¸»é¢˜
+			ArrayList<String> list,// é‚®ä»¶æ˜¯å¦æœ‰é™„ä»¶
+			String text,// å·²å‘é€é‚®ä»¶çš„æ­£æ–‡
+			String copyto,// æŠ„é€åˆ°
+			String sendMan) {// å‘é€äºº
+		getMailTableModel();// åˆå§‹åŒ–å·²å‘é€é‚®ä»¶åˆ—è¡¨æ¨¡å‹
+		resendMail(toMan, subject, list, text, copyto, sendMan);// å°†å·²å‘é€é‚®ä»¶æ·»åŠ åˆ°é‡æ–°å‘é€åˆ—è¡¨ä¸­
 		Vector<String> sendedMail = new Vector<String>();
 		sendedMail.add("<html>" + toMan + "</html>");
 		sendedMail.add("<html>" + subject + "</html>");
-		sendedMail.add("<html>" + getTime() + "</html>");// µÃµ½ÏµÍ³µ±Ç°µÄÊ±¼ä
+		sendedMail.add("<html>" + getTime() + "</html>");// å¾—åˆ°ç³»ç»Ÿå½“å‰çš„æ—¶é—´
 		if (!list.isEmpty())
-			sendedMail.add("<html><strong>" + "¡î" + "</strong></html>");
+			sendedMail.add("<html><strong>" + "â˜†" + "</strong></html>");
 		else
-			sendedMail.add("");// Ã»ÓĞ¸½¼ş
-		addSendedMail(sendedMail, text);// Ìí¼ÓÓÊ¼şµ½ÒÑ·¢ËÍÁĞ±íÖĞ
+			sendedMail.add("");// æ²¡æœ‰é™„ä»¶
+		addSendedMail(sendedMail, text);// æ·»åŠ é‚®ä»¶åˆ°å·²å‘é€åˆ—è¡¨ä¸­
 	}
 
-	// µÃµ½ÏµÍ³µ±Ç°µÄÊ±¼ä
+	// å¾—åˆ°ç³»ç»Ÿå½“å‰çš„æ—¶é—´
 	private String getTime() {
-		SimpleDateFormat dateFm = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ  HH:mm:ss"); // ¸ñÊ½»¯µ±Ç°ÏµÍ³ÈÕÆÚ
+		SimpleDateFormat dateFm = new SimpleDateFormat("yyyyå¹´MMæœˆddæ—¥  HH:mm:ss"); // æ ¼å¼åŒ–å½“å‰ç³»ç»Ÿæ—¥æœŸ
 		return dateFm.format(new Date());
 	}
 
-	// ½«ÓÊ¼şĞÅÏ¢Ìí¼Óµ½ÖØĞÂ·¢ËÍÁĞ±íÖĞ
-	private void resendMail(String toMan, // ÊÕ¼şÈË
-			String subject, // ÒÑ·¢ËÍÓÊ¼şµÄÖ÷Ìâ
-			ArrayList<String> list,// ÓÊ¼şÊÇ·ñÓĞ¸½¼ş
-			String text,// ÒÑ·¢ËÍÓÊ¼şµÄÕıÎÄ
-			String copyto,// ³­ËÍµ½
-			String sendMan) {// ·¢¼şÈË
+	// å°†é‚®ä»¶ä¿¡æ¯æ·»åŠ åˆ°é‡æ–°å‘é€åˆ—è¡¨ä¸­
+	private void resendMail(String toMan, // æ”¶ä»¶äºº
+			String subject, // å·²å‘é€é‚®ä»¶çš„ä¸»é¢˜
+			ArrayList<String> list,// é‚®ä»¶æ˜¯å¦æœ‰é™„ä»¶
+			String text,// å·²å‘é€é‚®ä»¶çš„æ­£æ–‡
+			String copyto,// æŠ„é€åˆ°
+			String sendMan) {// å‘ä»¶äºº
 		Vector<Object> sendedMail = new Vector<Object>();
 		sendedMail.add(toMan);
 		sendedMail.add(subject);
@@ -111,7 +111,7 @@ public class SendedMailTable {// ²ÉÓÃµ¥ÀıÄ£Ê½±£Ö¤±í¸ñµÄÎ¨Ò»
 		resendMailVector.add(sendedMail);
 	}
 
-	// ÖØĞÂ·¢ËÍÓÊ¼ş
+	// é‡æ–°å‘é€é‚®ä»¶
 	public void resend(int id) {
 		Vector<Object> sendedMail = resendMailVector.get(id);
 		sendFrame.sendMail((String) sendedMail.get(0),
@@ -122,7 +122,7 @@ public class SendedMailTable {// ²ÉÓÃµ¥ÀıÄ£Ê½±£Ö¤±í¸ñµÄÎ¨Ò»
 
 	}
 
-	// ·¢ËÍÓÊ¼ş¶ÔÏó
+	// å‘é€é‚®ä»¶å¯¹è±¡
 	private SendFrame sendFrame = null;
 
 	public void setSendFrame(SendFrame send) {

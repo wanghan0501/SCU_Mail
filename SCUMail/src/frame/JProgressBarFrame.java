@@ -9,36 +9,36 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 /**
- * ½ø¶ÈÌõ½çÃæÀà °üÀ¨ÓĞ¡¢ÎŞÄ£Ê½Á½ÖÖ½ø¶ÈÌõ
+ * è¿›åº¦æ¡ç•Œé¢ç±» åŒ…æ‹¬æœ‰ã€æ— æ¨¡å¼ä¸¤ç§è¿›åº¦æ¡
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class JProgressBarFrame extends JDialog {
-	private JLabel progressBarLabel = null;// ½ø¶ÈÌõÉÏ·½µÄÌáÊ¾±êÇ©
-	private JProgressBar progressBar = null;// ½ø¶ÈÌõ¶ÔÏó
+	private JLabel progressBarLabel = null;// è¿›åº¦æ¡ä¸Šæ–¹çš„æç¤ºæ ‡ç­¾
+	private JProgressBar progressBar = null;// è¿›åº¦æ¡å¯¹è±¡
 
 	public JProgressBarFrame() {
 	}
 
 	/**
-	 * ½ø¶ÈÌõ¹¹Ôì·½·¨
+	 * è¿›åº¦æ¡æ„é€ æ–¹æ³•
 	 * 
 	 * @param title
-	 *            ½ø¶ÈÌõ±êÌâ
+	 *            è¿›åº¦æ¡æ ‡é¢˜
 	 * @param state
-	 *            ½ø¶ÈÌõ×´Ì¬ £¬1 £ºÓĞÄ£Ê½µÄ½ø¶ÈÌõ£¬2£ºÎŞÄ£Ê½µÄ½ø¶ÈÌõ
+	 *            è¿›åº¦æ¡çŠ¶æ€ ï¼Œ1 ï¼šæœ‰æ¨¡å¼çš„è¿›åº¦æ¡ï¼Œ2ï¼šæ— æ¨¡å¼çš„è¿›åº¦æ¡
 	 */
 	public JProgressBarFrame(JFrame frame, String title, String message) {
 		super(frame, title);
 		init(frame, title, message);
 	}
 
-	// ½çÃæµÄ³õÊ¼»¯
+	// ç•Œé¢çš„åˆå§‹åŒ–
 	private void initFrame() {
 		this.setAlwaysOnTop(true);
-		Toolkit tk = getToolkit();// »ñµÃÆÁÄ»µÄ¿íºÍ¸ß
+		Toolkit tk = getToolkit();// è·å¾—å±å¹•çš„å®½å’Œé«˜
 		Dimension dim = tk.getScreenSize();
-		this.setResizable(false);// ÉèÖÃ´°¿Ú²»¿Éµ÷Õû´óĞ¡
+		this.setResizable(false);// è®¾ç½®çª—å£ä¸å¯è°ƒæ•´å¤§å°
 		this.setBounds(dim.width / 2 - 110, dim.height / 2 - 40, 211, 90);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		validate();
@@ -46,12 +46,12 @@ public class JProgressBarFrame extends JDialog {
 
 	/**
 	 * @param message
-	 *            ½ø¶ÈÌõÒªÏÔÊ¾µÄÏûÏ¢
+	 *            è¿›åº¦æ¡è¦æ˜¾ç¤ºçš„æ¶ˆæ¯
 	 * @param state
-	 *            ½ø¶ÈÌõµÄÄ£Ê½
+	 *            è¿›åº¦æ¡çš„æ¨¡å¼
 	 */
 	private void init(JFrame frame, String title, String message) {
-		this.setLayout(null);// ÉèÖÃ²¼¾ÖÎªÁ÷²¼¾Ö
+		this.setLayout(null);// è®¾ç½®å¸ƒå±€ä¸ºæµå¸ƒå±€
 
 		progressBarLabel = new JLabel();
 		progressBarLabel.setText(message);

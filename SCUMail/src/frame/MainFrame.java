@@ -35,31 +35,31 @@ import utils.ReadLinkmanXMl;
 import utils.ReceiveMailTable;
 
 /**
- * Ö÷½çÃæ
+ * ä¸»ç•Œé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class MainFrame extends JFrame implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
-	private static JDesktopPane desktopPane = null;// ÓÃÓÚ´´½¨¶àÎÄµµ½çÃæ»òĞéÄâ×ÀÃæµÄÈİÆ÷
+	private static JDesktopPane desktopPane = null;// ç”¨äºåˆ›å»ºå¤šæ–‡æ¡£ç•Œé¢æˆ–è™šæ‹Ÿæ¡Œé¢çš„å®¹å™¨
 	public static MainFrame MAINFRAME;
-	private JTree tree;// Ê÷ĞÎÍ¼
-	private JList jl;// ÁªÏµÈËÁĞ±í
-	private JPanel panel, panelframe;// panelframe×ó°ë²¿½çÃæ
+	private JTree tree;// æ ‘å½¢å›¾
+	private JList jl;// è”ç³»äººåˆ—è¡¨
+	private JPanel panel, panelframe;// panelframeå·¦åŠéƒ¨ç•Œé¢
 	private JLabel labelbackground;
 	private JScrollPane scrollPane;
 	private JMenuItem exitMI = null, newMailMI = null, sendedMI = null,
 			receiveMI = null, recycleMI = null, refreshMI = null, groupMailMI = null,
 			helpMI = null,aboutMI = null;
-	private JButton addLinkmanButton = null;// Ìí¼ÓÁªÏµÈË°´Å¥
+	private JButton addLinkmanButton = null;// æ·»åŠ è”ç³»äººæŒ‰é’®
 	private JMenu fileMenu = null;
 	private JMenu mailMenu = null;
 	private JMenu aboutMenu = null;
 	private ReadLinkmanXMl readLinkman = null;
 
-	// ³õÊ¼»¯½çÃæÅäÖÃ
+	// åˆå§‹åŒ–ç•Œé¢é…ç½®
 	public void jFrameValidate() {
-		Toolkit tk = getToolkit();// »ñµÃÆÁÄ»µÄ¿íºÍ¸ß
+		Toolkit tk = getToolkit();// è·å¾—å±å¹•çš„å®½å’Œé«˜
 		Dimension dim = tk.getScreenSize();
 		this.setBounds(dim.width / 2 - 420, dim.height / 2 - 350, 850, 678);
 		validate();
@@ -68,40 +68,40 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 	}
 
 	public MainFrame() {
-		super("SCUÓÊ¼ş¿Í»§¶Ë");
+		super("SCUé‚®ä»¶å®¢æˆ·ç«¯");
 		MAINFRAME = this;
 		this.setIconImage(EditorUtils.createIcon("email.png").getImage());
 		desktopPane = new JDesktopPane();
-		jFrameValidate();// ³õÊ¼»¯½çÃæ
+		jFrameValidate();// åˆå§‹åŒ–ç•Œé¢
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
 
-		fileMenu = new JMenu("ÎÄ¼ş(F)");
-		mailMenu = new JMenu("ÓÊ¼ş(M)");
-		aboutMenu = new JMenu("°ïÖú(H)");
+		fileMenu = new JMenu("æ–‡ä»¶(F)");
+		mailMenu = new JMenu("é‚®ä»¶(M)");
+		aboutMenu = new JMenu("å¸®åŠ©(H)");
 		menuBar.add(fileMenu);
 		menuBar.add(mailMenu);
 		menuBar.add(aboutMenu);
 
-		exitMI = addMenuItem(fileMenu, "ÍË³ö", "exit.gif");// ÍË³ö²Ëµ¥ÏîµÄ³õÊ¼»¯
-		newMailMI = addMenuItem(mailMenu, "ĞÂ½¨ÓÊ¼ş", "newMail.gif");// ĞÂ½¨ÓÊ¼ş²Ëµ¥ÏîµÄ³õÊ¼»¯
+		exitMI = addMenuItem(fileMenu, "é€€å‡º", "exit.gif");// é€€å‡ºèœå•é¡¹çš„åˆå§‹åŒ–
+		newMailMI = addMenuItem(mailMenu, "æ–°å»ºé‚®ä»¶", "newMail.gif");// æ–°å»ºé‚®ä»¶èœå•é¡¹çš„åˆå§‹åŒ–
 		
-		groupMailMI = addMenuItem(mailMenu,"ĞÂ½¨ÈºÓÊ¼ş","newGroup.jpg"); //·¢ËÍÈºÓÊ¼ş²Ëµ¥Ïî³õÊ¼»¯
+		groupMailMI = addMenuItem(mailMenu,"æ–°å»ºç¾¤é‚®ä»¶","newGroup.jpg"); //å‘é€ç¾¤é‚®ä»¶èœå•é¡¹åˆå§‹åŒ–
 		
-		sendedMI = addMenuItem(mailMenu, "·¢¼şÏä", "sended.png");// ÒÑ·¢ËÍÓÊ¼ş²Ëµ¥ÏîµÄ³õÊ¼»¯
-		receiveMI = addMenuItem(mailMenu, "ÊÕ¼şÏä", "receive.png");// ÊÕ¼şÏäÓÊ¼ş²Ëµ¥ÏîµÄ³õÊ¼»¯
-		recycleMI = addMenuItem(mailMenu, "»ØÊÕÕ¾", "deleted.png");// ÒÑÉ¾³ıÓÊ¼ş²Ëµ¥ÏîµÄ³õÊ¼»¯
-		refreshMI = addMenuItem(mailMenu, "Ë¢ĞÂÊÕ¼şÏä", "refresh.jpg");// ÒÑÉ¾³ıÓÊ¼ş²Ëµ¥ÏîµÄ³õÊ¼»¯
-		helpMI = addMenuItem(aboutMenu,"°ïÖúÎÄµµ","help.png"); //°ïÖúÎÄµµ²Ëµ¥Ïî³õÊ¼»¯
-		aboutMI = addMenuItem(aboutMenu,"¹ØÓÚÎÒÃÇ","aboutUs.png"); // ¹ØÓÚÎÒÃÇ²Ëµ¥ÏîµÄ³õÊ¼»¯		
+		sendedMI = addMenuItem(mailMenu, "å‘ä»¶ç®±", "sended.png");// å·²å‘é€é‚®ä»¶èœå•é¡¹çš„åˆå§‹åŒ–
+		receiveMI = addMenuItem(mailMenu, "æ”¶ä»¶ç®±", "receive.png");// æ”¶ä»¶ç®±é‚®ä»¶èœå•é¡¹çš„åˆå§‹åŒ–
+		recycleMI = addMenuItem(mailMenu, "å›æ”¶ç«™", "deleted.png");// å·²åˆ é™¤é‚®ä»¶èœå•é¡¹çš„åˆå§‹åŒ–
+		refreshMI = addMenuItem(mailMenu, "åˆ·æ–°æ”¶ä»¶ç®±", "refresh.jpg");// å·²åˆ é™¤é‚®ä»¶èœå•é¡¹çš„åˆå§‹åŒ–
+		helpMI = addMenuItem(aboutMenu,"å¸®åŠ©æ–‡æ¡£","help.png"); //å¸®åŠ©æ–‡æ¡£èœå•é¡¹åˆå§‹åŒ–
+		aboutMI = addMenuItem(aboutMenu,"å…³äºæˆ‘ä»¬","aboutUs.png"); // å…³äºæˆ‘ä»¬èœå•é¡¹çš„åˆå§‹åŒ–		
 		
-		// ¹¹½¨Ê÷ĞÎ½Úµã
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("SCUÓÊ¼ş¿Í»§¶Ë");
-		DefaultMutableTreeNode send = new DefaultMutableTreeNode("ĞÂ½¨ÓÊ¼ş");
-		DefaultMutableTreeNode sendGroup = new DefaultMutableTreeNode("ĞÂ½¨ÈºÓÊ¼ş");
-		DefaultMutableTreeNode addressee = new DefaultMutableTreeNode("ÊÕ¼şÏä");
-		DefaultMutableTreeNode AlreadySend = new DefaultMutableTreeNode("·¢¼şÏä");
-		DefaultMutableTreeNode delete = new DefaultMutableTreeNode("»ØÊÕÕ¾");
+		// æ„å»ºæ ‘å½¢èŠ‚ç‚¹
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("SCUé‚®ä»¶å®¢æˆ·ç«¯");
+		DefaultMutableTreeNode send = new DefaultMutableTreeNode("æ–°å»ºé‚®ä»¶");
+		DefaultMutableTreeNode sendGroup = new DefaultMutableTreeNode("æ–°å»ºç¾¤é‚®ä»¶");
+		DefaultMutableTreeNode addressee = new DefaultMutableTreeNode("æ”¶ä»¶ç®±");
+		DefaultMutableTreeNode AlreadySend = new DefaultMutableTreeNode("å‘ä»¶ç®±");
+		DefaultMutableTreeNode delete = new DefaultMutableTreeNode("å›æ”¶ç«™");
 		root.add(send);
 		root.add(sendGroup);
 		root.add(addressee);
@@ -109,42 +109,42 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 		root.add(delete);
 
 		tree = new JTree(root);
-		tree.addMouseListener(this);// ÎªÊ÷ĞÎ½Úµã×¢²áÊó±êÊÂ¼ş
+		tree.addMouseListener(this);// ä¸ºæ ‘å½¢èŠ‚ç‚¹æ³¨å†Œé¼ æ ‡äº‹ä»¶
 		tree.setPreferredSize(new Dimension(160, 650));
 		//tree.setBackground(Color.GRAY);
-		// ÖØĞÂäÖÈ¾Ê÷ĞÎ½Úµã
+		// é‡æ–°æ¸²æŸ“æ ‘å½¢èŠ‚ç‚¹
 		ClassNameTreeCellRenderer render = new ClassNameTreeCellRenderer();
 		tree.setCellRenderer(render);
-		// ÁªÏµÈËÃæ°å
+		// è”ç³»äººé¢æ¿
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setPreferredSize(new Dimension(160, 300));
-		// ½çÃæ×ó°ë²¿Ãæ°å
+		// ç•Œé¢å·¦åŠéƒ¨é¢æ¿
 		panelframe = new JPanel();
 		panelframe.setLayout(new BorderLayout());
 		panelframe.add(panel, BorderLayout.CENTER);
 		panelframe.add(tree, BorderLayout.NORTH);
 
 		addLinkmanButton = new JButton();
-		addLinkmanButton.setText("ÁªÏµÈË");
+		addLinkmanButton.setText("è”ç³»äºº");
 		addLinkmanButton.setIcon(EditorUtils.createIcon("linkman.gif"));
 		panel.add(addLinkmanButton, BorderLayout.NORTH);
-		addLinkmanButton.addActionListener(this);// ×¢²áÌí¼ÓÁªÏµÈËÊÂ¼ş
+		addLinkmanButton.addActionListener(this);// æ³¨å†Œæ·»åŠ è”ç³»äººäº‹ä»¶
 		readLinkman = new ReadLinkmanXMl();
-		jl = readLinkman.makeList();// ·µ»ØÁªÏµÈËÁĞ±í
-		jl.addMouseListener(this);// Ìí¼ÓÁªÏµÈËÁĞ±íË«»÷ÊÂ¼ş
+		jl = readLinkman.makeList();// è¿”å›è”ç³»äººåˆ—è¡¨
+		jl.addMouseListener(this);// æ·»åŠ è”ç³»äººåˆ—è¡¨åŒå‡»äº‹ä»¶
 		scrollPane = new JScrollPane();
 		panel.add(scrollPane, BorderLayout.CENTER);
-		scrollPane.setViewportView(jl);// ÔÚ¹ö¶¯Ãæ°åÖĞÌí¼ÓÁªÏµÈË
+		scrollPane.setViewportView(jl);// åœ¨æ»šåŠ¨é¢æ¿ä¸­æ·»åŠ è”ç³»äºº
 		validate();
 
 		labelbackground = new JLabel();
-		labelbackground.setIcon(null); // ´°Ìå±³¾°
+		labelbackground.setIcon(null); // çª—ä½“èƒŒæ™¯
 		desktopPane.addComponentListener(new ComponentAdapter() {
 			public void componentResized(final ComponentEvent e) {
 				Dimension size = e.getComponent().getSize();
 				labelbackground.setSize(e.getComponent().getSize());
-				// ÉèÖÃ´°Ìå±³¾°Í¼
+				// è®¾ç½®çª—ä½“èƒŒæ™¯å›¾
 				labelbackground.setText("<html><img width=" + size.width
 						+ " height=" + size.height + " src='"
 						+ this.getClass().getResource("/main.jpg")
@@ -153,24 +153,24 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 		});
 		desktopPane.add(labelbackground, new Integer(Integer.MIN_VALUE));
 
-		// Ìí¼ÓÒ»¸ö·Ö¸î´°¿Ú
+		// æ·»åŠ ä¸€ä¸ªåˆ†å‰²çª—å£
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				panelframe, desktopPane);
-		splitPane.setOneTouchExpandable(true);// ÔÚ·Ö¸ôÌõÉÏÌá¹©Ò»¸ö UI Ğ¡²¿¼şÀ´¿ìËÙÕ¹¿ª/ÕÛµş·Ö¸ôÌõ
-		splitPane.setDividerSize(10);// ÉèÖÃ·Ö¸ôÌõµÄ´óĞ¡
+		splitPane.setOneTouchExpandable(true);// åœ¨åˆ†éš”æ¡ä¸Šæä¾›ä¸€ä¸ª UI å°éƒ¨ä»¶æ¥å¿«é€Ÿå±•å¼€/æŠ˜å åˆ†éš”æ¡
+		splitPane.setDividerSize(10);// è®¾ç½®åˆ†éš”æ¡çš„å¤§å°
 		getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
 
-	// ·µ»ØĞÂ½¨²Ëµ¥Ïî
+	// è¿”å›æ–°å»ºèœå•é¡¹
 	private JMenuItem addMenuItem(JMenu menu, String name, String icon) {
-		// ĞÂ½¨ÓÊ¼ş²Ëµ¥ÏîµÄ³õÊ¼»¯
+		// æ–°å»ºé‚®ä»¶èœå•é¡¹çš„åˆå§‹åŒ–
 		JMenuItem menuItem = new JMenuItem(name, EditorUtils.createIcon(icon));
-		menuItem.addActionListener(this);// ¼àÌıÍË³ö²Ëµ¥ÏîÊÂ¼ş
+		menuItem.addActionListener(this);// ç›‘å¬é€€å‡ºèœå•é¡¹äº‹ä»¶
 		menu.add(menuItem);
 		return menuItem;
 	}
 
-	// Ìí¼Ó×Ó´°ÌåµÄ·½·¨
+	// æ·»åŠ å­çª—ä½“çš„æ–¹æ³•
 	public static void addIFame(JInternalFrame iframe) {
 		JInternalFrame[] frames = desktopPane.getAllFrames();
 		try {
@@ -190,68 +190,68 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 		}
 	}
 
-	// actionÊÂ¼şµÄ´¦Àí
+	// actionäº‹ä»¶çš„å¤„ç†
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == exitMI) {
-			System.exit(0);// ÍË³öÏµÍ³
+			System.exit(0);// é€€å‡ºç³»ç»Ÿ
 		} else if (e.getSource() == addLinkmanButton) {
-			addIFame(FrameFactory.getFrameFactory().getAddLinkManFrame());// ÁªÏµÈËÁĞ±í
-		} else if (e.getSource() == newMailMI) {// ĞÂ½¨ÓÊ¼ş
-			addIFame(FrameFactory.getFrameFactory().getSendFrame());// ·¢¼ş¼Ğ
-		} else if (e.getSource() == groupMailMI) { // ĞÂ½¨ÈºÓÊ¼ş
-			addIFame(FrameFactory.getFrameFactory().getSendGroupMailFrame()); //ĞÂ½¨ÈºÓÊ¼ş
-		} else if (e.getSource() == itemPopupOne || e.getSource() == refreshMI) {// ÓÒ¼üË¢ĞÂÊÕ¼şÁĞ±í
-			ReceiveMailTable.getMail2Table().startReceiveMail();// ÓÒ¼üË¢ĞÂÊÕ¼şÁĞ±í
-		} else if (e.getSource() == sendedMI) {// ÒÑ·¢ËÍ
-			addIFame(FrameFactory.getFrameFactory().getSendedFrame());// ÒÑ·¢ËÍ
-		} else if (e.getSource() == receiveMI) {// ÊÕÓÊ¼ş
-			addIFame(FrameFactory.getFrameFactory().getReceiveFrame());// ÊÕÓÊ¼ş
-		} else if (e.getSource() == recycleMI) {// ÒÑÉ¾³ı
-			addIFame(FrameFactory.getFrameFactory().getRecycleFrame());// ÊÕÓÊ¼ş
-		} else if (e.getSource() == helpMI) { //°ïÖúÎÄµµ
-			addIFame(FrameFactory.getFrameFactory().getHelpContentsFrame()); // °ïÖúÎÄµµ
-		} else if (e.getSource() == aboutMI) { //¹ØÓÚÎÒÃÇ
-			addIFame (FrameFactory.getFrameFactory().getAboutUsFrame()); //¹ØÓÚÎÒÃÇ
+			addIFame(FrameFactory.getFrameFactory().getAddLinkManFrame());// è”ç³»äººåˆ—è¡¨
+		} else if (e.getSource() == newMailMI) {// æ–°å»ºé‚®ä»¶
+			addIFame(FrameFactory.getFrameFactory().getSendFrame());// å‘ä»¶å¤¹
+		} else if (e.getSource() == groupMailMI) { // æ–°å»ºç¾¤é‚®ä»¶
+			addIFame(FrameFactory.getFrameFactory().getSendGroupMailFrame()); //æ–°å»ºç¾¤é‚®ä»¶
+		} else if (e.getSource() == itemPopupOne || e.getSource() == refreshMI) {// å³é”®åˆ·æ–°æ”¶ä»¶åˆ—è¡¨
+			ReceiveMailTable.getMail2Table().startReceiveMail();// å³é”®åˆ·æ–°æ”¶ä»¶åˆ—è¡¨
+		} else if (e.getSource() == sendedMI) {// å·²å‘é€
+			addIFame(FrameFactory.getFrameFactory().getSendedFrame());// å·²å‘é€
+		} else if (e.getSource() == receiveMI) {// æ”¶é‚®ä»¶
+			addIFame(FrameFactory.getFrameFactory().getReceiveFrame());// æ”¶é‚®ä»¶
+		} else if (e.getSource() == recycleMI) {// å·²åˆ é™¤
+			addIFame(FrameFactory.getFrameFactory().getRecycleFrame());// æ”¶é‚®ä»¶
+		} else if (e.getSource() == helpMI) { //å¸®åŠ©æ–‡æ¡£
+			addIFame(FrameFactory.getFrameFactory().getHelpContentsFrame()); // å¸®åŠ©æ–‡æ¡£
+		} else if (e.getSource() == aboutMI) { //å…³äºæˆ‘ä»¬
+			addIFame (FrameFactory.getFrameFactory().getAboutUsFrame()); //å…³äºæˆ‘ä»¬
 		}
 
 	}
 
-	private SendFrame sendFrame = null;// ·¢ËÍÓÊ¼ş¶ÔÏó
-	public JMenuItem itemPopupOne = null;// Êó±êÓÒ¼üµÚÒ»¸öÑ¡Ïî
+	private SendFrame sendFrame = null;// å‘é€é‚®ä»¶å¯¹è±¡
+	public JMenuItem itemPopupOne = null;// é¼ æ ‡å³é”®ç¬¬ä¸€ä¸ªé€‰é¡¹
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// Ê÷ĞÎ½ÚµãÖĞµÄµ¥»÷ÊÂ¼ş
+		// æ ‘å½¢èŠ‚ç‚¹ä¸­çš„å•å‡»äº‹ä»¶
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
 				.getLastSelectedPathComponent();
 		if (e.getSource() == tree && e.getButton() != 3 && e.getButton() != 2) {
 			if (selectedNode == null)
 				return;
-			else if (selectedNode.toString().equals("ĞÂ½¨ÓÊ¼ş")) {
+			else if (selectedNode.toString().equals("æ–°å»ºé‚®ä»¶")) {
 				sendFrame = FrameFactory.getFrameFactory().getSendFrame();
-				addIFame(sendFrame);// ·¢¼ş¼Ğ
-			} else if (selectedNode.toString().equals("ĞÂ½¨ÈºÓÊ¼ş")) {
-				addIFame(FrameFactory.getFrameFactory().getSendGroupMailFrame()); //ĞÂ½¨ÈºÓÊ¼ş
+				addIFame(sendFrame);// å‘ä»¶å¤¹
+			} else if (selectedNode.toString().equals("æ–°å»ºç¾¤é‚®ä»¶")) {
+				addIFame(FrameFactory.getFrameFactory().getSendGroupMailFrame()); //æ–°å»ºç¾¤é‚®ä»¶
 			}
-			else if (selectedNode.toString().equals("ÊÕ¼şÏä")) {
-				addIFame(FrameFactory.getFrameFactory().getReceiveFrame());// ÊÕ¼ş¼Ğ
-			} else if (selectedNode.toString().equals("·¢¼şÏä")) {
-				addIFame(FrameFactory.getFrameFactory().getSendedFrame());// ÒÑ·¢ËÍÓÊ¼ş
-			} else if (selectedNode.toString().equals("»ØÊÕÕ¾")) {
-				addIFame(FrameFactory.getFrameFactory().getRecycleFrame());// ÒÑÉ¾³ıÓÊ¼ş
+			else if (selectedNode.toString().equals("æ”¶ä»¶ç®±")) {
+				addIFame(FrameFactory.getFrameFactory().getReceiveFrame());// æ”¶ä»¶å¤¹
+			} else if (selectedNode.toString().equals("å‘ä»¶ç®±")) {
+				addIFame(FrameFactory.getFrameFactory().getSendedFrame());// å·²å‘é€é‚®ä»¶
+			} else if (selectedNode.toString().equals("å›æ”¶ç«™")) {
+				addIFame(FrameFactory.getFrameFactory().getRecycleFrame());// å·²åˆ é™¤é‚®ä»¶
 			}
-		} else if (e.getSource() == jl && e.getClickCount() == 2) {// Ë«»÷ÁªÏµÈËÊÂ¼ş
+		} else if (e.getSource() == jl && e.getClickCount() == 2) {// åŒå‡»è”ç³»äººäº‹ä»¶
 			int index = jl.getSelectedIndex();
-			if (sendFrame != null && sendFrame.isSelected()) {// Èç¹û·¢ËÍÓÊ¼ş½çÃæ±»³õÊ¼»¯²¢ÇÒ±»¼¤»î
+			if (sendFrame != null && sendFrame.isSelected()) {// å¦‚æœå‘é€é‚®ä»¶ç•Œé¢è¢«åˆå§‹åŒ–å¹¶ä¸”è¢«æ¿€æ´»
 				sendFrame.addLinkman(readLinkman.findLinkman(index));
 			}
-		} else if (e.getButton() == MouseEvent.BUTTON3 && e.getSource() == tree) {// ÊÕ¼şÏäÓÒ¼üË¢ĞÂ
+		} else if (e.getButton() == MouseEvent.BUTTON3 && e.getSource() == tree) {// æ”¶ä»¶ç®±å³é”®åˆ·æ–°
 			if (selectedNode == null)
 				return;
-			else if ("ÊÕ¼şÏä".equals(selectedNode.toString())) {
+			else if ("æ”¶ä»¶ç®±".equals(selectedNode.toString())) {
 				JPopupMenu popup = new JPopupMenu();
-				itemPopupOne = new JMenuItem("Ë¢ĞÂÊÕ¼şÏä",
+				itemPopupOne = new JMenuItem("åˆ·æ–°æ”¶ä»¶ç®±",
 						EditorUtils.createIcon("refresh.jpg"));
 				itemPopupOne.addActionListener(this);
 				popup.add(itemPopupOne);

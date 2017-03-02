@@ -5,13 +5,13 @@ import javax.swing.UIManager;
 import frame.LoginFrame;
 
 /**
- * Ö÷º¯Êı
+ * ä¸»å‡½æ•°
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class MainMethod {
 	public static void main(String[] args) {
-		// ÉèÖÃ½çÃæÎª±¾µØÄ£Ê½
+		// è®¾ç½®ç•Œé¢ä¸ºæœ¬åœ°æ¨¡å¼
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {

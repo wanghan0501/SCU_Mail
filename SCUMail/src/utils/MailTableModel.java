@@ -1,7 +1,7 @@
 package utils;
 
 /**
- * ±í¸ñÄ£ĞÍ
+ * è¡¨æ ¼æ¨¡å‹
  * @author caesar
  */
 import java.util.Vector;
@@ -9,7 +9,7 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 public class MailTableModel extends AbstractTableModel {
-	private String[] columns = new String[] { "·¢¼şÈË", "Ö÷Ìâ", "½ÓÊÕÊ±¼ä", "¸½¼ş" };
+	private String[] columns = new String[] { "å‘ä»¶äºº", "ä¸»é¢˜", "æ¥æ”¶æ—¶é—´", "é™„ä»¶" };
 
 	private Vector<Vector<String>> v = new Vector<Vector<String>>();
 
@@ -32,12 +32,12 @@ public class MailTableModel extends AbstractTableModel {
 		return ((Vector) (v.get(row))).get(column);
 	}
 
-	// µÃµ½Vector<Vector<String>> ¶ÔÏó
+	// å¾—åˆ°Vector<Vector<String>> å¯¹è±¡
 	public Vector<Vector<String>> getVector() {
 		return v;
 	}
 
-	// ÉèÖÃÁĞµÄÏÔÊ¾Ãû³Æ
+	// è®¾ç½®åˆ—çš„æ˜¾ç¤ºåç§°
 	public void setColumens(String[] value) {
 		columns = value;
 	}

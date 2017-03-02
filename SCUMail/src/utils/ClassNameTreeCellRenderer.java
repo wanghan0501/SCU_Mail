@@ -10,7 +10,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 
 /**
- * ÖØĞÂäÖÈ¾Ê÷ĞÎ½Úµã
+ * é‡æ–°æ¸²æŸ“æ ‘å½¢èŠ‚ç‚¹
  * @author caesar
  * 
  */
@@ -30,19 +30,19 @@ public class ClassNameTreeCellRenderer extends DefaultTreeCellRenderer {
 		if (row == 0) {
 			this.setIcon(EditorUtils.createIcon("home.gif"));
 			this.setFont(bf);
-		} else if (value.toString().equals("ĞÂ½¨ÓÊ¼ş")) {
+		} else if (value.toString().equals("æ–°å»ºé‚®ä»¶")) {
 			this.setIcon(EditorUtils.createIcon("newMail.gif"));
 			this.setFont(bif);
-		} else if (value.toString().equals("ĞÂ½¨ÈºÓÊ¼ş")) {
+		} else if (value.toString().equals("æ–°å»ºç¾¤é‚®ä»¶")) {
 			this.setIcon(EditorUtils.createIcon("newGroup.jpg"));
 			this.setFont(bif);
-		} else if (value.toString().equals("·¢¼şÏä")) {
+		} else if (value.toString().equals("å‘ä»¶ç®±")) {
 			this.setIcon(EditorUtils.createIcon("sended.png"));
 			this.setFont(bif);
-		} else if (value.toString().equals("·¢¼şÏä")) {
+		} else if (value.toString().equals("å‘ä»¶ç®±")) {
 			this.setIcon(EditorUtils.createIcon("receive.png"));
 			this.setFont(bif);
-		} else if (value.toString().equals("»ØÊÕÕ¾")) {
+		} else if (value.toString().equals("å›æ”¶ç«™")) {
 			this.setIcon(EditorUtils.createIcon("deleted.png"));
 			this.setFont(bif);
 		} else {

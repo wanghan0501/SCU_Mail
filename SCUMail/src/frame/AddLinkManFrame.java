@@ -22,7 +22,7 @@ import utils.LinkmanListTabelModel;
 import action.LinkmanEventAction;
 
 /**
- * Ôö¼ÓÁªÏµÈË½çÃæ
+ * å¢åŠ è”ç³»äººç•Œé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
@@ -33,77 +33,77 @@ public class AddLinkManFrame extends JInternalFrame implements ActionListener,
 			emailAdressLabel = null;
 	private JButton add = null, delete = null, ok = null, cancel = null;
 	private JScrollPane linkmanJSP;
-	private JTable linkmanList = null;// ÁªÏµÈËÁĞ±í
-	private JPanel editorJPanel = null;// ±à¼­Ãæ°å
-	private JPanel linkManListJPanel = null;// ÁªÏµÈËÁĞ±íÃæ°å
+	private JTable linkmanList = null;// è”ç³»äººåˆ—è¡¨
+	private JPanel editorJPanel = null;// ç¼–è¾‘é¢æ¿
+	private JPanel linkManListJPanel = null;// è”ç³»äººåˆ—è¡¨é¢æ¿
 	private Box baseBox = null, boxV1 = null, boxV2 = null;
 	private LinkmanEventAction linkmanEvent = null;
 
 	public AddLinkManFrame() {
-		super("Ìí¼ÓÁªÏµÈË");
+		super("æ·»åŠ è”ç³»äºº");
 		this.setFrameIcon(EditorUtils.createIcon("addLinkman.jpg"));
 		setClosable(true);
-		this.setMaximizable(true);// ´°¿Ú×î´ó»¯ÉèÖÃ
+		this.setMaximizable(true);// çª—å£æœ€å¤§åŒ–è®¾ç½®
 		setIconifiable(true);
 		setBounds(20, 10, 500, 385);
 		getContentPane().setLayout(new BorderLayout());
-		// ĞÕÃû
+		// å§“å
 		nameLabel = new JLabel();
-		nameLabel.setText("ĞÕÃû:");
+		nameLabel.setText("å§“å:");
 		getContentPane().add(nameLabel);
 		nameTF = new JTextField(40);
 		getContentPane().add(nameTF);
 
-		// êÇ³Æ
+		// æ˜µç§°
 		nickNameLabel = new JLabel();
-		nickNameLabel.setText("êÇ³Æ:");
+		nickNameLabel.setText("æ˜µç§°:");
 		getContentPane().add(nickNameLabel);
 		nickNameTF = new JTextField(40);
 		getContentPane().add(nickNameTF);
-		// µç×ÓÓÊ¼ş
+		// ç”µå­é‚®ä»¶
 		emailAdressLabel = new JLabel();
-		emailAdressLabel.setText("µç×ÓÓÊ¼ş:");
+		emailAdressLabel.setText("ç”µå­é‚®ä»¶:");
 		getContentPane().add(emailAdressLabel);
 		emailAdressTF = new JTextField(50);
 		emailAdressTF.getDocument().addDocumentListener(this);
 
-		linkmanList = new JTable();// ÁªÏµÈËÁĞ±í
+		linkmanList = new JTable();// è”ç³»äººåˆ—è¡¨
 		linkmanList.setModel(new LinkmanListTabelModel());
 		linkmanJSP = new JScrollPane(linkmanList);
 		linkmanJSP.setPreferredSize(new Dimension(400, 150));
 
-		add = new JButton("Ìí¼Ó");
+		add = new JButton("æ·»åŠ ");
 		add.addActionListener(this);
 		add.setEnabled(false);
-		delete = new JButton("É¾³ı");
+		delete = new JButton("åˆ é™¤");
 		delete.addActionListener(this);
-		ok = new JButton("È·¶¨");
+		ok = new JButton("ç¡®å®š");
 		ok.addActionListener(this);
-		cancel = new JButton("³·Ïú");
+		cancel = new JButton("æ’¤é”€");
 		cancel.addActionListener(this);
-		// Ìí¼ÓÁªÏµÈËÃæ°å
+		// æ·»åŠ è”ç³»äººé¢æ¿
 		editorJPanel = new JPanel();
-		editorJPanel.setBorder(BorderFactory.createTitledBorder("Ìí¼ÓÁªÏµÈË:"));
+		editorJPanel.setBorder(BorderFactory.createTitledBorder("æ·»åŠ è”ç³»äºº:"));
 		editorJPanel.add(box());
 		this.add(editorJPanel, BorderLayout.NORTH);
 
-		// Ìí¼ÓÉ¾³ıÁªÏµÈËÃæ°å
+		// æ·»åŠ åˆ é™¤è”ç³»äººé¢æ¿
 		JPanel addAadDeletePanel = new JPanel();
 		addAadDeletePanel.setPreferredSize(new Dimension(60, 150));
 		addAadDeletePanel.add(add);
 		addAadDeletePanel.add(new JLabel("   "));
 		addAadDeletePanel.add(delete);
-		// ÁªÏµÈËÁĞ±íÃæ°å
+		// è”ç³»äººåˆ—è¡¨é¢æ¿
 		JPanel linkmanPanel = new JPanel();
 		linkmanPanel.add(linkmanJSP);
 
 		linkManListJPanel = new JPanel(new BorderLayout());
-		linkManListJPanel.setBorder(BorderFactory.createTitledBorder("ÁªÏµÈËÁĞ±í:"));
+		linkManListJPanel.setBorder(BorderFactory.createTitledBorder("è”ç³»äººåˆ—è¡¨:"));
 		linkManListJPanel.add(linkmanPanel, BorderLayout.CENTER);
 		linkManListJPanel.add(addAadDeletePanel, BorderLayout.EAST);
 		this.add(linkManListJPanel, BorderLayout.CENTER);
 
-		// È·¶¨È¡ÏûÃæ°å
+		// ç¡®å®šå–æ¶ˆé¢æ¿
 		JPanel okAndCancelPanel = new JPanel();
 		okAndCancelPanel.setPreferredSize(new Dimension(500, 35));
 		okAndCancelPanel.add(ok);
@@ -116,7 +116,7 @@ public class AddLinkManFrame extends JInternalFrame implements ActionListener,
 	}
 
 	private Box box() {
-		// ´´½¨±êÇ©box
+		// åˆ›å»ºæ ‡ç­¾box
 		boxV1 = Box.createVerticalBox();
 		boxV1.add(nameLabel);
 		boxV1.add(Box.createVerticalStrut(10));
@@ -125,7 +125,7 @@ public class AddLinkManFrame extends JInternalFrame implements ActionListener,
 		boxV1.add(emailAdressLabel);
 		boxV1.add(Box.createVerticalStrut(12));
 
-		// ´´½¨ÎÄ±¾¿òbox
+		// åˆ›å»ºæ–‡æœ¬æ¡†box
 		boxV2 = Box.createVerticalBox();
 		boxV2.add(nameTF);
 		boxV2.add(Box.createVerticalStrut(8));
@@ -133,7 +133,7 @@ public class AddLinkManFrame extends JInternalFrame implements ActionListener,
 		boxV2.add(Box.createVerticalStrut(8));
 		boxV2.add(emailAdressTF);
 
-		// ´´½¨»ù±¾box
+		// åˆ›å»ºåŸºæœ¬box
 		baseBox = Box.createHorizontalBox();
 		baseBox.add(boxV1);
 		baseBox.add(Box.createHorizontalStrut(20));
@@ -143,18 +143,18 @@ public class AddLinkManFrame extends JInternalFrame implements ActionListener,
 	}
 
 	public void changedUpdate(DocumentEvent e) {
-		checkInput();// ÎÄ±¾¸üĞÂÊ±µ÷ÓÃ
+		checkInput();// æ–‡æœ¬æ›´æ–°æ—¶è°ƒç”¨
 	}
 
 	public void insertUpdate(DocumentEvent e) {
-		checkInput();// ²åÈë¸üĞÂ
+		checkInput();// æ’å…¥æ›´æ–°
 	}
 
 	public void removeUpdate(DocumentEvent e) {
-		checkInput();// ÒÆ³ı¸üĞÂ
+		checkInput();// ç§»é™¤æ›´æ–°
 	}
 
-	// ¼ì²âÊäÈëÊı¾İµÄÓĞĞ§ĞÔ
+	// æ£€æµ‹è¾“å…¥æ•°æ®çš„æœ‰æ•ˆæ€§
 	private void checkInput() {
 		boolean checkEmail = EditorUtils.checkEmailAdress(emailAdressTF
 				.getText().trim());
@@ -165,17 +165,17 @@ public class AddLinkManFrame extends JInternalFrame implements ActionListener,
 		}
 	}
 
-	// ÊÂ¼şµÄ´¦Àí
+	// äº‹ä»¶çš„å¤„ç†
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == add) {
-			linkmanEvent.addLinkman();// Ìí¼ÓÁªÏµÈË
+			linkmanEvent.addLinkman();// æ·»åŠ è”ç³»äºº
 		} else if (e.getSource() == delete) {
-			linkmanEvent.deleteLinkman(linkmanList.getSelectedRow());// É¾³ıÁªÏµÈË
+			linkmanEvent.deleteLinkman(linkmanList.getSelectedRow());// åˆ é™¤è”ç³»äºº
 		} else if (e.getSource() == ok) {
 			linkmanEvent.ok();
 		} else if (e.getSource() == cancel) {
-			this.dispose();// ¹Ø±Õ´°¿Ú
+			this.dispose();// å…³é—­çª—å£
 		}
 	}
 }

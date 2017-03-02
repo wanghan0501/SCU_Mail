@@ -18,90 +18,90 @@ import utils.EditorUtils;
 import utils.ReceiveMailTable;
 
 /**
- * ÀàËµÃ÷£ºÏµÍ³ÉÁ¶¯ÍĞÅÌÀà
+ * ç±»è¯´æ˜ï¼šç³»ç»Ÿé—ªåŠ¨æ‰˜ç›˜ç±»
  */
 public class SystemBickerTray extends Thread {
-	private SystemTray sysTray = null;// µ±Ç°²Ù×÷ÏµÍ³µÄÍĞÅÌ¶ÔÏó
-	private TrayIcon trayIcon;// µ±Ç°¶ÔÏóµÄÍĞÅÌ
-	private ImageIcon icon = null;// ÍĞÅÌÍ¼±ê
-	private ImageIcon nullIcon = null;// ¿ÕµÄÍ¼ÅÌÍ¼±ê
-	private boolean flag = false; // ÊÇ·ñÓĞĞÂÓÊ¼ş
-	private PopupMenu popupMenu = null;// µ¯³ö²Ëµ¥
+	private SystemTray sysTray = null;// å½“å‰æ“ä½œç³»ç»Ÿçš„æ‰˜ç›˜å¯¹è±¡
+	private TrayIcon trayIcon;// å½“å‰å¯¹è±¡çš„æ‰˜ç›˜
+	private ImageIcon icon = null;// æ‰˜ç›˜å›¾æ ‡
+	private ImageIcon nullIcon = null;// ç©ºçš„å›¾ç›˜å›¾æ ‡
+	private boolean flag = false; // æ˜¯å¦æœ‰æ–°é‚®ä»¶
+	private PopupMenu popupMenu = null;// å¼¹å‡ºèœå•
 	private Image nullimage = null;
 	private Image iconImage = null;
 
 	public SystemBickerTray() {
-		sysTray = SystemTray.getSystemTray();// »ñµÃµ±Ç°²Ù×÷ÏµÍ³µÄÍĞÅÌ¶ÔÏó
-		icon = EditorUtils.createIcon("e.png");// ÍĞÅÌÍ¼±ê
-		nullIcon = new ImageIcon("");// ¿ÕÍ¼Æ¬¶ÔÏó
+		sysTray = SystemTray.getSystemTray();// è·å¾—å½“å‰æ“ä½œç³»ç»Ÿçš„æ‰˜ç›˜å¯¹è±¡
+		icon = EditorUtils.createIcon("e.png");// æ‰˜ç›˜å›¾æ ‡
+		nullIcon = new ImageIcon("");// ç©ºå›¾ç‰‡å¯¹è±¡
 		nullimage = nullIcon.getImage();
 		iconImage = icon.getImage();
 		createPopupMenu();
-		trayIcon = new TrayIcon(icon.getImage(), "SCUÓÊ¼ş¿Í»§¶Ë", popupMenu);
-		trayIcon.addMouseListener(new MouseAdapter() {// ÏµÍ³ÍĞÅÌÌí¼ÓÊó±êÊÂ¼ş
+		trayIcon = new TrayIcon(icon.getImage(), "SCUé‚®ä»¶å®¢æˆ·ç«¯", popupMenu);
+		trayIcon.addMouseListener(new MouseAdapter() {// ç³»ç»Ÿæ‰˜ç›˜æ·»åŠ é¼ æ ‡äº‹ä»¶
 			public void mouseClicked(MouseEvent e) {
-				mouseAction(e);// Êó±êÊÂ¼şµÄ´¦Àí
+				mouseAction(e);// é¼ æ ‡äº‹ä»¶çš„å¤„ç†
 			}
 		});
-		addTrayIcon();// ½«ÍĞÅÌÌí¼Óµ½²Ù×÷ÏµÍ³µÄÍĞÅÌ
+		addTrayIcon();// å°†æ‰˜ç›˜æ·»åŠ åˆ°æ“ä½œç³»ç»Ÿçš„æ‰˜ç›˜
 	}
 
-	// ÉèÖÃĞÂÓÊ¼ş×ÜÊı
+	// è®¾ç½®æ–°é‚®ä»¶æ€»æ•°
 	public void setCount(int count) {
-		trayIcon.setToolTip("ÄãÓĞ " + count + " ·âĞÂÓÊ¼ş£¬Çë²éÊÕ£¡");
+		trayIcon.setToolTip("ä½ æœ‰ " + count + " å°æ–°é‚®ä»¶ï¼Œè¯·æŸ¥æ”¶ï¼");
 	}
 
 	/**
-	 * Ìí¼ÓÍĞÅÌµÄ·½·¨
+	 * æ·»åŠ æ‰˜ç›˜çš„æ–¹æ³•
 	 */
 	public void addTrayIcon() {
 		try {
-			sysTray.add(trayIcon);// ½«ÍĞÅÌÌí¼Óµ½²Ù×÷ÏµÍ³µÄÍĞÅÌ
-			this.start();// ¿ªÆôÏß³Ì·¢³öÌáÊ¾ĞÂºÍÍ¼Æ¬ÉÁ¶¯
+			sysTray.add(trayIcon);// å°†æ‰˜ç›˜æ·»åŠ åˆ°æ“ä½œç³»ç»Ÿçš„æ‰˜ç›˜
+			this.start();// å¼€å¯çº¿ç¨‹å‘å‡ºæç¤ºæ–°å’Œå›¾ç‰‡é—ªåŠ¨
 		} catch (AWTException e1) {
 			e1.printStackTrace();
 		}
 	}
 
 	/**
-	 * ´´½¨µ¯³ö²Ëµ¥
+	 * åˆ›å»ºå¼¹å‡ºèœå•
 	 */
 	private void createPopupMenu() {
-		popupMenu = new PopupMenu();// µ¯³ö²Ëµ¥
-		MenuItem refresh = new MenuItem("Ë¢ĞÂÊÕ¼şÏä");
-		MenuItem cancle = new MenuItem("È¡ÏûÉÁË¸");
-		MenuItem exit = new MenuItem("ÍË³öÏµÍ³");
+		popupMenu = new PopupMenu();// å¼¹å‡ºèœå•
+		MenuItem refresh = new MenuItem("åˆ·æ–°æ”¶ä»¶ç®±");
+		MenuItem cancle = new MenuItem("å–æ¶ˆé—ªçƒ");
+		MenuItem exit = new MenuItem("é€€å‡ºç³»ç»Ÿ");
 		popupMenu.add(refresh);
 		popupMenu.add(cancle);
 		popupMenu.add(exit);
-		refresh.addActionListener(new ActionListener() {// Ë¢ĞÂÊÕ¼şÏä
+		refresh.addActionListener(new ActionListener() {// åˆ·æ–°æ”¶ä»¶ç®±
 			public void actionPerformed(ActionEvent e) {
-				refreshInbox(e);// Ë¢ĞÂÊÕ¼şÏä
+				refreshInbox(e);// åˆ·æ–°æ”¶ä»¶ç®±
 			}
 		});
-		cancle.addActionListener(new ActionListener() {// È¡ÏûÉÁË¸
+		cancle.addActionListener(new ActionListener() {// å–æ¶ˆé—ªçƒ
 			public void actionPerformed(ActionEvent e) {
-				cancleBicker(e);// È¡ÏûÉÁË¸
+				cancleBicker(e);// å–æ¶ˆé—ªçƒ
 			}
 		});
-		exit.addActionListener(new ActionListener() {// ÍË³ö³ÌĞò
+		exit.addActionListener(new ActionListener() {// é€€å‡ºç¨‹åº
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);// ÍË³öÏµÍ³
+				System.exit(0);// é€€å‡ºç³»ç»Ÿ
 			}
 		});
 	}
 
-	// ÔËĞĞÏß³Ì
+	// è¿è¡Œçº¿ç¨‹
 	public void run() {
 		while (true) {
-			if (flag) { // ÓĞÓÊ¼ş
+			if (flag) { // æœ‰é‚®ä»¶
 				try {
 					trayIcon.setImage(nullimage);
 					sleep(500);
-					// ÉÁ¶¯ÏûÏ¢µÄ¿Õ°×Ê±¼ä
+					// é—ªåŠ¨æ¶ˆæ¯çš„ç©ºç™½æ—¶é—´
 					trayIcon.setImage(iconImage);
 					sleep(500);
-					// ÉÁ¶¯ÏûÏ¢µÄÌáÊ¾Í¼Æ¬
+					// é—ªåŠ¨æ¶ˆæ¯çš„æç¤ºå›¾ç‰‡
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -118,21 +118,21 @@ public class SystemBickerTray extends Thread {
 
 	}
 
-	// Ë¢ĞÂÓÊÏäÊÂ¼ş´¦Àí
+	// åˆ·æ–°é‚®ç®±äº‹ä»¶å¤„ç†
 	private void refreshInbox(ActionEvent e) {
-		ReceiveMailTable.getMail2Table().startReceiveMail();// ÓÒ¼üË¢ĞÂÊÕ¼şÁĞ±í
-		setCount(0);// ÉèÖÃÏÔÊ¾ĞÂÓÊ¼ş¸öÊı
-		CheckNewMialUtil.isCheck = true;// ÉèÖÃĞÂÓÊ¼ş±ê¼Ç
+		ReceiveMailTable.getMail2Table().startReceiveMail();// å³é”®åˆ·æ–°æ”¶ä»¶åˆ—è¡¨
+		setCount(0);// è®¾ç½®æ˜¾ç¤ºæ–°é‚®ä»¶ä¸ªæ•°
+		CheckNewMialUtil.isCheck = true;// è®¾ç½®æ–°é‚®ä»¶æ ‡è®°
 		flag = false;
 	}
 
-	// È¡Ïû ÉÁË¸ÊÂ¼ş´¦Àí
+	// å–æ¶ˆ é—ªçƒäº‹ä»¶å¤„ç†
 	private void cancleBicker(ActionEvent e) {
 		flag = false;
-		CheckNewMialUtil.isCheck = true;// ÉèÖÃĞÂÓÊ¼ş±ê¼Ç
+		CheckNewMialUtil.isCheck = true;// è®¾ç½®æ–°é‚®ä»¶æ ‡è®°
 	}
 
-	// Êó±êÊÂ¼şµÄ´¦Àí
+	// é¼ æ ‡äº‹ä»¶çš„å¤„ç†
 	private void mouseAction(MouseEvent e) {
 	}
 
@@ -141,7 +141,7 @@ public class SystemBickerTray extends Thread {
 	}
 
 	public void setFlag(boolean flag) {
-		if (flag)// Èç¹ûÓĞĞÂÓÊ¼ş ²¥·ÅÉùÒô
+		if (flag)// å¦‚æœæœ‰æ–°é‚®ä»¶ æ’­æ”¾å£°éŸ³
 			new MyAudioPlayer().play();
 		this.flag = flag;
 	}

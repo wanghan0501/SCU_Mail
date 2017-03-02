@@ -11,7 +11,7 @@ import utils.LinkmanListTabelModel;
 import utils.SaveLinkmans2XML;
 
 /**
- * ÀàËµÃ÷£º´¦ÀíÌí¼ÓÉ¾³ıÁªÏµÈËÊÂ¼ş
+ * ç±»è¯´æ˜ï¼šå¤„ç†æ·»åŠ åˆ é™¤è”ç³»äººäº‹ä»¶
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -23,42 +23,42 @@ public class LinkmanEventAction {
 
 	public LinkmanEventAction(JTextField nameTF, JTextField nickNameTF,
 			JTextField emailAdressTF, JTable linkmanList) {
-		name = nameTF;// Ãû³Æ
-		nickName = nickNameTF;// êÇ³Æ
-		emailAdress = emailAdressTF;// ÓÊÏäµØÖ·
+		name = nameTF;// åç§°
+		nickName = nickNameTF;// æ˜µç§°
+		emailAdress = emailAdressTF;// é‚®ç®±åœ°å€
 		this.linkmanList = linkmanList;
 	}
 
-	// Ìí¼ÓÁªÏµÈË
+	// æ·»åŠ è”ç³»äºº
 	public void addLinkman() {
-		if (!checkRepeatEmail(emailAdress.getText().trim()))// Èç¹ûemailµØÖ·²»ÖØ¸´
-			add();// Ìí¼Ó
+		if (!checkRepeatEmail(emailAdress.getText().trim()))// å¦‚æœemailåœ°å€ä¸é‡å¤
+			add();// æ·»åŠ 
 		else {
-			JOptionPane.showMessageDialog(null, "ÄãÌí¼ÓµÄÓÊÏäµØÖ·ÒÑ´æÔÚ£¬ÇëÎğÖØ¸´Ìí¼Ó£¡", "¾¯¸æ",
+			JOptionPane.showMessageDialog(null, "ä½ æ·»åŠ çš„é‚®ç®±åœ°å€å·²å­˜åœ¨ï¼Œè¯·å‹¿é‡å¤æ·»åŠ ï¼", "è­¦å‘Š",
 					JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
-	// É¾³ıÁªÏµÈË
+	// åˆ é™¤è”ç³»äºº
 	public void deleteLinkman(int selectRow) {
-		if (selectRow < linkmanVectors.size() && selectRow != -1) {// Ñ¡ÖĞÒ»ĞĞÉ¾³ı
+		if (selectRow < linkmanVectors.size() && selectRow != -1) {// é€‰ä¸­ä¸€è¡Œåˆ é™¤
 			linkmanVectors.remove(selectRow);
 			linkmanList.updateUI();
 		} else {
-			JOptionPane.showMessageDialog(null, "ÄãÃ»ÓĞÑ¡ÖĞÈÎºÎÒ»ĞĞ²»ÄÜÉ¾³ı£¡", "¾¯¸æ",
+			JOptionPane.showMessageDialog(null, "ä½ æ²¡æœ‰é€‰ä¸­ä»»ä½•ä¸€è¡Œä¸èƒ½åˆ é™¤ï¼", "è­¦å‘Š",
 					JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
-	// È·¶¨ĞŞ¸ÄÁªÏµÈË²¢½«ÁªÏµÈË±£´æÎªxml¸ñÊ½µÄÎÄµµ
+	// ç¡®å®šä¿®æ”¹è”ç³»äººå¹¶å°†è”ç³»äººä¿å­˜ä¸ºxmlæ ¼å¼çš„æ–‡æ¡£
 	public void ok() {
 		SaveLinkmans2XML saveLinkmansXML = new SaveLinkmans2XML();
 		saveLinkmansXML.saveLinkmanXml("linkman.xml", linkmanVectors);
-		JOptionPane.showMessageDialog(null, "Í¨Ñ¶Â¼ĞŞ¸Ä³É¹¦£¬ÎÄ¼şÃûÊÇ linkman.xml", "ÌáÊ¾",
+		JOptionPane.showMessageDialog(null, "é€šè®¯å½•ä¿®æ”¹æˆåŠŸï¼Œæ–‡ä»¶åæ˜¯ linkman.xml", "æç¤º",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	// Ìí¼ÓÁªÏµÈË
+	// æ·»åŠ è”ç³»äºº
 	private void add() {
 		Vector<String> linkmanVector = new Vector<String>();
 		linkmanVector.add(name.getText().trim());
@@ -68,21 +68,21 @@ public class LinkmanEventAction {
 		linkmanList.updateUI();
 	}
 
-	// ¼ì²âÓÊÏäÊÇ·ñÖØ¸´
+	// æ£€æµ‹é‚®ç®±æ˜¯å¦é‡å¤
 	private boolean checkRepeatEmail(String email) {
 		boolean isRepeate = true;
 		Vector<String> v = null;
-		int count = linkmanVectors.size();// µÃµ½ÁªÏµÈË¸öÊı
-		if (count > 0) {// Èç¹ûÓĞÁªÏµÈË¾Í±È½Ï
+		int count = linkmanVectors.size();// å¾—åˆ°è”ç³»äººä¸ªæ•°
+		if (count > 0) {// å¦‚æœæœ‰è”ç³»äººå°±æ¯”è¾ƒ
 			for (int i = 0; i < count; i++) {
-				v = linkmanVectors.get(i);// µÃµ½ÁªÏµÈËÓÊÏäµØÖ·
-				if (v.get(2).equals(email))// ĞÂ¼ÓµÄºÍÒÑÓĞµÄµØÖ·ÊÇ·ñÖØ¸´
+				v = linkmanVectors.get(i);// å¾—åˆ°è”ç³»äººé‚®ç®±åœ°å€
+				if (v.get(2).equals(email))// æ–°åŠ çš„å’Œå·²æœ‰çš„åœ°å€æ˜¯å¦é‡å¤
 					isRepeate = true;
 				else
 					isRepeate = false;
 			}
 		} else
-			// Èç¹ûÃ»ÓĞ¾ÍÖ±½ÓÌí¼Ó
+			// å¦‚æœæ²¡æœ‰å°±ç›´æ¥æ·»åŠ 
 			isRepeate = false;
 		return isRepeate;
 	}

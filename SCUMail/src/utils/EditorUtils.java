@@ -31,7 +31,7 @@ public class EditorUtils {
 				icon = new ImageIcon(ImageName);
 			}
 		} catch (Exception e) {
-			System.out.println("Í¼Æ¬   " + ImageName + "  ¼ÓÔØÊ§°Ü£¡");
+			System.out.println("å›¾ç‰‡   " + ImageName + "  åŠ è½½å¤±è´¥ï¼");
 			e.printStackTrace();
 		}
 		return icon;

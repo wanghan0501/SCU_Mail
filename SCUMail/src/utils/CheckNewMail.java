@@ -4,17 +4,17 @@ import mailutil.CheckNewMialUtil;
 import utils.bickerTray.SystemBickerTray;
 
 /**
- * ÀàËµÃ÷£º¼ì²âĞÂÓÊ¼şÀà
+ * ç±»è¯´æ˜ï¼šæ£€æµ‹æ–°é‚®ä»¶ç±»
  * @author caesar
  */
 public class CheckNewMail extends Thread {
-	private static int MailCount = 0;// ĞÂÓÊ¼ş×ÜÊı¼ÆÊıÆ÷
-	private SystemBickerTray bickerTray = null;// ÏµÍ³ÍĞÅÌÍ¼±ê
-	private int num = 0;// µÃµ½ÓÊÏäÖĞĞÂÓÊ¼şµÄ¸öÊı
+	private static int MailCount = 0;// æ–°é‚®ä»¶æ€»æ•°è®¡æ•°å™¨
+	private SystemBickerTray bickerTray = null;// ç³»ç»Ÿæ‰˜ç›˜å›¾æ ‡
+	private int num = 0;// å¾—åˆ°é‚®ç®±ä¸­æ–°é‚®ä»¶çš„ä¸ªæ•°
 	private CheckNewMialUtil check = null;
 
 	public CheckNewMail() {
-		bickerTray = new SystemBickerTray();// ÏµÍ³ÍĞÅÌÍ¼±ê
+		bickerTray = new SystemBickerTray();// ç³»ç»Ÿæ‰˜ç›˜å›¾æ ‡
 		check = new CheckNewMialUtil();
 	}
 
@@ -26,16 +26,16 @@ public class CheckNewMail extends Thread {
 					if (!bickerTray.isFlag()) {
 						bickerTray.setFlag(true);
 					}
-					bickerTray.setCount(num - MailCount);// ÉèÖÃÏÔÊ¾ĞÂÓÊ¼ş¸öÊı
+					bickerTray.setCount(num - MailCount);// è®¾ç½®æ˜¾ç¤ºæ–°é‚®ä»¶ä¸ªæ•°
 				}
-				sleep(2500);// ÔİÍ£3Ãë
+				sleep(2500);// æš‚åœ3ç§’
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	// ÉèÖÃÏÔÊ¾ĞÂÓÊ¼ş¸öÊı
+	// è®¾ç½®æ˜¾ç¤ºæ–°é‚®ä»¶ä¸ªæ•°
 	public static void setNewMailCount(int count) {
 		MailCount = count;
 	}

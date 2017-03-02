@@ -6,15 +6,15 @@ import java.util.Vector;
 import javax.swing.JTable;
 
 /**
- * ÀàËµÃ÷£º»Ö¸´ÓÊ¼şÀà
+ * ç±»è¯´æ˜ï¼šæ¢å¤é‚®ä»¶ç±»
  * 
- * @author ×÷Õß:user
- * @version ´´½¨Ê±¼ä£º2011-2-22 ÏÂÎç06:37:03
+ * @author ä½œè€…:user
+ * @version åˆ›å»ºæ—¶é—´ï¼š2011-2-22 ä¸‹åˆ06:37:03
  */
 public class RecycleMailTable {
 	private static RecycleMailTable recycleMail = new RecycleMailTable();;
-	private Vector<Vector<String>> recycleMailVector = null;// »Ö¸´ÓÊ¼şÁĞ±íÄ£ĞÍ
-	private JTable recycleMailTable = null;// »Ö¸´ÓÊ¼ş±í¸ñ
+	private Vector<Vector<String>> recycleMailVector = null;// æ¢å¤é‚®ä»¶åˆ—è¡¨æ¨¡å‹
+	private JTable recycleMailTable = null;// æ¢å¤é‚®ä»¶è¡¨æ ¼
 	private MailTableModel tableModel = null;
 	public static LinkedList<String> listCopy = new LinkedList<String>();
 
@@ -25,35 +25,35 @@ public class RecycleMailTable {
 		return recycleMail;
 	}
 
-	// ÉèÖÃ»Ö¸´ÓÊ¼ş±í¸ñ
+	// è®¾ç½®æ¢å¤é‚®ä»¶è¡¨æ ¼
 	public void setRecycleMailTable(JTable table) {
 		recycleMailTable = table;
 		recycleMailTable.updateUI();
 	}
 
-	// Ìí¼ÓÉ¾³ıÓÊ¼şĞÅÏ¢µ½»Ö¸´ÁĞ±íÄ£ĞÍÖĞ
+	// æ·»åŠ åˆ é™¤é‚®ä»¶ä¿¡æ¯åˆ°æ¢å¤åˆ—è¡¨æ¨¡å‹ä¸­
 	public void addRecycleMail(Vector<String> vector, String mailID) {
-		recycleMailVector.addElement(vector);// ½«ÒªÉ¾³ıµÄÓÊ¼şÌí¼Óµ½»ØÊÕÕ¾ÁĞ±íÖĞ
+		recycleMailVector.addElement(vector);// å°†è¦åˆ é™¤çš„é‚®ä»¶æ·»åŠ åˆ°å›æ”¶ç«™åˆ—è¡¨ä¸­
 		listCopy.add(mailID);
 		if (recycleMailTable != null)
 			recycleMailTable.updateUI();
 	}
 
-	// »Ö¸´ÓÊ¼ş
+	// æ¢å¤é‚®ä»¶
 	public void recycleMail(int id) {
 		ReceiveMailTable.recoverMail(recycleMailVector.get(id), listCopy.get(id));
 	}
 
-	// É¾³ıÓÊ¼ş
-	public void deleteMail(int id) {// id Ñ¡ÔñµÄĞĞºÅ
-		recycleMailVector.removeElementAt(id);// É¾³ı±í¸ñÖĞÑ¡ÖĞÓÊ¼ş¶ÔÓ¦µÄĞĞ
+	// åˆ é™¤é‚®ä»¶
+	public void deleteMail(int id) {// id é€‰æ‹©çš„è¡Œå·
+		recycleMailVector.removeElementAt(id);// åˆ é™¤è¡¨æ ¼ä¸­é€‰ä¸­é‚®ä»¶å¯¹åº”çš„è¡Œ
 		listCopy.remove(id);
 		if (recycleMailTable != null)
-			recycleMailTable.updateUI();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
+			recycleMailTable.updateUI();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
 	}
 
-	// ÓÊ¼ş±í¸ñÄ£ĞÍ
-	public MailTableModel getMailTableModel() {// ÓÊ¼ş±í¸ñÄ£ĞÍ
+	// é‚®ä»¶è¡¨æ ¼æ¨¡å‹
+	public MailTableModel getMailTableModel() {// é‚®ä»¶è¡¨æ ¼æ¨¡å‹
 		if (tableModel == null)
 			tableModel = new MailTableModel();
 		recycleMailVector = tableModel.getVector();

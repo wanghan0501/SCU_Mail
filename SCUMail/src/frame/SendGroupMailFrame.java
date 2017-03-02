@@ -39,7 +39,7 @@ import mailutil.SendGroupAttachMail;
 import frame.JProgressBarFrame;
 
 /**
- * ·¢ËÍÈºÓÊ¼ş½çÃæ
+ * å‘é€ç¾¤é‚®ä»¶ç•Œé¢
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -51,69 +51,69 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 	private JButton sendGroupButton = null;
 	private JButton resetButton = null;
 	private JProgressBarFrame progressBar = null;
-	// »ñµÃ·¢¼şÊµÀı
+	// è·å¾—å‘ä»¶å®ä¾‹
 	private SendAttachMail mail = SendAttachMail.getSendMailInstantiate();
 	private int sendedEmailCount = 0;
 	private int totalEmailCount = 0;
 	private String selectDirPath = "";
-	// Ïß³Ì³Ø
+	// çº¿ç¨‹æ± 
 	private ExecutorService exec = Executors.newCachedThreadPool();
-	// Èº·¢Ê±ºò×î¶àÖ»ÓĞ10¸öÏß³Ì
+	// ç¾¤å‘æ—¶å€™æœ€å¤šåªæœ‰10ä¸ªçº¿ç¨‹
 	private final Semaphore sendSemaphore = new Semaphore(10);
-	// Log²¢·¢¶ÓÁĞ
+	// Logå¹¶å‘é˜Ÿåˆ—
 	private ConcurrentLinkedQueue<String> successQueue = new ConcurrentLinkedQueue<String>();
 	private ConcurrentLinkedQueue<String> faileQueue = new ConcurrentLinkedQueue<String>();
 
-	// ´¢´æÁªÏµÈËĞÅÏ¢
+	// å‚¨å­˜è”ç³»äººä¿¡æ¯
 	Vector<Vector<String>> linkmanInfo = new Vector<Vector<String>>();
-	// ´¢´æÊÇ·ñÓĞ¸½¼ş
+	// å‚¨å­˜æ˜¯å¦æœ‰é™„ä»¶
 	ArrayList<Boolean> hasAttachment = new ArrayList<Boolean>();
 
 	public SendGroupMailFrame() {
-		super("ÈºÓÊ¼ş");
-		// ÉèÖÃ¶Ô»°¿òÍ¼±ê
+		super("ç¾¤é‚®ä»¶");
+		// è®¾ç½®å¯¹è¯æ¡†å›¾æ ‡
 		this.setFrameIcon(EditorUtils.createIcon("newGroup.jpg"));
 		this.setClosable(true);
-		this.setMaximizable(true);// ´°¿Ú×î´ó»¯ÉèÖÃ
+		this.setMaximizable(true);// çª—å£æœ€å¤§åŒ–è®¾ç½®
 		this.setIconifiable(true);
-		this.setBounds(10, 10, 640, 600);// ÉèÖÃ½çÃæµÄ´óĞ¡
+		this.setBounds(10, 10, 640, 600);// è®¾ç½®ç•Œé¢çš„å¤§å°
 		this.getContentPane().setLayout(new BorderLayout());
 		this.setVisible(true);
 
-		// ¶¥²¿Ãæ°å
+		// é¡¶éƒ¨é¢æ¿
 		upperPanel = new JPanel();
 		getContentPane().add(upperPanel, BorderLayout.NORTH);
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		// ¹¦ÄÜÌõ
+		// åŠŸèƒ½æ¡
 		final JToolBar toolBar = new JToolBar();
 		toolBar.setEnabled(false);
 		upperPanel.add(toolBar);
-		// Í¨Ñ¶Â¼¹¦ÄÜ°´¼ü
-		linkmanInfoButton = new JButton("Í¨Ñ¶Â¼", EditorUtils.createIcon("addressBook.png"));
+		// é€šè®¯å½•åŠŸèƒ½æŒ‰é”®
+		linkmanInfoButton = new JButton("é€šè®¯å½•", EditorUtils.createIcon("addressBook.png"));
 		linkmanInfoButton.addActionListener(this);
 		toolBar.add(linkmanInfoButton, JPanel.LEFT_ALIGNMENT);
-		// Èº·¢¹¦ÄÜ°´¼ü
-		sendGroupButton = new JButton("Èº·¢", EditorUtils.createIcon("sendGroup.png"));
+		// ç¾¤å‘åŠŸèƒ½æŒ‰é”®
+		sendGroupButton = new JButton("ç¾¤å‘", EditorUtils.createIcon("sendGroup.png"));
 		sendGroupButton.addActionListener(this);
 		toolBar.add(sendGroupButton, JPanel.LEFT_ALIGNMENT);
-		// ÖØÖÃ¹¦ÄÜ°´¼ü
-		resetButton = new JButton("ÖØÖÃ", EditorUtils.createIcon("reset.png"));
+		// é‡ç½®åŠŸèƒ½æŒ‰é”®
+		resetButton = new JButton("é‡ç½®", EditorUtils.createIcon("reset.png"));
 		resetButton.addActionListener(this);
 		toolBar.add(resetButton, JPanel.LEFT_ALIGNMENT);
 
-		// ¹ö¶¯Ãæ°å
+		// æ»šåŠ¨é¢æ¿
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
-		// Í¨Ñ¶Â¼±í
+		// é€šè®¯å½•è¡¨
 		table = new JTable();
 		table.setFillsViewportHeight(true);
 		table.setEnabled(false);
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ĞÕÃû", "ÁªÏµµØÖ·", "ÓÊ¼şÖ÷Ìâ", "ÓÊ¼şÕıÎÄ", "¸½¼ş" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "å§“å", "è”ç³»åœ°å€", "é‚®ä»¶ä¸»é¢˜", "é‚®ä»¶æ­£æ–‡", "é™„ä»¶" }));
 		table.setRowHeight(25);
 		scrollPane.setViewportView(table);
 	}
 
-	// ¼àÌıÊÂ¼ş´¦Àí
+	// ç›‘å¬äº‹ä»¶å¤„ç†
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -123,7 +123,7 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 			if (!isEmpty())
 				sendGroupMail(linkmanInfo);
 			else
-				JOptionPane.showMessageDialog(SendGroupMailFrame.this, "Í¨Ñ¶Â¼Îª¿Õ£¬ÇëÔØÈë" + "Í¨Ñ¶Â¼ºóÔÙ´Î³¢ÊÔÈº·¢ÓÊ¼ş£¡", "¾¯¸æ",
+				JOptionPane.showMessageDialog(SendGroupMailFrame.this, "é€šè®¯å½•ä¸ºç©ºï¼Œè¯·è½½å…¥" + "é€šè®¯å½•åå†æ¬¡å°è¯•ç¾¤å‘é‚®ä»¶ï¼", "è­¦å‘Š",
 						JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == resetButton) {
 			resetButtonEvent();
@@ -138,19 +138,19 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 	public void resetButtonEvent() {
 		// TODO Auto-generated method stub
 		linkmanInfo.clear();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ĞÕÃû", "ÁªÏµµØÖ·", "ÓÊ¼şÖ÷Ìâ", "ÓÊ¼şÕıÎÄ", "¸½¼ş" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "å§“å", "è”ç³»åœ°å€", "é‚®ä»¶ä¸»é¢˜", "é‚®ä»¶æ­£æ–‡", "é™„ä»¶" }));
 	}
 
 	public void openLinkmanInfoEvent() {
-		// ¹¹ÔìÒ»¸öµ±Ç°Â·¾¶µÄÎÄ¼şÑ¡ÔñÆ÷
+		// æ„é€ ä¸€ä¸ªå½“å‰è·¯å¾„çš„æ–‡ä»¶é€‰æ‹©å™¨
 		JFileChooser chooser = new JFileChooser(new File("."));
 		chooser.setOpaque(false);
-		// Ö»ËÑË÷ÎÄ¼ş
+		// åªæœç´¢æ–‡ä»¶
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
 		chooser.setAcceptAllFileFilterUsed(false);
 
-		// xlsÎÄ±¾¹ıÂËÆ÷
+		// xlsæ–‡æœ¬è¿‡æ»¤å™¨
 		chooser.addChoosableFileFilter(new FileFilter() {
 
 			@Override
@@ -164,12 +164,12 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 			@Override
 			public String getDescription() {
 				// TODO Auto-generated method stub
-				return "xlsÎÄ¼ş(*.xls)";
+				return "xlsæ–‡ä»¶(*.xls)";
 			}
 
 		});
 
-		// ÔÊĞíËùÓĞÎÄ¼ş
+		// å…è®¸æ‰€æœ‰æ–‡ä»¶
 		chooser.addChoosableFileFilter(new FileFilter() {
 
 			@Override
@@ -181,30 +181,30 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 			@Override
 			public String getDescription() {
 				// TODO Auto-generated method stub
-				return "ËùÓĞÎÄ¼ş(*.*)";
+				return "æ‰€æœ‰æ–‡ä»¶(*.*)";
 			}
 
 		});
 
-		if (chooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {// Èç¹ûÑ¡ÔñÈ·¶¨¼ü
+		if (chooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {// å¦‚æœé€‰æ‹©ç¡®å®šé”®
 			File file = chooser.getSelectedFile();
 			selectDirPath = file.getParent();
 			Icon icon = chooser.getIcon(file);
 			if (file.isFile()) {
-				// System.out.println("ÎÄ¼ş:" + file.getAbsolutePath());
+				// System.out.println("æ–‡ä»¶:" + file.getAbsolutePath());
 				dispLinkmanInfo(file);
 			}
 			// System.out.println(file.getName());
-			// ·¢ËÍÈºÓÊ¼ş
+			// å‘é€ç¾¤é‚®ä»¶
 			validate();
 			repaint();
 		}
 	}
 
 	public void dispLinkmanInfo(File file) {
-		// ´¢´æÁªÏµÈË
+		// å‚¨å­˜è”ç³»äºº
 		Vector<String> linkman = null;
-		// ±í¸ñÊı¾İÄ£ĞÍ
+		// è¡¨æ ¼æ•°æ®æ¨¡å‹
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
 		try {
@@ -222,12 +222,12 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 						else
 							linkman.add(cell.getContents());
 					}
-					// Èç¹ûÁªÏµÈËĞÅÏ¢ÕıÈ·
+					// å¦‚æœè”ç³»äººä¿¡æ¯æ­£ç¡®
 					if (linkman.size() == 5 || linkman.size() == 4) {
 						linkmanInfo.add(linkman);
-						// Êı¾İÄ£ĞÍ¸üĞÂ
+						// æ•°æ®æ¨¡å‹æ›´æ–°
 						model.addRow(linkman);
-						// ±í¸ñ¸üĞÂ
+						// è¡¨æ ¼æ›´æ–°
 						table.updateUI();
 					}
 				}
@@ -247,16 +247,16 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 	}
 
 	public void sendGroupMail(Vector<Vector<String>> linkmanInfo) {
-		// ³õÊ¼»¯ÈºÓÊ¼ş·¢ËÍ×´Ì¬
+		// åˆå§‹åŒ–ç¾¤é‚®ä»¶å‘é€çŠ¶æ€
 		sendedEmailCount = 0;
 		totalEmailCount = linkmanInfo.size();
-		// ´ı·¢ËÍÈºÓÊ¼ş×ÜÊı
-		String toMan = ""; // ÊÕ¼şÈË
-		String subject = ""; // Ö÷Ìâ
-		ArrayList<String> list = new ArrayList<String>(); // ¸½¼şÁĞ±í
-		String content = ""; // ÓÊ¼şÕıÎÄÄÚÈİ
-		String copy_to = ""; // ³­ËÍÈË
-		String sendMan = mail.getUser(); // ·¢¼şÈË
+		// å¾…å‘é€ç¾¤é‚®ä»¶æ€»æ•°
+		String toMan = ""; // æ”¶ä»¶äºº
+		String subject = ""; // ä¸»é¢˜
+		ArrayList<String> list = new ArrayList<String>(); // é™„ä»¶åˆ—è¡¨
+		String content = ""; // é‚®ä»¶æ­£æ–‡å†…å®¹
+		String copy_to = ""; // æŠ„é€äºº
+		String sendMan = mail.getUser(); // å‘ä»¶äºº
 		File file = new File(selectDirPath);
 		File[] files = file.listFiles();
 		File successLogger = new File(selectDirPath + "/successLog.txt");
@@ -267,15 +267,15 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 			successOut = new FileOutputStream(successLogger);
 			faileOut = new FileOutputStream(failelogger);
 			for (int i = 0; i < linkmanInfo.size(); i++) {
-				// ÉèÖÃÓÊ¼şÖ÷Ìâ
+				// è®¾ç½®é‚®ä»¶ä¸»é¢˜
 				subject = linkmanInfo.get(i).get(2);
-				// ÉèÖÃÓÊ¼şÊÕ¼şÈË
+				// è®¾ç½®é‚®ä»¶æ”¶ä»¶äºº
 				toMan = linkmanInfo.get(i).get(1);
-				// ÉèÖÃÓÊ¼şÄÚÈİ
+				// è®¾ç½®é‚®ä»¶å†…å®¹
 				content = linkmanInfo.get(i).get(3);
-				// ÉèÖÃ³­ËÍÈË
+				// è®¾ç½®æŠ„é€äºº
 				copy_to = "";
-				// ÉèÖÃ¸½¼ş
+				// è®¾ç½®é™„ä»¶
 				try {
 					String[] temp = linkmanInfo.get(i).get(4).trim().split(";");
 					for (int tempIndex = 0; tempIndex < temp.length; tempIndex++) {
@@ -288,10 +288,10 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 				} catch (Exception e) {
 					list.clear();
 				}
-				// ·¢ËÍÓÊ¼ş
+				// å‘é€é‚®ä»¶
 				sendMail(toMan, subject, list, content, copy_to, sendMan);
 				list.clear();
-				// ³É¹¦·¢ËÍÓÊ¼ş¼ÆÊı¼Ó1
+				// æˆåŠŸå‘é€é‚®ä»¶è®¡æ•°åŠ 1
 				sendedEmailCount++;
 			}
 		} catch (Exception e) {
@@ -304,31 +304,31 @@ public class SendGroupMailFrame extends JInternalFrame implements MouseListener,
 
 	public void sendMail(final String toMan, final String subject, final ArrayList<String> list, final String text,
 			final String copy, final String sendMan) {
-		// ÈºÓÊ¼ş¶ÔÏó
+		// ç¾¤é‚®ä»¶å¯¹è±¡
 		final SendGroupAttachMail groupMails = new SendGroupAttachMail(mail.getSMTPHost(), mail.getUser(),
 				mail.getPassword(), toMan, subject, text, copy, list);
 		if (progressBar == null) {
-			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "·¢ËÍÈºÓÊ¼ş", "ÈºÓÊ¼şÕıÔÚ·¢ËÍÖĞ£¬ÇëÉÔºó...");
+			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "å‘é€ç¾¤é‚®ä»¶", "ç¾¤é‚®ä»¶æ­£åœ¨å‘é€ä¸­ï¼Œè¯·ç¨å...");
 		}
 		progressBar.setVisible(true);
-		Runnable run = new Runnable() {// ¿ªÆôÒ»¸öĞÂµÄÏß³Ì·¢ËÍÓÊ¼ş,Ïß³Ì×î´óÊıÄ¿10£¬³¬¹ı×î´óÊıÄ¿ºó¾ÍµÈ´ı
+		Runnable run = new Runnable() {// å¼€å¯ä¸€ä¸ªæ–°çš„çº¿ç¨‹å‘é€é‚®ä»¶,çº¿ç¨‹æœ€å¤§æ•°ç›®10ï¼Œè¶…è¿‡æœ€å¤§æ•°ç›®åå°±ç­‰å¾…
 			public void run() {
 				try {
-					// »ñµÃËøĞí¿É
+					// è·å¾—é”è®¸å¯
 					sendSemaphore.acquire();
 					String message = "";
 					if ("".equals(message = groupMails.send())) {
-						SendedMailTable.getSendedMailTable().setValues(toMan, subject, list, text, copy, sendMan);// ½«ÓÊ¼şÌí¼Óµ½ÒÑ·¢ËÍ
-						message = "ÓÊ¼şÒÑ·¢ËÍ³É¹¦£¡";
-						successQueue.add(new Date()+" Ïò"+toMan +"·¢ËÍÓÊ¼ş³É¹¦!\n");
+						SendedMailTable.getSendedMailTable().setValues(toMan, subject, list, text, copy, sendMan);// å°†é‚®ä»¶æ·»åŠ åˆ°å·²å‘é€
+						message = "é‚®ä»¶å·²å‘é€æˆåŠŸï¼";
+						successQueue.add(new Date()+" å‘"+toMan +"å‘é€é‚®ä»¶æˆåŠŸ!\n");
 					} else {
-						message = "ÓÊ¼ş·¢ËÍÊ§°Ü£¡ Ê§°ÜÔ­Òò£º\n" + message;
-						faileQueue.add(new Date() + " Ïò" + toMan + message+"\n");
-						JOptionPane.showMessageDialog(SendGroupMailFrame.this, message, "ÌáÊ¾",
+						message = "é‚®ä»¶å‘é€å¤±è´¥ï¼ å¤±è´¥åŸå› ï¼š\n" + message;
+						faileQueue.add(new Date() + " å‘" + toMan + message+"\n");
+						JOptionPane.showMessageDialog(SendGroupMailFrame.this, message, "æç¤º",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 					progressBar.dispose();
-					// ·ÃÎÊÍêºó£¬ÊÍ·ÅËø
+					// è®¿é—®å®Œåï¼Œé‡Šæ”¾é”
 					sendSemaphore.release();
 					// System.out.println("-----------------"+sendSemaphore.availablePermits());
 				} catch (InterruptedException e) {

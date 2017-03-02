@@ -7,24 +7,24 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 /**
- * ÀàËµÃ÷£º²¥·ÅÒôÀÖÀà
+ * ç±»è¯´æ˜ï¼šæ’­æ”¾éŸ³ä¹ç±»
  */
 public class MyAudioPlayer {
-	private URL url = null;// ÒôÀÖÎÄ¼şµÄURl
-	private AudioStream as = null;// ²¥·ÅÆ÷
+	private URL url = null;// éŸ³ä¹æ–‡ä»¶çš„URl
+	private AudioStream as = null;// æ’­æ”¾å™¨
 
 	public MyAudioPlayer() {
 		try {
-			url = MyAudioPlayer.class.getResource("/newmail.wav");// »ñÈ¡ÒôÀÖÎÄ¼şµÄurl
-			InputStream is = url.openStream();// »ñµÃÒôÀÖÎÄ¼şµÄÊäÈëÁ÷
+			url = MyAudioPlayer.class.getResource("/newmail.wav");// è·å–éŸ³ä¹æ–‡ä»¶çš„url
+			InputStream is = url.openStream();// è·å¾—éŸ³ä¹æ–‡ä»¶çš„è¾“å…¥æµ
 			as = new AudioStream(is);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	// ²¥·ÅÒôÀÖ
+	// æ’­æ”¾éŸ³ä¹
 	public void play() {
-		AudioPlayer.player.start(as);// ÓÃAudioPlayer¾²Ì¬³ÉÔ±player.start²¥·ÅÒôÀÖ
+		AudioPlayer.player.start(as);// ç”¨AudioPlayeré™æ€æˆå‘˜player.startæ’­æ”¾éŸ³ä¹
 	}
 }

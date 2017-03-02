@@ -14,23 +14,23 @@ import frame.JProgressBarFrame;
 import frame.MainFrame;
 
 public class ReceiveMailTable extends Thread {
-	private Vector mails = null;// ¹¹ÔìÒ»¸ö¿ÕÏòÁ¿£¬Ê¹ÆäÄÚ²¿Êı¾İÊı×éµÄ´óĞ¡Îª
-	// 10£¬Æä±ê×¼ÈİÁ¿ÔöÁ¿ÎªÁã¡£
-	private static Vector<Vector<String>> mailListVector = null;// ÊÕÈ¡ÓÊ¼şÁĞ±íÄ£ĞÍ
+	private Vector mails = null;// æ„é€ ä¸€ä¸ªç©ºå‘é‡ï¼Œä½¿å…¶å†…éƒ¨æ•°æ®æ•°ç»„çš„å¤§å°ä¸º
+	// 10ï¼Œå…¶æ ‡å‡†å®¹é‡å¢é‡ä¸ºé›¶ã€‚
+	private static Vector<Vector<String>> mailListVector = null;// æ”¶å–é‚®ä»¶åˆ—è¡¨æ¨¡å‹
 	private static GetMail getmail = null;
 	private RecycleMailTable recycleMail = null;
-	private static JTable deleteMailTable = null;// É¾³ıÓÊ¼ş±í¸ñ
+	private static JTable deleteMailTable = null;// åˆ é™¤é‚®ä»¶è¡¨æ ¼
 	private MailTableModel tableModel = null;
 	public static LinkedList<String> list = new LinkedList<String>();
-	private static ReceiveMailTable mail2Table = null;// µ¥ÀıÄ£Ê½µÃµ½±¾Àà¶ÔÏó
+	private static ReceiveMailTable mail2Table = null;// å•ä¾‹æ¨¡å¼å¾—åˆ°æœ¬ç±»å¯¹è±¡
 	private static JProgressBarFrame progressBar = new JProgressBarFrame(
-			MainFrame.MAINFRAME, "ÊÕ¼şÏä", "ÕıÔÚ²éÊÕÓÊ¼ş£¬ÇëÉÔºó...");
+			MainFrame.MAINFRAME, "æ”¶ä»¶ç®±", "æ­£åœ¨æŸ¥æ”¶é‚®ä»¶ï¼Œè¯·ç¨å...");
 
 	private ReceiveMailTable() {
 		getmail = GetMail.getMailInstantiate();
 	}
 
-	public static ReceiveMailTable getMail2Table() {// µ¥ÀıÄ£Ê½µÃµ½±¾Àà¶ÔÏó
+	public static ReceiveMailTable getMail2Table() {// å•ä¾‹æ¨¡å¼å¾—åˆ°æœ¬ç±»å¯¹è±¡
 		if (mail2Table == null) {
 			progressBar.setVisible(true);
 			mail2Table = new ReceiveMailTable();
@@ -39,29 +39,29 @@ public class ReceiveMailTable extends Thread {
 		return mail2Table;
 	}
 
-	public static boolean isInitMail2Table() {// ÅĞ¶Ï±¾Àà¶ÔÏóÊÇ·ñ³õÊ¼»¯
+	public static boolean isInitMail2Table() {// åˆ¤æ–­æœ¬ç±»å¯¹è±¡æ˜¯å¦åˆå§‹åŒ–
 		boolean isInit = false;
 		if (mail2Table != null)
 			isInit = true;
 		return isInit;
 	}
 
-	// ÉèÖÃÓÊ¼şÁĞ±í±í¸ñ
+	// è®¾ç½®é‚®ä»¶åˆ—è¡¨è¡¨æ ¼
 	public void setDeleteMailTable(JTable jTable) {
 		deleteMailTable = jTable;
 	}
 
-	// Ë¢ĞÂÓÊ¼şÁĞ±íÊ±ÓÃµ½
+	// åˆ·æ–°é‚®ä»¶åˆ—è¡¨æ—¶ç”¨åˆ°
 	public void startReceiveMail() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				progressBar.setVisible(true);
 				MainFrame.addIFame(FrameFactory.getFrameFactory()
-						.getReceiveFrame());// ½«ÊÕ¼şÏä½çÃæÏÔÊ¾ÔÚÖ÷´°¿ÚÖĞ
+						.getReceiveFrame());// å°†æ”¶ä»¶ç®±ç•Œé¢æ˜¾ç¤ºåœ¨ä¸»çª—å£ä¸­
 			}
 		});
-		new Thread() {// ¿ªÆôĞÂµÄÏß³ÌË¢ĞÂÓÊ¼şÁĞ±í
+		new Thread() {// å¼€å¯æ–°çš„çº¿ç¨‹åˆ·æ–°é‚®ä»¶åˆ—è¡¨
 			public void run() {
 				mailToTable();
 			}
@@ -73,16 +73,16 @@ public class ReceiveMailTable extends Thread {
 		mailToTable();
 	}
 
-	// ½«ÓÊ¼şĞÅÏ¢Ìí¼Óµ½±í¸ñÖĞ
+	// å°†é‚®ä»¶ä¿¡æ¯æ·»åŠ åˆ°è¡¨æ ¼ä¸­
 	public void mailToTable() {
 		try {
 			Iterator it = getmail.getMailInfo(getmail.getAllMail()).iterator();
 			Map map = null;
-			// ½«ÓÊ¼şĞÅÏ¢ÁĞ±íÏÔÊ¾ÔÚ±í¸ñÖĞ
+			// å°†é‚®ä»¶ä¿¡æ¯åˆ—è¡¨æ˜¾ç¤ºåœ¨è¡¨æ ¼ä¸­
 			if (deleteMailTable.getRowCount() > 0) {
-				deleteMailTable.removeAll();// ÒÆ³ı±í¸ñÖĞµÄËùÓĞÄÚÈİ
-				mailListVector.removeAllElements();// ÒÆ³ıÄ£ĞÍÖĞµÄËùÓĞÄÚÈİ
-				list.clear();// ´Ó´ËÁĞ±íÖĞÒÆ³ıËùÓĞÔªËØ
+				deleteMailTable.removeAll();// ç§»é™¤è¡¨æ ¼ä¸­çš„æ‰€æœ‰å†…å®¹
+				mailListVector.removeAllElements();// ç§»é™¤æ¨¡å‹ä¸­çš„æ‰€æœ‰å†…å®¹
+				list.clear();// ä»æ­¤åˆ—è¡¨ä¸­ç§»é™¤æ‰€æœ‰å…ƒç´ 
 			}
 			while (it.hasNext()) {
 				mails = new Vector<String>();
@@ -101,7 +101,7 @@ public class ReceiveMailTable extends Thread {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					deleteMailTable.validate();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
+					deleteMailTable.validate();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
 					deleteMailTable.repaint();
 					progressBar.setVisible(false);
 				}
@@ -112,56 +112,56 @@ public class ReceiveMailTable extends Thread {
 		}
 	}
 
-	// ¶ÁÈ¡ÓÊ¼şÄÚÈİ
-	public static String readMail(LinkedList<String> linkedList, int id) {// idĞĞºÅ
+	// è¯»å–é‚®ä»¶å†…å®¹
+	public static String readMail(LinkedList<String> linkedList, int id) {// idè¡Œå·
 		String message = null;
-		String mailID = (String) linkedList.get(id);// ·µ»ØÖ¸¶¨ĞĞ¶ÔÓ¦µÄmailIDºÅ
+		String mailID = (String) linkedList.get(id);// è¿”å›æŒ‡å®šè¡Œå¯¹åº”çš„mailIDå·
 		try {
 			Map result = getmail.readMail(mailID);
-			message = result.get("content").toString();// µÃµ½ÓÊ¼şÄÚÈİ
+			message = result.get("content").toString();// å¾—åˆ°é‚®ä»¶å†…å®¹
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return message;
 	}
 
-	// ½«ÓÊ¼şÒÆµ½»ØÊÕÕ¾
+	// å°†é‚®ä»¶ç§»åˆ°å›æ”¶ç«™
 	public void moveMail2Recycle(int id) {
-		recycleMail = RecycleMailTable.getRecycleMail();// ³õÊ¼»¯»ØÊÕÕ¾
-		recycleMail.getMailTableModel();// µÃµ½»ØÊÕÕ¾µÄ±í¸ñÄ£ĞÍ
-		recycleMail.addRecycleMail(mailListVector.get(id), list.get(id));// ½«ÓÊ¼şÒÆµ½»ØÊÕÕ¾
+		recycleMail = RecycleMailTable.getRecycleMail();// åˆå§‹åŒ–å›æ”¶ç«™
+		recycleMail.getMailTableModel();// å¾—åˆ°å›æ”¶ç«™çš„è¡¨æ ¼æ¨¡å‹
+		recycleMail.addRecycleMail(mailListVector.get(id), list.get(id));// å°†é‚®ä»¶ç§»åˆ°å›æ”¶ç«™
 	}
 
-	// É¾³ıÓÊ¼ş
-	public void deleteMail(int id) {// id Ñ¡ÔñµÄĞĞºÅ
-		mailListVector.removeElementAt(id);// É¾³ı±í¸ñÖĞÑ¡ÖĞÓÊ¼ş¶ÔÓ¦µÄĞĞ
+	// åˆ é™¤é‚®ä»¶
+	public void deleteMail(int id) {// id é€‰æ‹©çš„è¡Œå·
+		mailListVector.removeElementAt(id);// åˆ é™¤è¡¨æ ¼ä¸­é€‰ä¸­é‚®ä»¶å¯¹åº”çš„è¡Œ
 		list.remove(id);
-		deleteMailTable.updateUI();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
-		deleteMailTable.validate();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
+		deleteMailTable.updateUI();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
+		deleteMailTable.validate();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
 		deleteMailTable.repaint();
 	}
 
-	// »Ö¸´ÓÊ¼ş
+	// æ¢å¤é‚®ä»¶
 	public static void recoverMail(Vector<String> vector, String mailId) {
 		mailListVector.add(vector);
 		list.add(mailId);
-		deleteMailTable.updateUI();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
-		deleteMailTable.validate();// ¶¯Ì¬µÄ¸üĞÂ±í¸ñ
+		deleteMailTable.updateUI();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
+		deleteMailTable.validate();// åŠ¨æ€çš„æ›´æ–°è¡¨æ ¼
 		deleteMailTable.repaint();
 	}
 
-	// ³¹µ×É¾³ıÓÊ¼ş
+	// å½»åº•åˆ é™¤é‚®ä»¶
 	public static boolean deleteMailForever(int[] selectMail, int id, List list) {
 		boolean isDelete = false;
 		String[] mailID = new String[id];
 		for (int i = 0; i < id; i++) {
-			mailID[i] = (String) list.get(selectMail[i]);// ·µ»ØÖ¸¶¨ĞĞ¶ÔÓ¦µÄmailIDºÅ
+			mailID[i] = (String) list.get(selectMail[i]);// è¿”å›æŒ‡å®šè¡Œå¯¹åº”çš„mailIDå·
 		}
-		isDelete = getmail.deleteMail(mailID);// ³¹µ×É¾³ıÓÊ¼ş
+		isDelete = getmail.deleteMail(mailID);// å½»åº•åˆ é™¤é‚®ä»¶
 		return isDelete;
 	}
 
-	public MailTableModel getMailTableModel() {// ÓÊ¼ş±í¸ñÄ£ĞÍ
+	public MailTableModel getMailTableModel() {// é‚®ä»¶è¡¨æ ¼æ¨¡å‹
 		if (tableModel == null)
 			tableModel = new MailTableModel();
 		mailListVector = tableModel.getVector();

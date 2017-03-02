@@ -5,19 +5,19 @@ import mailutil.SendAttachMail;
 import utils.EditorUtils;
 
 /**
- * ÓÃÓÚÑéÖ¤µÇÂ½ÊÇ·ñ³É¹¦ 
+ * ç”¨äºéªŒè¯ç™»é™†æ˜¯å¦æˆåŠŸ 
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class LoginAction {
-	private String POP3Host = ""; // POP3·şÎñÆ÷
-	private String SMTPHost = ""; // SMTP·şÎñÆ÷
-	private String user = ""; // µÇÂ¼·şÎñÆ÷µÄÕÊºÅ
-	private String password = ""; // µÇÂ¼·şÎñÆ÷µÄÃÜÂë
+	private String POP3Host = ""; // POP3æœåŠ¡å™¨
+	private String SMTPHost = ""; // SMTPæœåŠ¡å™¨
+	private String user = ""; // ç™»å½•æœåŠ¡å™¨çš„å¸å·
+	private String password = ""; // ç™»å½•æœåŠ¡å™¨çš„å¯†ç 
 	private GetMail getMail = null;
 	private SendAttachMail sendMail = null;
 
-	// Èı¸ö²ÎÊıµÄ¹¹Ôì·½·¨
+	// ä¸‰ä¸ªå‚æ•°çš„æ„é€ æ–¹æ³•
 	public LoginAction(String sMTPHost, String pOP3Host, String user,
 			String password) {
 		super();
@@ -25,26 +25,26 @@ public class LoginAction {
 		SMTPHost = sMTPHost;
 		this.user = user;
 		this.password = password;
-		// ÊµÀı»¯ÊÕÓÊ¼ş¶ÔÏó
+		// å®ä¾‹åŒ–æ”¶é‚®ä»¶å¯¹è±¡
 		getMail = GetMail.getMailInstantiate();
 		getMail.setPOP3Host(POP3Host);
 		getMail.setUser(user);
 		getMail.setPassword(password);
-		// ÊµÀı»¯·¢ÓÊ¼ş¼ş¶ÔÏó
+		// å®ä¾‹åŒ–å‘é‚®ä»¶ä»¶å¯¹è±¡
 		sendMail = SendAttachMail.getSendMailInstantiate();
 		sendMail.setSMTPHost(SMTPHost);
 		sendMail.setUser(user);
 		sendMail.setPassword(password);
 	}
 
-	// ÅĞ¶ÏµÇÂ½ÊÇ·ñ³É¹¦
+	// åˆ¤æ–­ç™»é™†æ˜¯å¦æˆåŠŸ
 	public boolean isLogin() {
 
 		boolean isLogin = false;
-		// ÅĞ¶ÏÓÃ»§ÃûÊÇ·ñÎª¿Õ
+		// åˆ¤æ–­ç”¨æˆ·åæ˜¯å¦ä¸ºç©º
 		if (checkUser()) {
 			try {
-				sendMail.connect();// Á¬½Ó·¢¼ş·şÎñÆ÷£¨Ö»ÄÜÍ¨¹ıÁ¬½Ó·¢¼şÏäÑéÖ¤Éí·İ£¬·ñÕß·¢¼şÊ±»áÅ×Òì³££©
+				sendMail.connect();// è¿æ¥å‘ä»¶æœåŠ¡å™¨ï¼ˆåªèƒ½é€šè¿‡è¿æ¥å‘ä»¶ç®±éªŒè¯èº«ä»½ï¼Œå¦è€…å‘ä»¶æ—¶ä¼šæŠ›å¼‚å¸¸ï¼‰
 				isLogin = true;
 			} catch (Exception e) {
 				isLogin = false;
@@ -54,15 +54,15 @@ public class LoginAction {
 		return isLogin;
 	}
 
-	// ÑéÖ¤ÓÃ»§ÊäÈëÊı¾İµÄÓĞĞ§ĞÔ
+	// éªŒè¯ç”¨æˆ·è¾“å…¥æ•°æ®çš„æœ‰æ•ˆæ€§
 	public boolean checkUser() {
 		boolean check = false;
-		boolean checkSMTP = SMTPHost.toLowerCase().startsWith("smtp");// ÑéÖ¤smtp·şÎñÆ÷
-		boolean checkPOP = POP3Host.toLowerCase().startsWith("pop");// ÑéÖ¤pop·şÎñÆ÷
+		boolean checkSMTP = SMTPHost.toLowerCase().startsWith("smtp");// éªŒè¯smtpæœåŠ¡å™¨
+		boolean checkPOP = POP3Host.toLowerCase().startsWith("pop");// éªŒè¯popæœåŠ¡å™¨
 		boolean checkPassword = !"".equals(password) && password.length() >= 1;
-		boolean checkUser = EditorUtils.checkEmailAdress(user);// ÑéÖ¤ÓÊÏäµÄÓĞĞ§ĞÔ
+		boolean checkUser = EditorUtils.checkEmailAdress(user);// éªŒè¯é‚®ç®±çš„æœ‰æ•ˆæ€§
 		if (checkSMTP && checkPOP && checkPassword && checkUser) {
-			check = true;// ÑéÖ¤Í¨¹ı
+			check = true;// éªŒè¯é€šè¿‡
 		}
 		return check;
 	}

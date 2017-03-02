@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import utils.EditorUtils;
 
 /**
- * ¹ØÓÚÎÒÃÇ½çÃæ
+ * å…³äºæˆ‘ä»¬ç•Œé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
@@ -27,12 +27,12 @@ public class AboutUsFrame extends JInternalFrame implements MouseListener,
 ActionListener  {	
 	private JLabel background = null;
 	public AboutUsFrame(){
-		super("¹ØÓÚÎÒÃÇ");
+		super("å…³äºæˆ‘ä»¬");
 		validate();
-		//ÉèÖÃ¶Ô»°¿òÍ¼±ê
+		//è®¾ç½®å¯¹è¯æ¡†å›¾æ ‡
 		this.setFrameIcon(EditorUtils.createIcon("aboutUs.png"));
 		this.setClosable(true);
-		this.setMaximizable(true);// ´°¿Ú×î´ó»¯ÉèÖÃ
+		this.setMaximizable(true);// çª—å£æœ€å¤§åŒ–è®¾ç½®
 		this.setIconifiable(true);
 		this.setBounds(10, 10, 640, 600);
 		this.getContentPane().setLayout(new BorderLayout());

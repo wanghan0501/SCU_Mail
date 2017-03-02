@@ -8,7 +8,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 /**
- * 组建渲染方式
+ * 缁勫缓娓叉煋鏂瑰紡
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */

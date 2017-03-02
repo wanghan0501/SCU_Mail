@@ -7,7 +7,7 @@ import utils.ReceiveMailTable;
 import utils.RecycleMailTable;
 
 /**
- * »ØÊÕÕ¾ É¾³ıÓÊ¼şµÄ»Ö¸´ºÍ³¹µ×É¾³ı
+ * å›æ”¶ç«™ åˆ é™¤é‚®ä»¶çš„æ¢å¤å’Œå½»åº•åˆ é™¤
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016 
@@ -16,23 +16,23 @@ public class RecycleFrame extends BaseReceiceFrame {
 	private RecycleMailTable recycleMail = null;
 
 	public RecycleFrame() {
-		super("»ØÊÕÕ¾");
+		super("å›æ”¶ç«™");
 		this.setFrameIcon(EditorUtils.createIcon("deleted.png"));
 		recycleMail = RecycleMailTable.getRecycleMail();
 		tableModel = recycleMail.getMailTableModel();
 		recycleMail.setRecycleMailTable(table);
 		table.setModel(tableModel);
-		this.setPopupOne("»Ö¸´ÓÊ¼ş", "undo.png");
-		this.setPopupTwo("³¹µ×É¾³ı", "forverdelete.png");
+		this.setPopupOne("æ¢å¤é‚®ä»¶", "undo.png");
+		this.setPopupTwo("å½»åº•åˆ é™¤", "forverdelete.png");
 	}
 
-	public void doubleClick(int selectRom) {// Ë«»÷ÊÂ¼şµÄ´¦Àí
+	public void doubleClick(int selectRom) {// åŒå‡»äº‹ä»¶çš„å¤„ç†
 		mailContent.setText(ReceiveMailTable.readMail(
 				RecycleMailTable.listCopy, selectRom));
 	}
 
 	/**
-	 * ÓÒ¼üµÚ¶ş¸öÑ¡Ïî±»Ñ¡ÖĞ
+	 * å³é”®ç¬¬äºŒä¸ªé€‰é¡¹è¢«é€‰ä¸­
 	 * 
 	 * @param selectRoms
 	 */
@@ -40,14 +40,14 @@ public class RecycleFrame extends BaseReceiceFrame {
 		super.popupTwoisSelected(selectRoms, RecycleMailTable.listCopy);
 	}
 
-	// »Ö¸´ÓÊ¼ş
+	// æ¢å¤é‚®ä»¶
 	public void delete(int[] selectRoms, int mailState) {
-		for (int i = 0; i < selectRoms.length// Ñ­»·É¾³ıÃ¿ĞĞ
-				&& selectRoms[i] < tableModel.getRowCount(); i++) {// ²¢ÅĞ¶ÏÃ¿ĞĞµÄÓĞĞ§ĞÔ
+		for (int i = 0; i < selectRoms.length// å¾ªç¯åˆ é™¤æ¯è¡Œ
+				&& selectRoms[i] < tableModel.getRowCount(); i++) {// å¹¶åˆ¤æ–­æ¯è¡Œçš„æœ‰æ•ˆæ€§
 			if (mailState == 1)
 				recycleMail.recycleMail(selectRoms[i]);
-			recycleMail.deleteMail(selectRoms[i]);// É¾³ıÓÊ¼şÁĞ±í±í¸ñÖĞµÄÓÊ¼ş
-			for (int j = i + 1; j < selectRoms.length; j++) {// ĞŞ¸ÄÑ¡ÖĞÓÊ¼şÒÔºóµÄÃ¿·âÓÊ¼şµÄĞĞºÅ
+			recycleMail.deleteMail(selectRoms[i]);// åˆ é™¤é‚®ä»¶åˆ—è¡¨è¡¨æ ¼ä¸­çš„é‚®ä»¶
+			for (int j = i + 1; j < selectRoms.length; j++) {// ä¿®æ”¹é€‰ä¸­é‚®ä»¶ä»¥åçš„æ¯å°é‚®ä»¶çš„è¡Œå·
 				selectRoms[j]--;
 			}
 		}

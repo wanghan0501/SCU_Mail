@@ -12,23 +12,23 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
- * ÀàËµÃ÷£º¶ÁÈ¡Í¨Ñ¶Â¼ÁĞ±íĞÅÏ¢
+ * ç±»è¯´æ˜ï¼šè¯»å–é€šè®¯å½•åˆ—è¡¨ä¿¡æ¯
  */
 public class ReadLinkmanXMl {
 	private static Vector<Vector<String>> linkmans = LinkmanListTabelModel
 			.getVector();
 
-	// ¶ÁÈ¡ÁªÏµÈËĞÅÏ¢
+	// è¯»å–è”ç³»äººä¿¡æ¯
 	public void readXMl(String fileName, Vector<Vector<String>> linkmanVector) {
 		try {
 			String path = System.getProperty("user.dir");
 			fileName = path + "/" + fileName;
 			File f = new File(fileName);
 			SAXReader reader = new SAXReader();
-			Document doc = reader.read(f);// ¶ÁÈ¡ÁªÏµÈËÁĞ±í
+			Document doc = reader.read(f);// è¯»å–è”ç³»äººåˆ—è¡¨
 			Element root = doc.getRootElement();
 			Element foo = null;
-			for (Iterator i = root.elementIterator("linkman"); i.hasNext();) {// ±éÀúÃ¿Ò»¸ö½áµã
+			for (Iterator i = root.elementIterator("linkman"); i.hasNext();) {// éå†æ¯ä¸€ä¸ªç»“ç‚¹
 				foo = (Element) i.next();
 				Vector<String> vector = new Vector<String>();
 				vector.add(foo.elementText("name"));
@@ -41,9 +41,9 @@ public class ReadLinkmanXMl {
 		}
 	}
 
-	static DefaultListModel dl = new DefaultListModel();// ÁªÏµÈËÁĞ±íÄ£ĞÍ
+	static DefaultListModel dl = new DefaultListModel();// è”ç³»äººåˆ—è¡¨æ¨¡å‹
 
-	// ÁªÏµÈËÁĞ±í ÓÃÓÚÖ÷Ò³ÃæÏÔÊ¾
+	// è”ç³»äººåˆ—è¡¨ ç”¨äºä¸»é¡µé¢æ˜¾ç¤º
 	public JList makeList() {
 		JList linkmanList = null;
 
@@ -53,34 +53,34 @@ public class ReadLinkmanXMl {
 			int linkmansCount = linkmans.size();
 			if (linkmansCount != 0) {
 				for (int i = 0; i < linkmansCount; i++) {
-					String name = linkmans.get(i).get(0);// µÃµ½µÚi¸öÁªÏµÈËµÄĞÕÃû
+					String name = linkmans.get(i).get(0);// å¾—åˆ°ç¬¬iä¸ªè”ç³»äººçš„å§“å
 					if (name != null && !"".equals(name)) {
-						dl.addElement(name);// ½«ÁªÏµÈËĞÕÃûÌí¼Óµ½ÁĞ±íÃûÄ£ĞÍÖĞ
+						dl.addElement(name);// å°†è”ç³»äººå§“åæ·»åŠ åˆ°åˆ—è¡¨åæ¨¡å‹ä¸­
 					} else {
-						String email = linkmans.get(i).get(2);// µÃµ½ÁªÏµÈËµÄemail
+						String email = linkmans.get(i).get(2);// å¾—åˆ°è”ç³»äººçš„email
 						dl.addElement(email);
 					}
 				}
 				linkmanList = new JList(dl);
 			} else {
-				dl.addElement("ÔİÊ±Ã»ÓĞÁªÏµÈË");
+				dl.addElement("æš‚æ—¶æ²¡æœ‰è”ç³»äºº");
 				linkmanList = new JList(dl);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return linkmanList;// ·µ»ØÁªÏµÈËÁĞ±í
+		return linkmanList;// è¿”å›è”ç³»äººåˆ—è¡¨
 	}
 
-	// ¸ù¾İĞÕÃû»òÓÊÏäµØÖ·²éÕÒÁªÏµÈË
+	// æ ¹æ®å§“åæˆ–é‚®ç®±åœ°å€æŸ¥æ‰¾è”ç³»äºº
 	public String findLinkman(int index) {
 		String linkman = "";
-		String name = (String) dl.get(index);// µÃµ½ÁªÏµÈËÄ£ĞÍÖĞµÄÁªÏµÈËĞÕÃû
+		String name = (String) dl.get(index);// å¾—åˆ°è”ç³»äººæ¨¡å‹ä¸­çš„è”ç³»äººå§“å
 		int linkmansCount = linkmans.size();
 		for (int i = 0; i < linkmansCount; i++) {
-			String lkmname = linkmans.get(i).get(0);// µÃµ½µÚi¸öÁªÏµÈËµÄĞÕÃû
+			String lkmname = linkmans.get(i).get(0);// å¾—åˆ°ç¬¬iä¸ªè”ç³»äººçš„å§“å
 			if (lkmname.equals(name)) {
-				String email = linkmans.get(i).get(2);// µÃµ½ÁªÏµÈËµÄemail
+				String email = linkmans.get(i).get(2);// å¾—åˆ°è”ç³»äººçš„email
 				linkman = name + " <" + email + ">;";
 				break;
 			}

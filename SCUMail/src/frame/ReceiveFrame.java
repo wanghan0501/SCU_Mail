@@ -4,43 +4,43 @@ import utils.EditorUtils;
 import utils.ReceiveMailTable;
 
 /**
- * ÊÕ¼ş½çÃæ
+ * æ”¶ä»¶ç•Œé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class ReceiveFrame extends BaseReceiceFrame {
 
 	public ReceiveFrame() {
-		super("ÊÕ¼şÏä");
+		super("æ”¶ä»¶ç®±");
 		this.setFrameIcon(EditorUtils.createIcon("receive.png"));
-		mail2Table = ReceiveMailTable.getMail2Table();// ¿ªÆôĞÂµÄÏß³ÌÏÔÊ¾ÓÊ¼şÁĞ±í
+		mail2Table = ReceiveMailTable.getMail2Table();// å¼€å¯æ–°çš„çº¿ç¨‹æ˜¾ç¤ºé‚®ä»¶åˆ—è¡¨
 		mail2Table.setDeleteMailTable(this.table);
 		tableModel = mail2Table.getMailTableModel();
 		table.setModel(tableModel);
-		this.setPopupOne("É¾³ı", "delete.png");
-		this.setPopupTwo("³¹µ×É¾³ı", "forverdelete.png");
-		this.setPopupThree("Ë¢ĞÂÊÕ¼şÏä", "refresh.jpg", true);
+		this.setPopupOne("åˆ é™¤", "delete.png");
+		this.setPopupTwo("å½»åº•åˆ é™¤", "forverdelete.png");
+		this.setPopupThree("åˆ·æ–°æ”¶ä»¶ç®±", "refresh.jpg", true);
 	}
 
-	public void doubleClick(int selectRom) {// Ë«»÷ÊÂ¼şµÄ´¦Àí
+	public void doubleClick(int selectRom) {// åŒå‡»äº‹ä»¶çš„å¤„ç†
 		mailContent.setText(ReceiveMailTable.readMail(ReceiveMailTable.list,
 				selectRom));
 	}
 
-	// É¾³ıÓÊ¼ş
-	public void delete(int[] selectRoms, int mailState) {// mailState ÅĞ¶ÏÓÊ¼şµÄÉ¾³ı×´Ì¬
-		for (int i = 0; i < selectRoms.length// Ñ­»·É¾³ıÃ¿ĞĞ
-				&& selectRoms[i] < tableModel.getRowCount(); i++) {// ²¢ÅĞ¶ÏÃ¿ĞĞµÄÓĞĞ§ĞÔ
+	// åˆ é™¤é‚®ä»¶
+	public void delete(int[] selectRoms, int mailState) {// mailState åˆ¤æ–­é‚®ä»¶çš„åˆ é™¤çŠ¶æ€
+		for (int i = 0; i < selectRoms.length// å¾ªç¯åˆ é™¤æ¯è¡Œ
+				&& selectRoms[i] < tableModel.getRowCount(); i++) {// å¹¶åˆ¤æ–­æ¯è¡Œçš„æœ‰æ•ˆæ€§
 			if (mailState == 1)
-				mail2Table.moveMail2Recycle(selectRoms[i]);// ½«ÓÊ¼ş·ÅÈë»ØÊÕÕ¾
-			mail2Table.deleteMail(selectRoms[i]);// É¾³ıÓÊ¼şÁĞ±í±í¸ñÖĞµÄÓÊ¼ş
-			for (int j = i + 1; j < selectRoms.length; j++) {// ĞŞ¸ÄÑ¡ÖĞÓÊ¼şÒÔºóµÄÃ¿·âÓÊ¼şµÄĞĞºÅ
+				mail2Table.moveMail2Recycle(selectRoms[i]);// å°†é‚®ä»¶æ”¾å…¥å›æ”¶ç«™
+			mail2Table.deleteMail(selectRoms[i]);// åˆ é™¤é‚®ä»¶åˆ—è¡¨è¡¨æ ¼ä¸­çš„é‚®ä»¶
+			for (int j = i + 1; j < selectRoms.length; j++) {// ä¿®æ”¹é€‰ä¸­é‚®ä»¶ä»¥åçš„æ¯å°é‚®ä»¶çš„è¡Œå·
 				selectRoms[j]--;
 			}
 		}
 	}
 
-	// ÓÒ¼üµÚÈı¸öÑ¡Ïî±»Ñ¡ÖĞË¢ĞÂÊÕ¼şÏä
+	// å³é”®ç¬¬ä¸‰ä¸ªé€‰é¡¹è¢«é€‰ä¸­åˆ·æ–°æ”¶ä»¶ç®±
 	private void popupThreeisSelected() {
 
 	}

@@ -4,7 +4,7 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
 /**
- * ÀàËµÃ÷£ºSMTP/POP3ÊÚÈ¨ÑéÖ¤Àà
+ * ç±»è¯´æ˜ï¼šSMTP/POP3æˆæƒéªŒè¯ç±»
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -13,13 +13,13 @@ import javax.mail.PasswordAuthentication;
 class SmtpPop3Auth extends Authenticator {
 	String user, password;
 
-	// ÉèÖÃÕÊºÅĞÅÏ¢
+	// è®¾ç½®å¸å·ä¿¡æ¯
 	void setAccount(String user, String password) {
 		this.user = user;
 		this.password = password;
 	}
 
-	// È¡µÃPasswordAuthentication¶ÔÏó
+	// å–å¾—PasswordAuthenticationå¯¹è±¡
 	protected PasswordAuthentication getPasswordAuthentication() {
 		return new PasswordAuthentication(user, password);
 	}

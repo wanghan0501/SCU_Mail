@@ -12,64 +12,64 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 /**
- * ÀàËµÃ÷£º±£´æÁªÏµÈËÎªxmlÎÄ¼ş
+ * ç±»è¯´æ˜ï¼šä¿å­˜è”ç³»äººä¸ºxmlæ–‡ä»¶
  * @author caesar
  */
 public class SaveLinkmans2XML {
-	private Document document = null;// xmlÎÄµµ¶ÔÏó
-	private Element linkmansElement = null;// ´´½¨¸ùÔªËØ
+	private Document document = null;// xmlæ–‡æ¡£å¯¹è±¡
+	private Element linkmansElement = null;// åˆ›å»ºæ ¹å…ƒç´ 
 
-	// ±£´æÁªÏµÈËÎªxmlÎÄµµ
+	// ä¿å­˜è”ç³»äººä¸ºxmlæ–‡æ¡£
 	public boolean saveLinkmanXml(String fileName,
 			Vector<Vector<String>> linkmanVector) {
 		boolean isSave = false;
 		if (linkmanVector.size() > 0) {
-			initXml();// ³õÊ¼»¯xmlÎÄµµ
+			initXml();// åˆå§‹åŒ–xmlæ–‡æ¡£
 			Iterator<Vector<String>> iterator = linkmanVector.iterator();
 			while (iterator.hasNext()) {
 				Vector<String> vector = iterator.next();
-				String name = vector.get(0);// µÃµ½ĞÕÃû
-				String nickname = vector.get(1);// µÃµ½êÇ³Æ
-				String email = vector.get(2);// µÃµ½ÓÊÏäµØÖ·
+				String name = vector.get(0);// å¾—åˆ°å§“å
+				String nickname = vector.get(1);// å¾—åˆ°æ˜µç§°
+				String email = vector.get(2);// å¾—åˆ°é‚®ç®±åœ°å€
 				saveLinkmanInfor(name, nickname, email);
 			}
-			saveXMLFile(fileName);// ±£´æÁªÏµÈËxmlÎÄ¼ş
-			isSave = true;// ±£´æ³É¹¦
+			saveXMLFile(fileName);// ä¿å­˜è”ç³»äººxmlæ–‡ä»¶
+			isSave = true;// ä¿å­˜æˆåŠŸ
 		}
 		return isSave;
 
 	}
 
-	// ³õÊ¼»¯xmlÎÄµµ
+	// åˆå§‹åŒ–xmlæ–‡æ¡£
 	private void initXml() {
-		// Ê¹ÓÃ DocumentHelper Àà´´½¨Ò»¸öÎÄµµÊµÀı¡£ DocumentHelper ÊÇÉú³É XML ÎÄµµ½ÚµãµÄ dom4j API
-		// ¹¤³§Àà¡£
+		// ä½¿ç”¨ DocumentHelper ç±»åˆ›å»ºä¸€ä¸ªæ–‡æ¡£å®ä¾‹ã€‚ DocumentHelper æ˜¯ç”Ÿæˆ XML æ–‡æ¡£èŠ‚ç‚¹çš„ dom4j API
+		// å·¥å‚ç±»ã€‚
 		document = DocumentHelper.createDocument();
-		// Ê¹ÓÃ addElement() ·½·¨´´½¨¸ùÔªËØ catalog ¡£addElement() ÓÃÓÚÏò XML ÎÄµµÖĞÔö¼ÓÔªËØ¡£
+		// ä½¿ç”¨ addElement() æ–¹æ³•åˆ›å»ºæ ¹å…ƒç´  catalog ã€‚addElement() ç”¨äºå‘ XML æ–‡æ¡£ä¸­å¢åŠ å…ƒç´ ã€‚
 		linkmansElement = document.addElement("linkmans");
-		// ÔÚ linkmans ÔªËØÖĞÊ¹ÓÃ addComment() ·½·¨Ìí¼Ó×¢ÊÍ¡°An XML catalog¡±¡£
-		linkmansElement.addComment("ÎÒµÄÁªÏµÈËÁĞ±í£¡");
+		// åœ¨ linkmans å…ƒç´ ä¸­ä½¿ç”¨ addComment() æ–¹æ³•æ·»åŠ æ³¨é‡Šâ€œAn XML catalogâ€ã€‚
+		linkmansElement.addComment("æˆ‘çš„è”ç³»äººåˆ—è¡¨ï¼");
 	}
 
 	private void saveLinkmanInfor(String name, String nickname,
 			String emailadress) {
-		// ÔÚ linkmans ÔªËØÖĞÊ¹ÓÃ addElement() ·½·¨Ôö¼Ó linkman ÔªËØ¡£
+		// åœ¨ linkmans å…ƒç´ ä¸­ä½¿ç”¨ addElement() æ–¹æ³•å¢åŠ  linkman å…ƒç´ ã€‚
 		Element linkmanElement = linkmansElement.addElement("linkman");
 
-		// Ìí¼Ó½ÚµãlinkmanµÄ×Ó½Úµãname£»
+		// æ·»åŠ èŠ‚ç‚¹linkmançš„å­èŠ‚ç‚¹nameï¼›
 		Element nameElement = linkmanElement.addElement("name");
 		nameElement.setText(name);
 
-		// Ìí¼Ó½ÚµãlinkmanµÄ×Ó½Úµãnickname
+		// æ·»åŠ èŠ‚ç‚¹linkmançš„å­èŠ‚ç‚¹nickname
 		Element nicknameElement = linkmanElement.addElement("nickname");
 		nicknameElement.setText(nickname);
 
-		// Ìí¼Ó½ÚµãlinkmanµÄ×Ó½Úµãemailadress
+		// æ·»åŠ èŠ‚ç‚¹linkmançš„å­èŠ‚ç‚¹emailadress
 		Element emailadressElement = linkmanElement.addElement("emailadress");
 		emailadressElement.setText(emailadress);
 	}
 
-	// ±£´æÍ¨Ñ¶Â¼xmlÎÄ¼ş
+	// ä¿å­˜é€šè®¯å½•xmlæ–‡ä»¶
 	private void saveXMLFile(String fileName) {
 		XMLWriter output;
 		try {

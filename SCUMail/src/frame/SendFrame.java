@@ -45,144 +45,144 @@ import utils.EditorUtils;
 import utils.SendedMailTable;
 
 /**
- * ·¢ËÍÓÊ¼ş½çÃæ
+ * å‘é€é‚®ä»¶ç•Œé¢
  * @author caesar
  * @version Copyright(C) SCU. 2016
  */
 public class SendFrame extends JInternalFrame implements ActionListener,
 		MouseListener, MouseMotionListener, FocusListener {
-	private JComboBox fontSizeCB;// ×ÖÌå´óĞ¡ÁĞ±í
-	private JComboBox fontCB;// ×ÖÌåÁĞ±í
-	private JTextPane sendCotent;// ·¢ËÍÄÚÈİÃæ°å
-	private JTextField subjectTF;// ÓÊ¼şÖ÷ÌâÎÄ±¾¿ò
-	private JTextField copy_to;// ³­ËÍ
-	private JTextField to_mail;// ÊÕ¼şÈË
-	private JList attachmentList = null;// ¸½¼şÁĞ±í£¬×î¶àÄÜÌí¼ÓÈı¸ö¸½¼ş
-	private JScrollPane scrollPane = null;// ÕıÎÄ±à¼­´°¿Ú
-	private JScrollPane jsp = null;// ÓÃÓÚÏÔÊ¾¸½¼ş
-	private DefaultListModel listmodel = null;// ¸½¼şÁĞ±íÄ£ĞÍ
-	private JLabel adjunctL = null;// ¸½¼ş±êÇ©
+	private JComboBox fontSizeCB;// å­—ä½“å¤§å°åˆ—è¡¨
+	private JComboBox fontCB;// å­—ä½“åˆ—è¡¨
+	private JTextPane sendCotent;// å‘é€å†…å®¹é¢æ¿
+	private JTextField subjectTF;// é‚®ä»¶ä¸»é¢˜æ–‡æœ¬æ¡†
+	private JTextField copy_to;// æŠ„é€
+	private JTextField to_mail;// æ”¶ä»¶äºº
+	private JList attachmentList = null;// é™„ä»¶åˆ—è¡¨ï¼Œæœ€å¤šèƒ½æ·»åŠ ä¸‰ä¸ªé™„ä»¶
+	private JScrollPane scrollPane = null;// æ­£æ–‡ç¼–è¾‘çª—å£
+	private JScrollPane jsp = null;// ç”¨äºæ˜¾ç¤ºé™„ä»¶
+	private DefaultListModel listmodel = null;// é™„ä»¶åˆ—è¡¨æ¨¡å‹
+	private JLabel adjunctL = null;// é™„ä»¶æ ‡ç­¾
 	private JLabel to_mailLabel = null, copy_toLabel = null,
 			subject_Label = null;
-	private JButton sendButton = null;// ·¢ËÍ°´Å¥
-	private JButton resetButton = null;// ÖØÖÃ
-	private JButton attachmentButton = null;// ²åÈë¸½¼ş°´Å¥
-	private JButton selectColorButton = null;// ÑÕÉ«Ñ¡Ôñ°´Å¥
+	private JButton sendButton = null;// å‘é€æŒ‰é’®
+	private JButton resetButton = null;// é‡ç½®
+	private JButton attachmentButton = null;// æ’å…¥é™„ä»¶æŒ‰é’®
+	private JButton selectColorButton = null;// é¢œè‰²é€‰æ‹©æŒ‰é’®
 	private Box baseBox = null, boxV1 = null, boxV2 = null;
-	private ArrayList<String> attachArrayList = new ArrayList<String>();// ÓÃÓÚ´æ´¢¸½¼şÂ·¾¶µÄÁ´±í
+	private ArrayList<String> attachArrayList = new ArrayList<String>();// ç”¨äºå­˜å‚¨é™„ä»¶è·¯å¾„çš„é“¾è¡¨
 	private Color color = Color.black;
-	// ÊôĞÔ¶¨Òå
-	private Action boldAction = new StyledEditorKit.BoldAction();// Ìí¼Ó¼Ó´ÖÕìÌıÆ÷
-	private Action underlineAction = new StyledEditorKit.UnderlineAction(); // Ìí¼Ó¼ÓÏÂ»®ÏßÕìÌıÆ÷
-	private Action italicAction = new StyledEditorKit.ItalicAction(); // Ìí¼ÓÇãĞ±ÕìÌıÆ÷
-	private HTMLDocument document = null;// ÉùÃ÷Ò»¸öÍøÒ³ÎÄµµ¶ÔÏó±äÁ¿
+	// å±æ€§å®šä¹‰
+	private Action boldAction = new StyledEditorKit.BoldAction();// æ·»åŠ åŠ ç²—ä¾¦å¬å™¨
+	private Action underlineAction = new StyledEditorKit.UnderlineAction(); // æ·»åŠ åŠ ä¸‹åˆ’çº¿ä¾¦å¬å™¨
+	private Action italicAction = new StyledEditorKit.ItalicAction(); // æ·»åŠ å€¾æ–œä¾¦å¬å™¨
+	private HTMLDocument document = null;// å£°æ˜ä¸€ä¸ªç½‘é¡µæ–‡æ¡£å¯¹è±¡å˜é‡
 	private SendAttachMail sendMail = null;
 	private EditorPopupMenu rightMouseButton = null;
-	private JProgressBarFrame progressBar = null;// ½ø¶ÈÌõÊµÀı
+	private JProgressBarFrame progressBar = null;// è¿›åº¦æ¡å®ä¾‹
 
 	public SendFrame() {
-		super("ĞÂÓÊ¼ş");
+		super("æ–°é‚®ä»¶");
 		this.setFrameIcon(EditorUtils.createIcon("newMail.gif"));
-		// ³õÊ¼»¯»ù±¾Ïî
-		getContentPane().setLayout(new BorderLayout());// ÉèÖÃ¿Õ²¼¾Ö
-		setIconifiable(true);// ÊÇ·ñÊ¹ JInternalFrame ±ä³ÉÒ»¸öÍ¼±ê
-		setClosable(true);// ÊÇ·ñ¹Ø±Õ
-		setMaximizable(true);// ´°¿Ú×î´ó»¯ÉèÖÃ
-		setResizable(true);// ÉèÖÃ´°¿Ú¿ÎÒÔµ÷Õû´óĞ¡
-		setBounds(10, 10, 640, 600);// ÉèÖÃ½çÃæµÄ´óĞ¡
+		// åˆå§‹åŒ–åŸºæœ¬é¡¹
+		getContentPane().setLayout(new BorderLayout());// è®¾ç½®ç©ºå¸ƒå±€
+		setIconifiable(true);// æ˜¯å¦ä½¿ JInternalFrame å˜æˆä¸€ä¸ªå›¾æ ‡
+		setClosable(true);// æ˜¯å¦å…³é—­
+		setMaximizable(true);// çª—å£æœ€å¤§åŒ–è®¾ç½®
+		setResizable(true);// è®¾ç½®çª—å£è¯¾ä»¥è°ƒæ•´å¤§å°
+		setBounds(10, 10, 640, 600);// è®¾ç½®ç•Œé¢çš„å¤§å°
 		setVisible(true);
 
-		// ÉèÖÃÊÕ¼şÈË±êÇ©
+		// è®¾ç½®æ”¶ä»¶äººæ ‡ç­¾
 		to_mailLabel = new JLabel();
-		to_mailLabel.setText("ÊÕ¼şÈË:");
-		// ³­ËÍ±êÇ©
+		to_mailLabel.setText("æ”¶ä»¶äºº:");
+		// æŠ„é€æ ‡ç­¾
 		copy_toLabel = new JLabel();
-		copy_toLabel.setText("³­ËÍ:");
-		// Ö÷Ìâ±êÇ©
+		copy_toLabel.setText("æŠ„é€:");
+		// ä¸»é¢˜æ ‡ç­¾
 		subject_Label = new JLabel();
-		subject_Label.setText("Ö÷Ìâ:");
-		// ÊÕ¼şÈËÎÄ±¾¿ò
+		subject_Label.setText("ä¸»é¢˜:");
+		// æ”¶ä»¶äººæ–‡æœ¬æ¡†
 		to_mail = new JTextField(40);
 		to_mail.addFocusListener(this);
-		to_mail.setToolTipText("ÊÕ¼şÈËµØÖ·ÒÔÓ¢ÎÄ¶ººÅ·Ö¸ô");
-		// ³­ËÍÎÄ±¾¿ò
+		to_mail.setToolTipText("æ”¶ä»¶äººåœ°å€ä»¥è‹±æ–‡é€—å·åˆ†éš”");
+		// æŠ„é€æ–‡æœ¬æ¡†
 		copy_to = new JTextField(40);
 		copy_to.addFocusListener(this);
-		// Ö÷ÌâÎÄ±¾¿ò
+		// ä¸»é¢˜æ–‡æœ¬æ¡†
 		subjectTF = new JTextField(40);
-		JPanel setPanel = new JPanel();// ÉÏ°ë²¿
+		JPanel setPanel = new JPanel();// ä¸ŠåŠéƒ¨
 		setPanel.add(box());
 		scrollPane = new JScrollPane();
 
 		sendCotent = new JTextPane();
 		sendCotent.setContentType("text/html");
 		HTMLEditorKit editorKit = new HTMLEditorKit();
-		document = (HTMLDocument) editorKit.createDefaultDocument();// ´´½¨Ä¬ÈÏÎÄµµÖ¸ÏòÍøÒ³ÒıÓÃdocument
-		sendCotent.setEditorKit(editorKit);// ÉèÖÃÎªhtml¸ñÊ½µÄ±à¼­Æ÷
+		document = (HTMLDocument) editorKit.createDefaultDocument();// åˆ›å»ºé»˜è®¤æ–‡æ¡£æŒ‡å‘ç½‘é¡µå¼•ç”¨document
+		sendCotent.setEditorKit(editorKit);// è®¾ç½®ä¸ºhtmlæ ¼å¼çš„ç¼–è¾‘å™¨
 		sendCotent.setDocument(document);
 		sendCotent.addMouseListener(this);
 		scrollPane.setViewportView(sendCotent);
-		// ¹¤¾ßÌõ
+		// å·¥å…·æ¡
 		final JToolBar toolBar = new JToolBar();
 		getContentPane().add(toolBar);
-		sendButton = new JButton("·¢ËÍ", EditorUtils.createIcon("newsend.gif"));
+		sendButton = new JButton("å‘é€", EditorUtils.createIcon("newsend.gif"));
 		sendButton.addActionListener(this);
 		toolBar.add(sendButton);
-		resetButton = new JButton("ÖØĞ´", EditorUtils.createIcon("rewrite.gif"));
+		resetButton = new JButton("é‡å†™", EditorUtils.createIcon("rewrite.gif"));
 		resetButton.addActionListener(this);
 		toolBar.add(resetButton);
-		// ¸½¼şÁĞ±í
+		// é™„ä»¶åˆ—è¡¨
 		listmodel = new DefaultListModel();
-		adjunctL = new JLabel("¸½¼ş£º");
-		jsp = new JScrollPane();// ÓÃÓÚÏÔÊ¾JList
+		adjunctL = new JLabel("é™„ä»¶ï¼š");
+		jsp = new JScrollPane();// ç”¨äºæ˜¾ç¤ºJList
 		jsp.setPreferredSize(new Dimension(350, 20));
 		attachmentList = new JList(listmodel);
-		attachmentList.addMouseListener(this);// ÎªÓÊ¼şÁĞ±íÌí¼ÓÊó±êÊÂ¼ş
-		jsp.setViewportView(attachmentList);// ÉèÖÃJScrollPanelµÄÊÓÍ¼ÎªJList
+		attachmentList.addMouseListener(this);// ä¸ºé‚®ä»¶åˆ—è¡¨æ·»åŠ é¼ æ ‡äº‹ä»¶
+		jsp.setViewportView(attachmentList);// è®¾ç½®JScrollPanelçš„è§†å›¾ä¸ºJList
 		attachmentList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		attachmentList.setVisibleRowCount(1);
 		attachmentList.setLayoutOrientation(JList.VERTICAL_WRAP);
-		// ²åÈë¸½¼ş°´Å¥
-		attachmentButton = new JButton("²åÈë¸½¼ş",
+		// æ’å…¥é™„ä»¶æŒ‰é’®
+		attachmentButton = new JButton("æ’å…¥é™„ä»¶",
 				EditorUtils.createIcon("attach.png"));
 		attachmentButton.addActionListener(this);
 		toolBar.add(attachmentButton);
-		// Ğ±Ìå°´Å¥
+		// æ–œä½“æŒ‰é’®
 		JButton italicButton = new JButton(italicAction);
 		italicButton.setIcon(EditorUtils.createIcon("italic.gif"));
 		italicButton.setText("");
 		italicButton.setPreferredSize(new Dimension(22, 22));
-		// ´ÖÌå°´Å¥
+		// ç²—ä½“æŒ‰é’®
 		JButton blodButton = new JButton(boldAction);
 		blodButton.setIcon(EditorUtils.createIcon("blod.gif"));
 		blodButton.setText("");
 		blodButton.setPreferredSize(new Dimension(22, 22));
-		// ÏÂ»®Ïß°´Å¥
+		// ä¸‹åˆ’çº¿æŒ‰é’®
 		JButton underlineButton = new JButton(underlineAction);
 		underlineButton.setIcon(EditorUtils.createIcon("underline.gif"));
 		underlineButton.setText("");
 		underlineButton.setPreferredSize(new Dimension(22, 22));
 
-		// ×ÖÌå
-		final JLabel fontLabel = new JLabel("×ÖÌå");
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();// »ñµÃ±¾µØ ¼ÆËã»úÉÏ×ÖÌå¿ÉÓÃµÄÃû³Æ
+		// å­—ä½“
+		final JLabel fontLabel = new JLabel("å­—ä½“");
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();// è·å¾—æœ¬åœ° è®¡ç®—æœºä¸Šå­—ä½“å¯ç”¨çš„åç§°
 		String font[] = ge.getAvailableFontFamilyNames();
 		fontCB = new JComboBox(font);
 		fontCB.addActionListener(this);
-		// ×ÖºÅÁĞ±í
-		final JLabel fontSizeLabel = new JLabel("×ÖºÅ");
+		// å­—å·åˆ—è¡¨
+		final JLabel fontSizeLabel = new JLabel("å­—å·");
 		String fontSize[] = { "10", "11", "12", "13", "14", "16", "18", "20",
 				"22", "24", "26", "28", "36", "48" };
 		fontSizeCB = new JComboBox(fontSize);
 		fontSizeCB.addActionListener(this);
 		fontSizeCB.setPreferredSize(new Dimension(50, 23));
 
-		// ÑÕÉ«
-		final JLabel colorLabel = new JLabel("ÑÕÉ«");
-		selectColorButton = new JButton("Ñ¡É«");
+		// é¢œè‰²
+		final JLabel colorLabel = new JLabel("é¢œè‰²");
+		selectColorButton = new JButton("é€‰è‰²");
 		selectColorButton.addActionListener(this);
 
-		JPanel editorToolBarPanel = new JPanel();// ±à¼­Çø¹¤¾ßÌõ
+		JPanel editorToolBarPanel = new JPanel();// ç¼–è¾‘åŒºå·¥å…·æ¡
 		editorToolBarPanel.add(italicButton);
 		editorToolBarPanel.add(blodButton);
 		editorToolBarPanel.add(underlineButton);
@@ -195,18 +195,18 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		editorToolBarPanel.add(new JLabel("   "));
 		editorToolBarPanel.add(colorLabel);
 		editorToolBarPanel.add(selectColorButton);
-		// ±à¼­ÇøÃæ°å
-		JPanel editorPanel = new JPanel(new BorderLayout());// ±à¼­Çø
+		// ç¼–è¾‘åŒºé¢æ¿
+		JPanel editorPanel = new JPanel(new BorderLayout());// ç¼–è¾‘åŒº
 		editorPanel.add(editorToolBarPanel, BorderLayout.NORTH);
 		editorPanel.add(scrollPane, BorderLayout.CENTER);
-		// Ìí¼ÓÒ»¸ö·Ö¸î´°¿Ú
+		// æ·»åŠ ä¸€ä¸ªåˆ†å‰²çª—å£
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				setPanel, editorPanel);
-		splitPane.setOneTouchExpandable(true);// ÔÚ·Ö¸ôÌõÉÏÌá¹©Ò»¸ö UI Ğ¡²¿¼şÀ´¿ìËÙÕ¹¿ª/ÕÛµş·Ö¸ôÌõ
-		splitPane.setDividerSize(10);// ÉèÖÃ·Ö¸ôÌõµÄ´óĞ¡¡£
+		splitPane.setOneTouchExpandable(true);// åœ¨åˆ†éš”æ¡ä¸Šæä¾›ä¸€ä¸ª UI å°éƒ¨ä»¶æ¥å¿«é€Ÿå±•å¼€/æŠ˜å åˆ†éš”æ¡
+		splitPane.setDividerSize(10);// è®¾ç½®åˆ†éš”æ¡çš„å¤§å°ã€‚
 
-		// Õû¸ö½çÃæ±à¼­Çø
-		JPanel framePanel = new JPanel(new BorderLayout());// ±à¼­Çø
+		// æ•´ä¸ªç•Œé¢ç¼–è¾‘åŒº
+		JPanel framePanel = new JPanel(new BorderLayout());// ç¼–è¾‘åŒº
 		framePanel.add(splitPane, BorderLayout.CENTER);
 		this.add(framePanel, BorderLayout.CENTER);
 		this.add(toolBar, BorderLayout.NORTH);
@@ -214,7 +214,7 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 	}
 
 	private Box box() {
-		// ´´½¨±êÇ©box
+		// åˆ›å»ºæ ‡ç­¾box
 		boxV1 = Box.createVerticalBox();
 		boxV1.add(to_mailLabel);
 		boxV1.add(Box.createVerticalStrut(10));
@@ -223,7 +223,7 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		boxV1.add(subject_Label);
 		boxV1.add(Box.createVerticalStrut(12));
 
-		// ´´½¨ÎÄ±¾¿òbox
+		// åˆ›å»ºæ–‡æœ¬æ¡†box
 		boxV2 = Box.createVerticalBox();
 		boxV2.add(to_mail);
 		boxV2.add(Box.createVerticalStrut(8));
@@ -231,7 +231,7 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		boxV2.add(Box.createVerticalStrut(8));
 		boxV2.add(subjectTF);
 
-		// ´´½¨»ù±¾box
+		// åˆ›å»ºåŸºæœ¬box
 		baseBox = Box.createHorizontalBox();
 		baseBox.add(boxV1);
 		baseBox.add(Box.createHorizontalStrut(20));
@@ -240,46 +240,46 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		return baseBox;
 	}
 
-	// °´Å¥ÊÂ¼şµÄ´¦Àí
+	// æŒ‰é’®äº‹ä»¶çš„å¤„ç†
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == selectColorButton) {// Ñ¡ÔñÑÕÉ«
-			color = JColorChooser.showDialog(this, "ÇëÑ¡ÔñÑÕÉ«", Color.black);
+		if (e.getSource() == selectColorButton) {// é€‰æ‹©é¢œè‰²
+			color = JColorChooser.showDialog(this, "è¯·é€‰æ‹©é¢œè‰²", Color.black);
 			Action colorAction = new StyledEditorKit.ForegroundAction(
-					"set-foreground-", color);// Ìí¼ÓÑÕÉ«ÕìÌıÆ÷
+					"set-foreground-", color);// æ·»åŠ é¢œè‰²ä¾¦å¬å™¨
 			if (color != null)
 				colorAction.actionPerformed(new ActionEvent(color, 0,
 						sendCotent.getSelectedText()));
-		} else if (e.getSource() == fontCB) {// ×ÖÌåÉèÖÃ
+		} else if (e.getSource() == fontCB) {// å­—ä½“è®¾ç½®
 			String font = (String) fontCB.getSelectedItem();
 			Action fontAction = new StyledEditorKit.FontFamilyAction(font, font);
 			fontAction.actionPerformed(new ActionEvent(fontAction, 0,
 					sendCotent.getSelectedText()));
-		} else if (e.getSource() == fontSizeCB) {// ×ÖÌå´óĞ¡ÉèÖÃ
+		} else if (e.getSource() == fontSizeCB) {// å­—ä½“å¤§å°è®¾ç½®
 			String fontsize = (String) fontSizeCB.getSelectedItem();
 			Action fontSizeAction = new StyledEditorKit.FontSizeAction(
 					fontsize, Integer.parseInt(fontsize));
 			fontSizeAction.actionPerformed(new ActionEvent(fontSizeAction, 0,
 					sendCotent.getSelectedText()));
-		} else if (e.getSource() == resetButton) {// ÖØÖÃ°´Å¥ÊÂ¼ş
+		} else if (e.getSource() == resetButton) {// é‡ç½®æŒ‰é’®äº‹ä»¶
 			reset();
-		} else if (e.getSource() == attachmentButton) {// ²åÈë¸½¼ş
-			addAttachment();// ²åÈë¸½¼ş
-		} else if (e.getSource() == sendButton) {// ·¢ËÍÓÊ¼ş
-			getSendMailInfo();// ·¢ËÍÓÊ¼ş
+		} else if (e.getSource() == attachmentButton) {// æ’å…¥é™„ä»¶
+			addAttachment();// æ’å…¥é™„ä»¶
+		} else if (e.getSource() == sendButton) {// å‘é€é‚®ä»¶
+			getSendMailInfo();// å‘é€é‚®ä»¶
 		}
 	}
 
-	// Êó±êÊÂ¼ş´¦Àí
+	// é¼ æ ‡äº‹ä»¶å¤„ç†
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == attachmentList && e.getButton() == 3) {// Êó±ê°´¼ügetButton()·½·¨·µ»Ø1±íÊ¾°´ÁË×ó¼üÅÌ£¬2±íÊ¾°´ÁËÖĞ¼üÅÌ£¬3±íÊ¾°´ÁËÓÒ¼üÅÌ
-			deleteAttachment(e);// É¾³ı¸½¼ş
-		} else if (e.getSource() == sendCotent && e.getButton() == 3) {// Êó±ê°´¼ügetButton()·½·¨·µ»Ø1±íÊ¾°´ÁË×ó¼üÅÌ£¬2±íÊ¾°´ÁËÖĞ¼üÅÌ£¬3±íÊ¾°´ÁËÓÒ¼üÅÌ
-			rightMouseButton.rightMouseButton(e);// Êó±êÓÒ¼üÏìÓ¦
+		if (e.getSource() == attachmentList && e.getButton() == 3) {// é¼ æ ‡æŒ‰é”®getButton()æ–¹æ³•è¿”å›1è¡¨ç¤ºæŒ‰äº†å·¦é”®ç›˜ï¼Œ2è¡¨ç¤ºæŒ‰äº†ä¸­é”®ç›˜ï¼Œ3è¡¨ç¤ºæŒ‰äº†å³é”®ç›˜
+			deleteAttachment(e);// åˆ é™¤é™„ä»¶
+		} else if (e.getSource() == sendCotent && e.getButton() == 3) {// é¼ æ ‡æŒ‰é”®getButton()æ–¹æ³•è¿”å›1è¡¨ç¤ºæŒ‰äº†å·¦é”®ç›˜ï¼Œ2è¡¨ç¤ºæŒ‰äº†ä¸­é”®ç›˜ï¼Œ3è¡¨ç¤ºæŒ‰äº†å³é”®ç›˜
+			rightMouseButton.rightMouseButton(e);// é¼ æ ‡å³é”®å“åº”
 		}
 
 	}
 
-	// Êó±êÍÏ¶¯
+	// é¼ æ ‡æ‹–åŠ¨
 	public void mouseDragged(MouseEvent mouseevent) {
 
 	}
@@ -300,20 +300,20 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 	public void mouseReleased(MouseEvent e) {
 	}
 
-	// Ìí¼Ó¸½¼ş
+	// æ·»åŠ é™„ä»¶
 	private void addAttachment() {
 		if (listmodel.getSize() >= 4) {
-			JOptionPane.showMessageDialog(this, "×î¶àÖ»ÄÜÌí¼Ó4¸ö¸½¼ş");
+			JOptionPane.showMessageDialog(this, "æœ€å¤šåªèƒ½æ·»åŠ 4ä¸ªé™„ä»¶");
 			return;
 		}
-		File f = new File(".");// µÃµ½µ±Ç°Ä¿Â¼
-		JFileChooser chooser = new JFileChooser(f);// ¹¹ÔìÒ»¸öµ±Ç°Â·¾¶µÄÎÄ¼şÑ¡ÔñÆ÷
-		if (chooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {// Èç¹ûÑ¡ÔñÈ·¶¨¼ü
+		File f = new File(".");// å¾—åˆ°å½“å‰ç›®å½•
+		JFileChooser chooser = new JFileChooser(f);// æ„é€ ä¸€ä¸ªå½“å‰è·¯å¾„çš„æ–‡ä»¶é€‰æ‹©å™¨
+		if (chooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {// å¦‚æœé€‰æ‹©ç¡®å®šé”®
 			File file = chooser.getSelectedFile();
 			Icon icon = chooser.getIcon(file);
 			attachmentList.setCellRenderer(new CellRender(icon));
-			listmodel.addElement(file.getName());// ½«¸½¼şÌí¼Óµ½JLISTÖĞ
-			attachArrayList.add(file.getPath());// ½«¸½¼şµÄÂ·¾¶Ìí¼Óµ½¸½¼şÁĞ±íÖĞ
+			listmodel.addElement(file.getName());// å°†é™„ä»¶æ·»åŠ åˆ°JLISTä¸­
+			attachArrayList.add(file.getPath());// å°†é™„ä»¶çš„è·¯å¾„æ·»åŠ åˆ°é™„ä»¶åˆ—è¡¨ä¸­
 		}
 		if (listmodel.getSize() <= 1) {
 			boxV1.add(adjunctL);
@@ -323,84 +323,84 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		repaint();
 	}
 
-	// É¾³ı¸½¼ş
+	// åˆ é™¤é™„ä»¶
 	private void deleteAttachment(MouseEvent e) {
 		final JPopupMenu popup = new JPopupMenu();
-		JMenuItem itemdel = new JMenuItem("É¾³ı");
+		JMenuItem itemdel = new JMenuItem("åˆ é™¤");
 		itemdel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (attachmentList.getSelectedValue() == null) {
 					JOptionPane.showMessageDialog(SendFrame.this,
-							"ÇëÄúÑ¡ÔñÁĞ±íÖĞĞèÒªÉ¾³ıµÄ¸½¼ş");
+							"è¯·æ‚¨é€‰æ‹©åˆ—è¡¨ä¸­éœ€è¦åˆ é™¤çš„é™„ä»¶");
 					return;
 				}
-				int attachmentIndex = attachmentList.getSelectedIndex();// µÃµ½Ñ¡Ôñ¸½¼şµÄË÷ÒıºÅ
-				attachArrayList.remove(attachmentIndex);// ½«¸½¼şÂ·¾¶Á´±íÖĞµÄ¶ÔÓ¦ÖµÉ¾³ı
-				listmodel.remove(attachmentIndex);// ½«ÁĞ±íÄ£ĞÍÖĞµÄ¸½¼şÉ¾³ı
+				int attachmentIndex = attachmentList.getSelectedIndex();// å¾—åˆ°é€‰æ‹©é™„ä»¶çš„ç´¢å¼•å·
+				attachArrayList.remove(attachmentIndex);// å°†é™„ä»¶è·¯å¾„é“¾è¡¨ä¸­çš„å¯¹åº”å€¼åˆ é™¤
+				listmodel.remove(attachmentIndex);// å°†åˆ—è¡¨æ¨¡å‹ä¸­çš„é™„ä»¶åˆ é™¤
 			}
 		});
 		popup.add(itemdel);
-		popup.show(e.getComponent(), e.getX(), e.getY());// ÏÔÊ¾µ¯³ö²Ëµ¥
+		popup.show(e.getComponent(), e.getX(), e.getY());// æ˜¾ç¤ºå¼¹å‡ºèœå•
 	}
 
-	// µÃµ½·¢ËÍÓÊ¼şĞÅÏ¢
+	// å¾—åˆ°å‘é€é‚®ä»¶ä¿¡æ¯
 	public void getSendMailInfo() {
-		sendMail = SendAttachMail.getSendMailInstantiate();// ³õÊ¼»¯·¢ËÍÓÊ¼ş¶ÔÏó
-		String text = sendCotent.getText().trim();// ÕıÎÄ
-		String sendMan = sendMail.getUser();// ·¢¼şÈË
-		String subject = subjectTF.getText().trim();// Ö÷Ìâ
-		String toMan = to_mail.getText().trim();// ÊÕ¼şÈË
-		String copy = copy_to.getText().trim();// ³­ËÍµ½
-		SendedMailTable.getSendedMailTable().setSendFrame(this);// ÖØĞÂ·¢ËÍÓÊ¼şÊ±µ÷ÓÃ
-		sendMail(toMan, subject, attachArrayList, text, copy, sendMan);// ·¢ËÍÓÊ¼ş
+		sendMail = SendAttachMail.getSendMailInstantiate();// åˆå§‹åŒ–å‘é€é‚®ä»¶å¯¹è±¡
+		String text = sendCotent.getText().trim();// æ­£æ–‡
+		String sendMan = sendMail.getUser();// å‘ä»¶äºº
+		String subject = subjectTF.getText().trim();// ä¸»é¢˜
+		String toMan = to_mail.getText().trim();// æ”¶ä»¶äºº
+		String copy = copy_to.getText().trim();// æŠ„é€åˆ°
+		SendedMailTable.getSendedMailTable().setSendFrame(this);// é‡æ–°å‘é€é‚®ä»¶æ—¶è°ƒç”¨
+		sendMail(toMan, subject, attachArrayList, text, copy, sendMan);// å‘é€é‚®ä»¶
 	}
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param text
-	 *            ÕıÎÄÄÚÈİ
+	 *            æ­£æ–‡å†…å®¹
 	 * @param sendMan
-	 *            ·¢¼şÈË
+	 *            å‘ä»¶äºº
 	 * @param subject
-	 *            Ö÷Ìâ
+	 *            ä¸»é¢˜
 	 * @param toMan
-	 *            ÊÕ¼şÈË
+	 *            æ”¶ä»¶äºº
 	 */
 
 	public void sendMail(final String toMan, final String subject,
 			ArrayList<String> list, final String text, final String copy,
 			final String sendMan) {
-		sendMail.setContent(text);// ÉèÖÃÓÊ¼şÕıÎÄ
-		sendMail.setFilename(list);// ÉèÖÃÓÊ¼ş¸½¼şÃû³Æ
-		sendMail.setFrom(sendMan);// ÉèÖÃ·¢¼şÈË
-		sendMail.setSubject(subject);// ÉèÖÃÓÊ¼şÖ÷Ìâ
-		sendMail.setTo(toMan);// ÉèÖÃÊÕ¼şÈË
-		sendMail.setCopy_to(copy);// ÉèÖÃ³­ËÍÈË
+		sendMail.setContent(text);// è®¾ç½®é‚®ä»¶æ­£æ–‡
+		sendMail.setFilename(list);// è®¾ç½®é‚®ä»¶é™„ä»¶åç§°
+		sendMail.setFrom(sendMan);// è®¾ç½®å‘ä»¶äºº
+		sendMail.setSubject(subject);// è®¾ç½®é‚®ä»¶ä¸»é¢˜
+		sendMail.setTo(toMan);// è®¾ç½®æ”¶ä»¶äºº
+		sendMail.setCopy_to(copy);// è®¾ç½®æŠ„é€äºº
 
 		if (progressBar == null) {
-			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "·¢ËÍÓÊ¼ş",
-					"ÓÊ¼şÕıÔÚ·¢ËÍÖĞ£¬ÇëÉÔºó...");
+			progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "å‘é€é‚®ä»¶",
+					"é‚®ä»¶æ­£åœ¨å‘é€ä¸­ï¼Œè¯·ç¨å...");
 		}
 		progressBar.setVisible(true);
-		new Thread() {// ¿ªÆôÒ»¸öĞÂµÄÏß³Ì·¢ËÍÓÊ¼ş
+		new Thread() {// å¼€å¯ä¸€ä¸ªæ–°çš„çº¿ç¨‹å‘é€é‚®ä»¶
 			public void run() {
 				String message = "";
 				if ("".equals(message = sendMail.send())) {
 					SendedMailTable.getSendedMailTable().setValues(toMan,
-							subject, attachArrayList, text, copy, sendMan);// ½«ÓÊ¼şÌí¼Óµ½ÒÑ·¢ËÍ
-					message = "ÓÊ¼şÒÑ·¢ËÍ³É¹¦£¡";
+							subject, attachArrayList, text, copy, sendMan);// å°†é‚®ä»¶æ·»åŠ åˆ°å·²å‘é€
+					message = "é‚®ä»¶å·²å‘é€æˆåŠŸï¼";
 				} else {
-					message = "<html><h4>ÓÊ¼ş·¢ËÍÊ§°Ü£¡ Ê§°ÜÔ­Òò£º</h4></html>\n" + message;
+					message = "<html><h4>é‚®ä»¶å‘é€å¤±è´¥ï¼ å¤±è´¥åŸå› ï¼š</h4></html>\n" + message;
 				}
 				progressBar.dispose();
-				JOptionPane.showMessageDialog(SendFrame.this, message, "ÌáÊ¾",
+				JOptionPane.showMessageDialog(SendFrame.this, message, "æç¤º",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}.start();
 	}
 
-	// Çå¿Õ¸÷ÖÖÊôĞÔÖµ
+	// æ¸…ç©ºå„ç§å±æ€§å€¼
 	private void reset() {
 		sendCotent.setText("");
 		subjectTF.setText("");
@@ -410,18 +410,18 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		listmodel.clear();
 	}
 
-	// Ìí¼ÓÁªÏµÈËµ½ÊÕ¼şÈË
+	// æ·»åŠ è”ç³»äººåˆ°æ”¶ä»¶äºº
 	public void addLinkman(String linkman) {
-		if (focusStatic == 2) {// ÅĞ¶Ï³­ËÍÎÄ±¾¿òÊÇ·ñµÃµ½½¹µã
+		if (focusStatic == 2) {// åˆ¤æ–­æŠ„é€æ–‡æœ¬æ¡†æ˜¯å¦å¾—åˆ°ç„¦ç‚¹
 			setJTextFieldString(copy_to, linkman);
-			copy_to.requestFocus();// ³­ËÍÈËÎÄ±¾¿òµÃµ½½¹µã
+			copy_to.requestFocus();// æŠ„é€äººæ–‡æœ¬æ¡†å¾—åˆ°ç„¦ç‚¹
 		} else {
-			to_mail.requestFocus();// ÊÕ¼şÈËÎÄ±¾¿òµÃµ½½¹µã
+			to_mail.requestFocus();// æ”¶ä»¶äººæ–‡æœ¬æ¡†å¾—åˆ°ç„¦ç‚¹
 			setJTextFieldString(to_mail, linkman);
 		}
 	}
 
-	// ÉèÖÃÎÄ±¾¿òÖĞµÄ×Ö·û´®
+	// è®¾ç½®æ–‡æœ¬æ¡†ä¸­çš„å­—ç¬¦ä¸²
 	private void setJTextFieldString(JTextField jt, String linkman) {
 		String copy_toString = jt.getText();
 		if (!copy_toString.endsWith(";") && !copy_toString.equals(""))
@@ -430,7 +430,7 @@ public class SendFrame extends JInternalFrame implements ActionListener,
 		jt.setText(copy_toString);
 	}
 
-	private int focusStatic = 1;// 1 ´ú±íÊÕ¼şÈËµÃµ½½¹µã£¬2´ú±í³­ËÍÈËµÃµ½½¹µã
+	private int focusStatic = 1;// 1 ä»£è¡¨æ”¶ä»¶äººå¾—åˆ°ç„¦ç‚¹ï¼Œ2ä»£è¡¨æŠ„é€äººå¾—åˆ°ç„¦ç‚¹
 
 	@Override
 	public void focusGained(FocusEvent e) {

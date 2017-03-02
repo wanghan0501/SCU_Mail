@@ -25,7 +25,7 @@ import utils.MailTableModel;
 import utils.ReceiveMailTable;
 
 /**
- * ½ÓÊÜÓÊ¼þ½çÃæ¡¢»ØÊÕÕ¾½çÃæ¡¢ÒÑ·¢ËÍ½çÃæµÄ¸¸Àà
+ * æŽ¥å—é‚®ä»¶ç•Œé¢ã€å›žæ”¶ç«™ç•Œé¢ã€å·²å‘é€ç•Œé¢çš„çˆ¶ç±»
  * 
  * @author caesar
  * @version Copyright(C) SCU. 2016
@@ -35,30 +35,30 @@ public class BaseReceiceFrame extends JInternalFrame implements MouseListener,
 	public JTable table;
 	private JScrollPane scrollPane_1;
 	private JPanel panel;
-	public JTextPane mailContent;// ÓÊ¼þÄÚÈÝµÄÏÔÊ¾
+	public JTextPane mailContent;// é‚®ä»¶å†…å®¹çš„æ˜¾ç¤º
 	public MailTableModel tableModel = null;;
 	public ReceiveMailTable mail2Table = null;
 	public JMenuItem itemPopupOne = null;
 	public JMenuItem itemPopupTwo = null;
 	public JMenuItem itemPopupThree = null;
-	private String popupOne = "µÚÒ»Ïî", popupTwo = "µÚ¶þÏî", popupThree = "µÚÈýÏî";
+	private String popupOne = "ç¬¬ä¸€é¡¹", popupTwo = "ç¬¬äºŒé¡¹", popupThree = "ç¬¬ä¸‰é¡¹";
 	private String icon1 = null, icon2 = null, icon3 = null;
-	private JProgressBarFrame progressBar = null;// ½ø¶ÈÌõÊµÀý
+	private JProgressBarFrame progressBar = null;// è¿›åº¦æ¡å®žä¾‹
 	private boolean isThree = false;
 
-	// ÉèÖÃÓÒ¼üµÚÒ»ÏîÃû³Æ
+	// è®¾ç½®å³é”®ç¬¬ä¸€é¡¹åç§°
 	public void setPopupOne(String popupOne, String name) {
 		icon1 = name;
 		this.popupOne = popupOne;
 	}
 
-	// ÉèÖÃÓÒ¼üµÚ¶þÏîÃû³Æ
+	// è®¾ç½®å³é”®ç¬¬äºŒé¡¹åç§°
 	public void setPopupTwo(String popupTwo, String name) {
 		icon2 = name;
 		this.popupTwo = popupTwo;
 	}
 
-	// ÉèÖÃÓÒ¼üµÚÈýÏîÃû³Æ
+	// è®¾ç½®å³é”®ç¬¬ä¸‰é¡¹åç§°
 	public void setPopupThree(String popupThree, String name, boolean isThree) {
 		icon3 = name;
 		this.isThree = isThree;
@@ -68,12 +68,12 @@ public class BaseReceiceFrame extends JInternalFrame implements MouseListener,
 	public BaseReceiceFrame(String title) {
 		this.setLayout(new BorderLayout());
 		setTitle(title);
-		setClosable(true);// ÉèÖÃÊÇ·ñ¿ÉÒÔÍ¨¹ýÄ³¸öÓÃ»§²Ù×÷¹Ø±Õ´ËJInternalFrame
+		setClosable(true);// è®¾ç½®æ˜¯å¦å¯ä»¥é€šè¿‡æŸä¸ªç”¨æˆ·æ“ä½œå…³é—­æ­¤JInternalFrame
 		setIconifiable(true);
-		setMaximizable(true);// ´°¿Ú×î´ó»¯ÉèÖÃ
-		setResizable(true);// ÉèÖÃ´°¿Ú¿ÎÒÔµ÷Õû´óÐ¡
-		setBounds(10, 10, 640, 600);// ÉèÖÃ½çÃæµÄ´óÐ¡
-		final JScrollPane scrollPane = new JScrollPane();// ´´½¨Ò»¸ö¿ÕµÄ£¨ÎÞÊÓ¿ÚµÄÊÓÍ¼£©JScrollPane£¬
+		setMaximizable(true);// çª—å£æœ€å¤§åŒ–è®¾ç½®
+		setResizable(true);// è®¾ç½®çª—å£è¯¾ä»¥è°ƒæ•´å¤§å°
+		setBounds(10, 10, 640, 600);// è®¾ç½®ç•Œé¢çš„å¤§å°
+		final JScrollPane scrollPane = new JScrollPane();// åˆ›å»ºä¸€ä¸ªç©ºçš„ï¼ˆæ— è§†å£çš„è§†å›¾ï¼‰JScrollPaneï¼Œ
 		scrollPane.setPreferredSize(new Dimension(520, 155));
 		table = new JTable();
 		table.addMouseListener(this);
@@ -86,23 +86,23 @@ public class BaseReceiceFrame extends JInternalFrame implements MouseListener,
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setPreferredSize(new Dimension(520, 190));
-		mailContent = new JTextPane();// ¿ÉÒÔÓÃÒÔÍ¼ÐÎ·½Ê½±íÊ¾µÄÊôÐÔÀ´±ê¼ÇµÄÎÄ±¾×é¼þ
-		HTMLEditorKit kit = new HTMLEditorKit();// ÐÂ½¨HTMLEditorKit
-		mailContent.setEditorKit(kit);// ÉèÖÃEditorKitÎªHTMLEditorKit
+		mailContent = new JTextPane();// å¯ä»¥ç”¨ä»¥å›¾å½¢æ–¹å¼è¡¨ç¤ºçš„å±žæ€§æ¥æ ‡è®°çš„æ–‡æœ¬ç»„ä»¶
+		HTMLEditorKit kit = new HTMLEditorKit();// æ–°å»ºHTMLEditorKit
+		mailContent.setEditorKit(kit);// è®¾ç½®EditorKitä¸ºHTMLEditorKit
 		mailContent.setContentType("text/html");
 		scrollPane_1.setViewportView(mailContent);
 		panel.add(scrollPane_1, BorderLayout.CENTER);
 
-		// Ìí¼ÓÒ»¸ö·Ö¸î´°¿Ú
+		// æ·»åŠ ä¸€ä¸ªåˆ†å‰²çª—å£
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				scrollPane, panel);
-		splitPane.setOneTouchExpandable(true);// ÔÚ·Ö¸ôÌõÉÏÌá¹©Ò»¸ö UI Ð¡²¿¼þÀ´¿ìËÙÕ¹¿ª/ÕÛµþ·Ö¸ôÌõ
-		splitPane.setDividerSize(10);// ÉèÖÃ·Ö¸ôÌõµÄ´óÐ¡¡£
+		splitPane.setOneTouchExpandable(true);// åœ¨åˆ†éš”æ¡ä¸Šæä¾›ä¸€ä¸ª UI å°éƒ¨ä»¶æ¥å¿«é€Ÿå±•å¼€/æŠ˜å åˆ†éš”æ¡
+		splitPane.setDividerSize(10);// è®¾ç½®åˆ†éš”æ¡çš„å¤§å°ã€‚
 		getContentPane().add(splitPane, BorderLayout.CENTER);
 		setVisible(true);
-		// Ìí¼Ó³¬Á¬½ÓÖ§³Ö
+		// æ·»åŠ è¶…è¿žæŽ¥æ”¯æŒ
 		mailContent.setEditable(false);
-		mailContent// HyperlinkListener ³¬Á´½Ó¼àÌýÆ÷
+		mailContent// HyperlinkListener è¶…é“¾æŽ¥ç›‘å¬å™¨
 				.addHyperlinkListener(new javax.swing.event.HyperlinkListener() {
 					public void hyperlinkUpdate(
 							javax.swing.event.HyperlinkEvent e) {
@@ -122,12 +122,12 @@ public class BaseReceiceFrame extends JInternalFrame implements MouseListener,
 
 	public void mouseClicked(MouseEvent e) {
 		int selectRom = table.getSelectedRow();
-		if (e.getClickCount() == 2) {// Ë«»÷Ê±ÏÔÊ¾ÓÊ¼þ
-			if (selectRom != -1) {// Èç¹ûÑ¡ÔñÒ»ÐÐ
+		if (e.getClickCount() == 2) {// åŒå‡»æ—¶æ˜¾ç¤ºé‚®ä»¶
+			if (selectRom != -1) {// å¦‚æžœé€‰æ‹©ä¸€è¡Œ
 				doubleClick(selectRom);
 			}
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
-			if (selectRom >= 0 && selectRom < tableModel.getRowCount()) {// ÅÐ¶ÏÑ¡ÖÐÐÐÊÇ·ñÓÐÐ§
+			if (selectRom >= 0 && selectRom < tableModel.getRowCount()) {// åˆ¤æ–­é€‰ä¸­è¡Œæ˜¯å¦æœ‰æ•ˆ
 				JPopupMenu popup = new JPopupMenu();
 				itemPopupOne = new JMenuItem(popupOne);
 				itemPopupOne.addActionListener(this);
@@ -139,12 +139,12 @@ public class BaseReceiceFrame extends JInternalFrame implements MouseListener,
 
 				popup.add(itemPopupOne);
 				popup.add(itemPopupTwo);
-				if (isThree) {// ÊÇ·ñÓÐµÚÈý¸öÑ¡Ïî
+				if (isThree) {// æ˜¯å¦æœ‰ç¬¬ä¸‰ä¸ªé€‰é¡¹
 					itemPopupThree = new JMenuItem(popupThree);
 					itemPopupThree.setIcon(EditorUtils.createIcon(icon3));
 					itemPopupThree.addActionListener(this);
-					popup.addSeparator();// Ìí¼Ó·Ö¸î·û
-					popup.add(itemPopupThree);// ½«µÚÈýÏîÌí¼Óµ½²Ëµ¥ÖÐ
+					popup.addSeparator();// æ·»åŠ åˆ†å‰²ç¬¦
+					popup.add(itemPopupThree);// å°†ç¬¬ä¸‰é¡¹æ·»åŠ åˆ°èœå•ä¸­
 				}
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
@@ -152,72 +152,72 @@ public class BaseReceiceFrame extends JInternalFrame implements MouseListener,
 	}
 
 	/**
-	 * Ë«»÷ÊÂ¼þµÄÏìÓ¦
+	 * åŒå‡»äº‹ä»¶çš„å“åº”
 	 * 
 	 * @param selectRom
-	 *            Ñ¡ÔñµÄÐÐºÅ
+	 *            é€‰æ‹©çš„è¡Œå·
 	 */
 	public void doubleClick(int selectRom) {
 	}
 
-	// É¾³ýÓÊ¼þµÄÊÂ¼þ´¦Àí
+	// åˆ é™¤é‚®ä»¶çš„äº‹ä»¶å¤„ç†
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		actionEvent(e);
 	}
 
 	/**
-	 * ¶¯×÷ÊÂ¼þµÄ´¦Àí
+	 * åŠ¨ä½œäº‹ä»¶çš„å¤„ç†
 	 * 
 	 * @param e
 	 */
 	public void actionEvent(ActionEvent e) {
-		final int[] selectRoms = table.getSelectedRows();// Ñ¡ÖÐ¶àÐÐ
-		if (e.getSource() == this.itemPopupOne) {// É¾³ýÓÊ¼þ
+		final int[] selectRoms = table.getSelectedRows();// é€‰ä¸­å¤šè¡Œ
+		if (e.getSource() == this.itemPopupOne) {// åˆ é™¤é‚®ä»¶
 			delete(selectRoms, 1);
-		} else if (e.getSource() == this.itemPopupTwo) {// ³¹µ×É¾³ýÓÊ¼þ
-			new Thread() {// ¿ªÆôÐÂµÄÏß³ÌÉ¾³ýÓÊ¼þ
+		} else if (e.getSource() == this.itemPopupTwo) {// å½»åº•åˆ é™¤é‚®ä»¶
+			new Thread() {// å¼€å¯æ–°çš„çº¿ç¨‹åˆ é™¤é‚®ä»¶
 				public void run() {
 					popupTwoisSelected(selectRoms, ReceiveMailTable.list);
 				}
 			}.start();
-		} else if (e.getSource() == this.itemPopupThree) {// µÚÈýÏî²Ëµ¥
+		} else if (e.getSource() == this.itemPopupThree) {// ç¬¬ä¸‰é¡¹èœå•
 			popupThreeisSelected();
 		}
 	}
 
-	// ÓÒ¼üµÚÈý¸öÑ¡Ïî±»Ñ¡ÖÐ
+	// å³é”®ç¬¬ä¸‰ä¸ªé€‰é¡¹è¢«é€‰ä¸­
 	private void popupThreeisSelected() {
-		ReceiveMailTable.getMail2Table().startReceiveMail();// ÓÒ¼üË¢ÐÂÊÕ¼þÁÐ±í
+		ReceiveMailTable.getMail2Table().startReceiveMail();// å³é”®åˆ·æ–°æ”¶ä»¶åˆ—è¡¨
 	}
 
 	/**
-	 * ÓÒ¼üµÚ¶þ¸öÑ¡Ïî±»Ñ¡ÖÐ£¨ ³¹µ×É¾³ýÓÊ¼þ£©
+	 * å³é”®ç¬¬äºŒä¸ªé€‰é¡¹è¢«é€‰ä¸­ï¼ˆ å½»åº•åˆ é™¤é‚®ä»¶ï¼‰
 	 * 
 	 * @param selectRoms
 	 */
 	public void popupTwoisSelected(int[] selectRoms, List list) {
 		String message = "";
-		progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "É¾³ýÓÊ¼þ",
-				"ÕýÔÚÉ¾³ýÓÊ¼þ...");
+		progressBar = new JProgressBarFrame(MainFrame.MAINFRAME, "åˆ é™¤é‚®ä»¶",
+				"æ­£åœ¨åˆ é™¤é‚®ä»¶...");
 		progressBar.setVisible(true);
 		int i = 0;
-		for (i = 0; i < selectRoms.length// Ñ­»·É¾³ýÃ¿ÐÐ
+		for (i = 0; i < selectRoms.length// å¾ªçŽ¯åˆ é™¤æ¯è¡Œ
 				&& selectRoms[i] < tableModel.getRowCount(); i++)
-			;// ²¢ÅÐ¶ÏÃ¿ÐÐµÄÓÐÐ§ÐÔ
-		if (ReceiveMailTable.deleteMailForever(selectRoms, i, list)) {// ³¹µ×É¾³ýÓÊ¼þ
+			;// å¹¶åˆ¤æ–­æ¯è¡Œçš„æœ‰æ•ˆæ€§
+		if (ReceiveMailTable.deleteMailForever(selectRoms, i, list)) {// å½»åº•åˆ é™¤é‚®ä»¶
 			delete(selectRoms, 2);
-			message = "É¾³ý³É¹¦£¡";
+			message = "åˆ é™¤æˆåŠŸï¼";
 		} else {
-			message = "É¾³ýÊ§°Ü£¡";
+			message = "åˆ é™¤å¤±è´¥ï¼";
 		}
 		progressBar.dispose();
-		JOptionPane.showMessageDialog(this, message, "ÌáÊ¾",
+		JOptionPane.showMessageDialog(this, message, "æç¤º",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	// ÓÐ×ÓÀàÍê³É¾ßÌåµÄÉ¾³ý¹¦ÄÜ
-	public void delete(int[] selectRoms, int mailState) {// mailState ÅÐ¶ÏÓÊ¼þµÄÉ¾³ý×´Ì¬
+	// æœ‰å­ç±»å®Œæˆå…·ä½“çš„åˆ é™¤åŠŸèƒ½
+	public void delete(int[] selectRoms, int mailState) {// mailState åˆ¤æ–­é‚®ä»¶çš„åˆ é™¤çŠ¶æ€
 
 	}
 
