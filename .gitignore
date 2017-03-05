@@ -1,9 +1,6 @@
 /SCUMail/
-# ignore java *.class files
+# Java class files  
+*.class 
 
-SCUMail/bin/action/*.class
-SCUMail/bin/frame/*.class
-SCUMail/bin/mailutil/*.class
-SCUMail/bin/utils/*.class
-SCUMail/bin/utils/bickerTray/*.class
-
+# Generated files  
+bin/
