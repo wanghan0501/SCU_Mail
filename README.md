@@ -25,7 +25,7 @@
 
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
 
-* 邮件[hanwang.0501@gmail.com](hanwang.0501@gmail.com)
+* 邮件[hanwang.0501@gmail.com](mailto:hanwang.0501@gmail.com)
 * QQ: 511965496
 
 ## 关于作者
